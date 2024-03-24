@@ -1,0 +1,56 @@
+
+
+#vpanel{
+    /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
+    -fx-background-color: linear-gradient(to bottom, #eaefea, rgba(28, 101, 81, 0.5)); /* Gradient from light blue to dark blue */
+    -fx-background-radius: 5; /* Rounded corners */
+    -fx-border-radius: 5; /* Rounded corners for the border */
+    -fx-border-color: #a8cba8; /* Border color */
+
+
+}
+.button{
+    -fx-background-color: linear-gradient(to bottom, #e4eee4, rgba(28, 101, 81, 0.5)); /* Gradient from light blue to dark blue */
+    -fx-border-color: #0e0707; /* Border color */
+    -fx-border-width: 1; /* Border width */
+}
+.button:hover{
+    -fx-background-color: rgba(87, 224, 188, 0.5);
+}
+#HPanel{
+    /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
+    -fx-background-color: linear-gradient(to bottom,  #a8cba8, rgba(27, 100, 83, 0.5)); /* Gradient from light blue to dark blue */
+    -fx-background-radius: 10; /* Rounded corners */
+    -fx-border-radius: 10; /* Rounded corners for the border */
+    -fx-border-color: #a8cba8; /* Border color */
+}
+
+/* Text styles (adjust as needed) */
+.table-text {
+    -fx-fill: rgba(0, 0, 0, 0.8); /* Darker gray text for better readability */
+}
+
+.table-view {
+    -fx-background-color: #c0e8c0;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+    -fx-table-cell-border-color: rgba(27, 100, 83, 0.5);
+    -fx-border-radius: 5; /* Rounded corners for the border */
+}
+
+
+
+.table-row-cell:nth-child(even) {
+    -fx-background-color: #eee;
+}
+
+.column-header {
+    -fx-background-color: #ddd;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(87, 224, 188, 0.5);
+}
+
