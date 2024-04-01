@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -11,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -47,7 +49,20 @@ public class ShopMenu implements Initializable {
    @FXML
    private VBox vpanel;
 
+   @FXML
+   private Button Add;
+
+   @FXML
+   private Button Delete;
+
+   @FXML
+   private Button Update;
+   @FXML
+   private Button Search;
+
    private ResultSet rs;
+   private Database GlobalDB;
+   private Connection GlobalConnect;
 
 
    ObservableList<Medicine> list = FXCollections.observableArrayList(
@@ -56,6 +71,8 @@ public class ShopMenu implements Initializable {
    );
    @Override
    public void initialize(URL url, ResourceBundle resourceBundle) {
+      GlobalDB = new Database();
+      GlobalConnect = GlobalDB.dbConnect();
       //Format
       //tableColumnName.setCellValueFactory(new PropertyValueFactory<Class name,Data type>("Class attribute name"));
       Name.setCellValueFactory(new PropertyValueFactory<Medicine,String>("Name"));
@@ -84,5 +101,16 @@ public class ShopMenu implements Initializable {
          e.printStackTrace();
       }
       inventoryTable.setItems(list);
+   }
+
+   @FXML
+   void removeFromInventory() throws SQLException {
+      int selectID = inventoryTable.getSelectionModel().getSelectedIndex();
+      Medicine m = inventoryTable.getSelectionModel().getSelectedItem();
+      inventoryTable.getItems().remove(selectID);
+
+      //Reflect change on the database
+      Database db = new Database();
+      db.deleteMedicine(m.getSerial_id(),GlobalConnect);
    }
 }

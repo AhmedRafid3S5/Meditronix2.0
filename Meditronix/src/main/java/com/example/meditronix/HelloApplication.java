@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ShopMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 955, 720);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MainScreen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 760, 510);
         String css = "src/main/resources/com/example/meditronix/ShopInventory.css";
         scene.getStylesheets().add(css);
         stage.setTitle("MEDITRONIX");

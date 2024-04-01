@@ -12,6 +12,8 @@ public class Medicine {
     private Float Quantity;
     private Float UnitCost;
 
+    private String serial_id;
+
     public Medicine(String name, String dose, String expiry, String type, Float price, Float quantity, Float unitCost) {
         this.Name = name;
         this.Dose = dose;
@@ -30,6 +32,7 @@ public class Medicine {
         this.price = rs.getFloat("Selling_price");  // Assuming "Selling_price" is the price column
         this.Quantity = rs.getFloat("Available_Quantity");
         this.UnitCost = rs.getFloat("unit_cost");
+        this.serial_id = rs.getString("serial_id");
     }
 
     public String getName() {
@@ -59,4 +62,6 @@ public class Medicine {
     public Float getUnitCost() {
         return UnitCost;
     }
+
+    public String getSerial_id(){ return serial_id;}
 }

@@ -6,7 +6,7 @@ public class Database {
      public Connection dbConnect()  {
          try {
              Class.forName("com.mysql.jdbc.Driver");
-             String url = "jdbc:mysql://database-1.c5ymicw8wwm5.ap-southeast-2.rds.amazonaws.com:3306/mydb?characterEncoding=UTF-8";
+             String url = "Replace with url given in messenger pinned comment";
              String username = "admin";
              String password = "admin1234";
 
@@ -33,5 +33,25 @@ public class Database {
          return rs;
 
     }
+
+    public void deleteMedicine(String id, Connection con) throws SQLException {
+
+        String sql = "Delete From shop_inventory where serial_id = ?";
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setString(1,id);
+
+        int rowsDeleted = stmt.executeUpdate();
+
+        //Replace by notification on Hpanel
+        if (rowsDeleted > 0) {
+            System.out.println("Medicine with serial ID " + id + " deleted successfully!");
+        } else {
+            System.out.println("No medicine found with serial ID " + id);
+        }
+
+        stmt.close();
+        con.close();
+    }
+
 
 }

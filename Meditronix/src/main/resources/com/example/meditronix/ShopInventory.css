@@ -1,8 +1,10 @@
 
+/*background-color: #118ab2;
+background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%);*/
 
 #vpanel{
     /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
-    -fx-background-color: linear-gradient(to bottom, #eaefea, rgba(28, 101, 81, 0.5)); /* Gradient from light blue to dark blue */
+    -fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);/* Gradient from light blue to dark blue */
     -fx-background-radius: 5; /* Rounded corners */
     -fx-border-radius: 5; /* Rounded corners for the border */
     -fx-border-color: #a8cba8; /* Border color */
@@ -10,16 +12,24 @@
 
 }
 .button{
-    -fx-background-color: linear-gradient(to bottom, #e4eee4, rgba(28, 101, 81, 0.5)); /* Gradient from light blue to dark blue */
-    -fx-border-color: #0e0707; /* Border color */
+    /*-fx-background-color: linear-gradient(to bottom, #e4eee4, rgba(28, 101, 81, 0.5)); /* Gradient from light blue to dark blue */
+    -fx-background-color: linear-gradient(to bottom , #77EED8, rgba(131, 179, 234, 0.5));
+    -fx-border-color: #ffffff; /* Border color */
     -fx-border-width: 1; /* Border width */
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
 }
+
 .button:hover{
-    -fx-background-color: rgba(87, 224, 188, 0.5);
+    -fx-background-color:#118ab2;
 }
+
+
 #HPanel{
     /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
-    -fx-background-color: linear-gradient(to bottom,  #a8cba8, rgba(27, 100, 83, 0.5)); /* Gradient from light blue to dark blue */
+    /*-fx-background-color:background-color: #ffffb5;*/
+    -fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);
+    /* Gradient from light blue to dark blue */
     -fx-background-radius: 10; /* Rounded corners */
     -fx-border-radius: 10; /* Rounded corners for the border */
     -fx-border-color: #a8cba8; /* Border color */
@@ -31,21 +41,25 @@
 }
 
 .table-view {
-    -fx-background-color: #c0e8c0;
+    -fx-background-color: #81e0f3;
     -fx-border-color: #ddd;
     -fx-border-width: 1px;
     -fx-table-cell-border-color: rgba(27, 100, 83, 0.5);
     -fx-border-radius: 5; /* Rounded corners for the border */
+
 }
 
 
 
-.table-row-cell:nth-child(even) {
-    -fx-background-color: #eee;
+.table-row-cell:even {
+    -fx-background-color: #cde4f6;
+}
+.table-row-cell:odd {
+    -fx-background-color: #e9eff3;
 }
 
 .column-header {
-    -fx-background-color: #ddd;
+    -fx-background-color:#77EED8;
     -fx-text-fill: black;
     -fx-font-weight: bold;
 }
