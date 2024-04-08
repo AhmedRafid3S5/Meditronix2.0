@@ -4,7 +4,7 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
 
 #vpanel{
     /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
-    -fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);/* Gradient from light blue to dark blue */
+    -fx-background-color: linear-gradient(to top right, #77EED8, #9EABE4);/* Gradient from light blue to dark blue */
     -fx-background-radius: 5; /* Rounded corners */
     -fx-border-radius: 5; /* Rounded corners for the border */
     -fx-border-color: #a8cba8; /* Border color */
@@ -20,9 +20,11 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
     -fx-background-radius: 20;
 }
 
-.button:hover{
+.button:hover,Update:hover,Add:hover{
     -fx-background-color:#118ab2;
 }
+
+
 
 
 #HPanel{
@@ -45,8 +47,14 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
     -fx-border-color: #ddd;
     -fx-border-width: 1px;
     -fx-table-cell-border-color: rgba(27, 100, 83, 0.5);
-    -fx-border-radius: 5; /* Rounded corners for the border */
+    -fx-border-radius: 10; /* Rounded corners for the border */
+    -fx-background-radius: 10;
 
+}
+
+
+#addButton:hover{
+    -fx-background-color: #66ea48;
 }
 
 
@@ -68,3 +76,10 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
     -fx-background-color: rgba(87, 224, 188, 0.5);
 }
 
+#addPanel,#updatePanel{
+    -fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);
+}
+
+#addHboxPanel{
+    -fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);
+}

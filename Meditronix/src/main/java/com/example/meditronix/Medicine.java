@@ -64,4 +64,8 @@ public class Medicine {
     }
 
     public String getSerial_id(){ return serial_id;}
+
+    public void setSerial_id(String id){
+        this.serial_id = id;
+    }
 }

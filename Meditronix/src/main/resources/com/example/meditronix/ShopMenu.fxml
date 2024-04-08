@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="920.0" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.ShopMenu">
+<AnchorPane prefHeight="722.0" prefWidth="957.0" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.ShopMenu">
    <children>
-      <MenuBar layoutX="-2.0" layoutY="8.0" prefHeight="26.0" prefWidth="1090.0">
+      <MenuBar layoutX="-2.0" layoutY="8.0" prefHeight="26.0" prefWidth="955.0">
         <menus>
           <Menu mnemonicParsing="false" text="Settings">
             <items>
@@ -47,7 +47,7 @@
       </TableView>
       <VBox fx:id="vpanel" layoutY="34.0" prefHeight="685.0" prefWidth="107.0">
          <children>
-            <Button fx:id="Add" mnemonicParsing="false" prefHeight="75.0" prefWidth="107.0" text="Add">
+            <Button fx:id="Add" mnemonicParsing="false" onAction="#showAddPanel" prefHeight="75.0" prefWidth="107.0" text="Add">
                <font>
                   <Font size="14.0" />
                </font>
@@ -67,7 +67,7 @@
                    </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="Update" mnemonicParsing="false" prefHeight="75.0" prefWidth="107.0" text="Update">
+            <Button fx:id="Update" mnemonicParsing="false" onAction="#showUpdatePanel" prefHeight="75.0" prefWidth="107.0" text="Update">
                <graphic>
                    <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                        <Image url="@images/icons8-upload-to-the-cloud-30.png" />

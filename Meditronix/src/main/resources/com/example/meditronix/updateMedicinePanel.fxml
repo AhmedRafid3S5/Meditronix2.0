@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="updatePanel" prefHeight="170.0" prefWidth="845.0" style="-fx-background-radius: 10; -fx-border-color: #FFC300; -fx-border-radius: 10; -fx-border-width: 2;" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.UpdateMedicinePanel">
+    <children>
+        <TextField fx:id="updateNameField" layoutX="50.0" layoutY="30.0" promptText="Set Name" />
+        <TextField fx:id="updateDoseField" layoutX="50.0" layoutY="73.0" promptText="Dose" />
+        <TextField fx:id="updateBuyCostField" layoutX="274.0" layoutY="30.0" promptText="Buying cost per unit" />
+        <TextField fx:id="updateSellCostField" layoutX="274.0" layoutY="73.0" promptText="Set selling price" />
+        <TextField fx:id="updateQuantityField" layoutX="274.0" layoutY="115.0" promptText="Quantity bought" />
+        <DatePicker fx:id="updateExpiryDateField" layoutX="500.0" layoutY="30.0" promptText="Expiry Date" />
+        <Button fx:id="updateButton" layoutX="760.0" layoutY="127.0" mnemonicParsing="false" onAction="#updateMedicine" prefHeight="27.0" prefWidth="70.0" text="Update">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font></Button>
+        <Label layoutX="50.0" layoutY="14.0" text="*Name">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Label layoutX="50.0" layoutY="56.0" text="Dose">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Label layoutX="50.0" layoutY="99.0" text="*Type">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <ChoiceBox fx:id="updateTypeList" layoutX="50.0" layoutY="115.0" prefWidth="150.0" />
+        <Label layoutX="274.0" layoutY="13.0" text="Unit cost">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Label layoutX="274.0" layoutY="55.0" text="*Selling price">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Label layoutX="274.0" layoutY="98.0" text="*Quantity bought">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Label layoutX="500.0" layoutY="12.0" text="Expiry Date">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="newWarningLabel" layoutX="500.0" layoutY="132.0" />
+      <TextField fx:id="selectByIndexField" layoutX="500.0" layoutY="73.0" prefHeight="26.0" prefWidth="118.0" promptText="Select by index" />
+      <Button fx:id="searchByIndexBtn" layoutX="619.0" layoutY="73.0" mnemonicParsing="false" onAction="#showSelectedMed" prefHeight="27.0" prefWidth="58.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" text="Select">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+
+    </children>
+</AnchorPane>
