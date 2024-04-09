@@ -69,6 +69,18 @@ public class MainScreen implements Initializable{
         state = "pharmacist";
 
 
+        
+    }
+    public void signUpButtonPressed(ActionEvent event) throws IOException {
+        Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SignUpMenu.fxml")));
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene((Parent) root);
+        stage.setScene(scene);
+        stage.show();
+        Database db = new Database();
+        db.dbConnect();
+
     }
 
     public  void switchToInventory(ActionEvent event) throws IOException {
