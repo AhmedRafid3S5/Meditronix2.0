@@ -13,9 +13,9 @@ public class Database {
              Class.forName("com.mysql.jdbc.Driver");
              //String url = "jdbc:mysql://database-1.czywou6sao7o.ap-southeast-2.rds.amazonaws.com:3306/mydb?characterEncoding=UTF-8";
              //String username = "admin";
-             String url = "jdbc:mysql://127.0.0.1:3306/mylocaldb";
+             String url = "jdbc:mysql://127.0.0.1:3306/meditronix";
              String username = "root";
-             String password = "admin1234";
+             String password = "12345";
 
              Connection con = DriverManager.getConnection(url, username, password);
              System.out.println("Connected to database successfully");
