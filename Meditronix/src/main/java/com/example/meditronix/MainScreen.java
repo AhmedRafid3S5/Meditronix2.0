@@ -94,6 +94,16 @@ public class MainScreen implements Initializable{
         db.dbConnect();
     }
 
+    public  void switchToDoctorMenu(ActionEvent event) throws IOException {
+        Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("DoctorMenu.fxml")));
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene((Parent) root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
 @FXML
     public void login(ActionEvent event) throws IOException, SQLException {
 
@@ -148,6 +158,7 @@ public class MainScreen implements Initializable{
                 con.close();
 
                 //switch to doctor scene
+                switchToDoctorMenu(event);
             }
         }
 
