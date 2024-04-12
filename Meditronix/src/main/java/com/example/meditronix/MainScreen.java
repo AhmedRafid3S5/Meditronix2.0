@@ -43,13 +43,17 @@ public class MainScreen implements Initializable{
 
     @FXML
     private TextField userNameInput;
-
+    @FXML
     private  String state;
+    @FXML
     private Stage stage;
+    @FXML
     private Parent root;
+    @FXML
     private Scene scene;
-
+    @FXML
     private Database db;
+    @FXML
     private Connection con;
     @FXML
     public void doctorButtonPressed()
@@ -61,16 +65,15 @@ public class MainScreen implements Initializable{
     {
         state = "customer";
     }
+    @FXML
     public void setStage(Stage stage) {
         this.stage = stage;
     }
     @FXML
     public void shopButtonPressed(ActionEvent event) throws IOException {
         state = "pharmacist";
-
-
-        
     }
+    @FXML
     public void signUpButtonPressed(ActionEvent event) throws IOException {
         Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SignUpMenu.fxml")));
 
@@ -82,6 +85,15 @@ public class MainScreen implements Initializable{
         db.dbConnect();
 
     }
+    @FXML
+    public  void switchToShop(ActionEvent event) throws IOException {
+        Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("PurchaseTypeSelection.fxml")));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene((Parent) root);
+        stage.setScene(scene);
+        stage.show();
+    }
+ @FXML
 
     public  void switchToInventory(ActionEvent event) throws IOException {
         Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ShopMenu.fxml")));
@@ -142,6 +154,8 @@ public class MainScreen implements Initializable{
                 con.close();
 
                 //switch to customer scene
+
+                switchToShop(event);
             }
             else if (state.equals("doctor"))
             {

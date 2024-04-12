@@ -143,4 +143,15 @@ public class Database {
     }
 
 
+    //Codes for the Medicine Purchase Menu
+    public ResultSet showGeneric() throws SQLException {
+
+        Connection con = dbConnect();
+        Statement stmt = con.createStatement();
+        String sql = "SELECT * FROM shop_inventory WHERE Type = 'Generic'; ";
+        ResultSet rs = stmt.executeQuery(sql);
+        return rs;
+
+    }
+
 }

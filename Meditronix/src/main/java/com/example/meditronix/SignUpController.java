@@ -27,6 +27,9 @@ public class SignUpController implements Initializable {
     private Button CreateAccount;
 
     @FXML
+    private Button ReturnToMain;
+
+    @FXML
     private TextField SignUpName;
 
     @FXML
@@ -36,12 +39,21 @@ public class SignUpController implements Initializable {
     }
 
     @FXML
-    void CreateAccountPress(ActionEvent event) {
+    void CreateAccountPress(ActionEvent event) throws IOException {
         String username = SignUpName.getText();
         String password = SignUpPassword.getText();
-
         Database database = new Database();
         Connection con = database.dbConnect();
+
+        // Check if username and password are not empty
+        if (username.isEmpty() || password.isEmpty()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Input");
+            alert.setContentText("Please enter a valid username and password.");
+            alert.showAndWait();
+            return; // Return from the method if username or password is empty
+        }
 
         if (con != null) {
             try {
@@ -54,19 +66,15 @@ public class SignUpController implements Initializable {
                 // Execute the INSERT statement
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
-                    System.out.println("User inserted successfully!");
                     // Show a popup window indicating successful user insertion
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText(null);
-                    alert.setContentText("User inserted successfully!");
+                    Alert successAlert = new Alert(AlertType.INFORMATION);
+                    successAlert.setTitle("Success");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("User inserted successfully!");
+                    successAlert.showAndWait();
 
-                    // Get the stage of the popup window and wait for user confirmation
-                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    alert.showAndWait();
-
-                    // Switch to MainMenu.fxml scene upon user confirmation
-                    if (alert.getResult() == ButtonType.OK) {
+                    // Switch to MainScreen.fxml scene upon user confirmation
+                    if (successAlert.getResult() == ButtonType.OK) {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
                         Parent root = loader.load();
                         Scene scene = new Scene(root);
@@ -74,14 +82,11 @@ public class SignUpController implements Initializable {
                         primaryStage.setScene(scene);
                         primaryStage.show();
                     }
-
                 } else {
                     System.out.println("Failed to insert user!");
-
                 }
             } catch (SQLException e) {
                 System.out.println("Error inserting user: " + e.getMessage());
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
@@ -94,10 +99,20 @@ public class SignUpController implements Initializable {
             }
         } else {
             System.out.println("Failed to connect to the database!");
-
         }
-
     }
+    @FXML
+    void ReturnPress(ActionEvent event) throws IOException{
+        Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene((Parent) root);
+        stage.setScene(scene);
+        stage.show();
+        Database db = new Database();
+        db.dbConnect();
+    }
+
 
 
 }

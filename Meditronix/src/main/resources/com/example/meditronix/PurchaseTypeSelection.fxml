@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="788.0" style="-fx-background-color: #acc7dc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.PurchaseTypeSelectorController">
+   <children>
+      <Label alignment="CENTER" layoutY="37.0" prefHeight="52.0" prefWidth="788.0" style="-fx-background-color: #e0ecf2;" text="WELCOME TO THE MEDICAL STORE">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Button fx:id="GenericButton" layoutX="12.0" layoutY="123.0" mnemonicParsing="false" onAction="#GenericButtonPress" prefHeight="185.0" prefWidth="375.0" text="BUY GENERIC MEDICINE">
+         <font>
+            <Font name="Arial Narrow Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="PrescribedButton" layoutX="393.0" layoutY="123.0" mnemonicParsing="false" prefHeight="185.0" prefWidth="375.0" text="BUY PRESCRIBED MEDICINE">
+         <font>
+            <Font name="Arial Narrow Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="BackButton" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#BackButtonPress" prefHeight="46.0" prefWidth="131.0" text="Back">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Button>
+      <Button fx:id="ReceiptButton" layoutX="12.0" layoutY="316.0" mnemonicParsing="false" onAction="#GenericButtonPress" prefHeight="185.0" prefWidth="375.0" text="VIEW RECEIPTS">
+         <font>
+            <Font name="Arial Narrow Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="PrescriptionButton" layoutX="393.0" layoutY="316.0" mnemonicParsing="false" prefHeight="185.0" prefWidth="375.0" text="VIEW PRESCRIPTIONS">
+         <font>
+            <Font name="Arial Narrow Bold" size="20.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

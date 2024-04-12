@@ -75,7 +75,7 @@
                   <Label layoutX="32.0" layoutY="255.0" text="Enter Password" />
                   <Button fx:id="login" layoutX="26.0" layoutY="328.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="322.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #5DC1B5;" text="Log in" />
                   <Label layoutX="113.0" layoutY="379.0" text="Don't have an account?" />
-                  <Button fx:id="signUp" layoutX="247.0" layoutY="375.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="SignUp" />
+                  <Button fx:id="signUp" layoutX="247.0" layoutY="375.0" mnemonicParsing="false" onAction="#signUpButtonPressed" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="SignUp" />
                   <Label fx:id="loginNotify" layoutX="32.0" layoutY="420.0" prefHeight="18.0" prefWidth="322.0" />
                </children>
             </AnchorPane>
