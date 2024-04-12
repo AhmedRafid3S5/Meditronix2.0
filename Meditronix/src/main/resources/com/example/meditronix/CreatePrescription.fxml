@@ -2,10 +2,10 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="767.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.CreatePrescriptionController">
@@ -36,41 +36,49 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="Name" layoutX="237.0" layoutY="116.0" onAction="#nameTfPressed" prefHeight="25.0" prefWidth="205.0" />
-      <TextField fx:id="Age" layoutX="237.0" layoutY="148.0" onAction="#ageTfPressed" prefHeight="25.0" prefWidth="91.0" />
-      <TextField fx:id="Gender" layoutX="237.0" layoutY="184.0" onAction="#genderTfPressed" prefHeight="25.0" prefWidth="91.0" />
+      <TextField fx:id="Name" layoutX="212.0" layoutY="116.0" onAction="#nameTfPressed" prefHeight="25.0" prefWidth="205.0" />
+      <TextField fx:id="Age" layoutX="212.0" layoutY="148.0" onAction="#ageTfPressed" prefHeight="25.0" prefWidth="91.0" />
+      <TextField fx:id="Gender" layoutX="212.0" layoutY="184.0" onAction="#genderTfPressed" prefHeight="25.0" prefWidth="91.0" />
       <Label layoutX="61.0" layoutY="232.0" prefHeight="25.0" prefWidth="170.0" text="Prescribe Medicines:">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="addMedicineButton" layoutX="476.0" layoutY="283.0" mnemonicParsing="false" onAction="#addMedicine" prefHeight="25.0" prefWidth="111.0" text="Add Medicine" />
-      <Button fx:id="removeMedicineButton" layoutX="476.0" layoutY="327.0" mnemonicParsing="false" onAction="#removeMedicine" prefHeight="25.0" prefWidth="111.0" text="Remove Medicine" />
-      <Button fx:id="stopPrescriptionButton" layoutX="478.0" layoutY="366.0" mnemonicParsing="false" onAction="#stopPrescription" prefHeight="25.0" prefWidth="111.0" text="Stop Prescription" />
-      <VBox fx:id="medicineEntryTemplate" prefHeight="200.0" prefWidth="392.0" visible="false">
-         <children>
-            <HBox prefHeight="217.0" prefWidth="392.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="79.0" text="Name:" />
-                  <TextField fx:id="medicineName" prefHeight="25.0" prefWidth="100.0" />
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="79.0" text="Dosage:" />
-                  <TextField fx:id="medicineDosage" prefHeight="25.0" prefWidth="100.0" />
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="79.0" text="Quantity:" />
-                  <TextField fx:id="medicineQuantity" prefHeight="25.0" prefWidth="100.0" />
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="79.0" text="Frequency:" />
-                  <TextField fx:id="medicineFrequency" prefHeight="25.0" prefWidth="100.0" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <Label layoutX="61.0" layoutY="287.0" prefHeight="17.0" prefWidth="59.0" text="Name:" />
-      <TextField fx:id="MedicineName" layoutX="146.0" layoutY="283.0" onAction="#medicineNameTfPressed" prefHeight="25.0" prefWidth="227.0" />
-      <Label layoutX="61.0" layoutY="322.0" prefHeight="17.0" prefWidth="59.0" text="Dosage:" />
-      <Label fx:id="MedicineCountLabel" layoutX="61.0" layoutY="439.0" prefHeight="17.0" prefWidth="150.0" text="Medicine Count" />
-      <Label layoutX="61.0" layoutY="357.0" prefHeight="17.0" prefWidth="59.0" text="Quantity:" />
-      <Label layoutX="62.0" layoutY="398.0" prefHeight="17.0" prefWidth="59.0" text="Frequency:" />
-      <TextField fx:id="Dosage" layoutX="146.0" layoutY="318.0" onAction="#dosageTfPressed" prefHeight="25.0" prefWidth="227.0" />
-      <TextField fx:id="Quantity" layoutX="146.0" layoutY="353.0" onAction="#quantityTfPressed" prefHeight="25.0" prefWidth="227.0" />
-      <TextField fx:id="Frequency" layoutX="146.0" layoutY="394.0" onAction="#frequencyTfPressed" prefHeight="25.0" prefWidth="227.0" />
+      <Button fx:id="addMedicineButton" layoutX="61.0" layoutY="472.0" mnemonicParsing="false" onAction="#addMedicine" prefHeight="25.0" prefWidth="117.0" text="Add Medicine" />
+      <Button fx:id="removeMedicineButton" layoutX="192.0" layoutY="472.0" mnemonicParsing="false" onAction="#removeMedicine" prefHeight="25.0" prefWidth="117.0" text="Remove Medicine" />
+      <Button fx:id="stopPrescriptionButton" layoutX="325.0" layoutY="472.0" mnemonicParsing="false" onAction="#stopPrescription" prefHeight="25.0" prefWidth="117.0" text="Create Prescription" />
+      <Label fx:id="MedicineCountLabel" layoutX="62.0" layoutY="266.0" prefHeight="17.0" prefWidth="150.0" text="Medicine Count: 0" />
+      <TextField fx:id="Frequency" layoutX="137.0" layoutY="428.0" onAction="#frequencyTfPressed" prefHeight="25.0" prefWidth="227.0" />
+      <Label layoutX="62.0" layoutY="432.0" text="Frequency:" />
+      <Label layoutX="58.0" layoutY="395.0" text="Quantity:" />
+      <TextField fx:id="Quantity" layoutX="137.0" layoutY="391.0" onAction="#quantityTfPressed" prefHeight="25.0" prefWidth="227.0" />
+      <TextField fx:id="MedicineName" layoutX="137.0" layoutY="299.0" onAction="#medicineNameTfPressed" prefHeight="25.0" prefWidth="227.0" />
+      <Label layoutX="65.0" layoutY="303.0" text="Name:" />
+      <TextField fx:id="Dosage" layoutX="137.0" layoutY="347.0" onAction="#dosageTfPressed" prefHeight="25.0" prefWidth="227.0" />
+      <Label layoutX="61.0" layoutY="351.0" text="Dosage:" />
+      <Label layoutX="59.0" layoutY="513.0" prefHeight="21.0" prefWidth="127.0" text="Generate Codes:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="PrescriptionCode" layoutX="61.0" layoutY="550.0" mnemonicParsing="false" onAction="#PrescriptionCodePressed" prefHeight="25.0" prefWidth="117.0" text="Prescription Code" />
+      <Button fx:id="PatientID" layoutX="195.0" layoutY="550.0" mnemonicParsing="false" onAction="#PatientIDPressed" prefHeight="25.0" prefWidth="72.0" text="Patient ID" />
+      <TableView fx:id="patientTable" layoutX="464.0" layoutY="95.0" prefHeight="69.0" prefWidth="271.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="140.800048828125" text="Name" />
+          <TableColumn fx:id="ageColumn" prefWidth="63.199951171875" text="Age" />
+            <TableColumn fx:id="genderColumn" prefWidth="66.40008544921875" text="Gender" />
+        </columns>
+      </TableView>
+      <Button fx:id="Add" layoutX="334.0" layoutY="184.0" mnemonicParsing="false" onAction="#addPatient" prefHeight="25.0" prefWidth="43.0" text="Add" />
+      <TableView fx:id="MedicineTableview" layoutX="430.0" layoutY="277.0" prefHeight="181.0" prefWidth="299.0">
+        <columns>
+          <TableColumn fx:id="mednamecol" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="meddosagecol" prefWidth="75.0" text="Dosage" />
+            <TableColumn fx:id="medquantitycol" prefWidth="75.0" text="Quantity" />
+            <TableColumn fx:id="medfreqcol" prefWidth="72.60003662109375" text="Frequency" />
+        </columns>
+      </TableView>
+      <Button fx:id="removePatientButton" layoutX="386.0" layoutY="184.0" mnemonicParsing="false" onAction="#removePatientPressed" prefHeight="25.0" prefWidth="62.0" text="Remove" />
    </children>
 </Pane>

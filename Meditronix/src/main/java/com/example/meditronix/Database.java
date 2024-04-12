@@ -142,5 +142,91 @@ public class Database {
 
     }
 
+    //to create a new table for a prescription
+    public void createPrescriptionTable(String prescriptionCode) {
+        try {
+            Connection con = dbConnect();
+            Statement stmt = con.createStatement();
+
+            // Create a new table for the prescription
+            String sql = "CREATE TABLE IF NOT EXISTS " + prescriptionCode + " (" +
+                    "medicine_name VARCHAR(255), " +
+                    "dosage VARCHAR(50), " +
+                    "quantity INT, " +
+                    "frequency VARCHAR(50))";
+            stmt.executeUpdate(sql);
+
+            System.out.println("Prescription table created: " + prescriptionCode);
+
+            // Close resources
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //to insert medicine data into the prescription table
+    public void insertMedicineData(String prescriptionCode, String medicineName, String dosage, int quantity, String frequency) {
+        try {
+            Connection con = dbConnect();
+
+            // Insert medicine data into the prescription table
+            String sql = "INSERT INTO " + prescriptionCode + " (medicine_name, dosage, quantity, frequency) " +
+                    "VALUES (?, ?, ?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, medicineName);
+            pstmt.setString(2, dosage);
+            pstmt.setInt(3, quantity);
+            pstmt.setString(4, frequency);
+            pstmt.executeUpdate();
+
+            System.out.println("Medicine data inserted into prescription table: " + prescriptionCode);
+
+            // Close resources
+            pstmt.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // to delete medicine data from the database
+    public void deleteMedicineData(String prescriptionCode, String medicineName, String dosage, String quantity, String frequency) {
+        String sql = "DELETE FROM " + prescriptionCode + " WHERE medicine_name = ? AND dosage = ? AND quantity = ? AND frequency = ?";
+        try (Connection conn = dbConnect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, medicineName);
+            stmt.setString(2, dosage);
+            stmt.setString(3, quantity);
+            stmt.setString(4, frequency);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Medicine data deleted successfully from the database.");
+            } else {
+                System.out.println("No medicine data found for deletion.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error deleting medicine data from the database: " + e.getMessage());
+        }
+    }
+
+
+
+    // to delete patient data from the database
+    public void deletePatientData(String patientName) {
+        String sql = "DELETE FROM PatientTable WHERE Name = ?";
+        try (Connection conn = dbConnect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, patientName);
+            stmt.executeUpdate();
+            System.out.println("Patient data deleted successfully from the database.");
+        } catch (SQLException e) {
+            System.out.println("Error deleting patient data from the database: " + e.getMessage());
+        }
+    }
+
+
+
 
 }
