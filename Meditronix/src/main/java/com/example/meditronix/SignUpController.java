@@ -27,7 +27,7 @@ public class SignUpController implements Initializable {
     private Button CreateAccount;
 
     @FXML
-    private Button ReturnToMain;
+    private Button BackButton;
 
     @FXML
     private TextField SignUpName;

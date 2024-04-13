@@ -1,0 +1,25 @@
+
+#BackButton {
+    -fx-background-color: linear-gradient(to bottom , #97c8bf, #548b96);
+    -fx-text-fill: white; /* Text color */
+    -fx-border-color: #ffffff; /* Border color */
+    -fx-border-width: 1; /* Border width */
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to bottom , #97c8bf, #548b96);
+    -fx-text-fill: white; /* Text color */
+    -fx-border-color: #ffffff; /* Border color */
+    -fx-border-width: 1; /* Border width */
+}
+
+#BackButton:hover {
+    -fx-background-color: linear-gradient(to bottom , #67b088, #7dc99b); /* Lighter shade on hover */
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom , #67b088, #7dc99b); /* Lighter shade on hover */
+}
+

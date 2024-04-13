@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <RadioButton layoutX="76.0" layoutY="129.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="116.0" text="Invoice No" />
+      <RadioButton layoutX="76.0" layoutY="169.0" mnemonicParsing="false" text="Prescription Code" />
+      <TextField layoutX="76.0" layoutY="214.0" />
+      <Button layoutX="76.0" layoutY="270.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="FIND">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <TableView layoutX="287.0" layoutY="117.0" prefHeight="296.0" prefWidth="457.0">
+        <columns>
+          <TableColumn prefWidth="222.0" text="NAME" />
+            <TableColumn prefWidth="75.0" text="DOSE" />
+          <TableColumn minWidth="8.5" prefWidth="83.0" text="QUANTITY" />
+            <TableColumn prefWidth="85.0" text="PRICE" />
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" layoutX="2.0" layoutY="25.0" prefHeight="44.0" prefWidth="788.0" text="PREVIOUS INVOICE">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="286.0" layoutY="432.0" prefHeight="35.0" prefWidth="457.0" text="SUBTOTAL : " />
+   </children>
+</Pane>

@@ -48,5 +48,24 @@ public class PurchaseTypeSelectorController {
         stage.show();
 
     }
+    private void ViewPrescriptionButtonPress(ActionEvent event) throws IOException {
+        Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GenericPurchase.fxml")));
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene((Parent) root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+    @FXML
+    private void MemoButtonPressed(ActionEvent event) throws IOException {
+        Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ViewReceipt.fxml")));
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene((Parent) root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
 
 }
