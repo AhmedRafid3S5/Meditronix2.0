@@ -1,0 +1,30 @@
+/* Set the background gradient */
+.root {
+    -fx-background-color: linear-gradient(to bottom, #71c481, #49759e);
+}
+
+/* Style the Label component */
+.label {
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-font-family: "Montserrat", sans-serif; /* Choose a bold font */
+    -fx-font-size: 27px; /* Increase font size */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); /* Add shadow effect */
+}
+
+
+/* Style the Button components */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #71c481, #49759e); /* Gradient background */
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 20px;
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-color: #548b96; /* Dark green border color */
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #67b088, #5fa08e); /* Dark green gradient */
+}
