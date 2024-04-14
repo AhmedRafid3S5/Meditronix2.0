@@ -240,4 +240,41 @@ public class Database {
 
     }
 
+    //SQL function to update a selected med in inventory
+    public boolean updateMedicine(Medicine old_med,Medicine new_med,Connection con) throws SQLException {
+        String updateSQL = "UPDATE `shop_inventory`\n" +
+                "SET\n" +
+                "  `Name` = ?,\n" +
+                "  `Selling_price` = ?,\n" +
+                "  `Available_Quantity` = ?,\n" +
+                "  `unit_cost` = ?,\n" +
+                "  `Dose` = ?,\n" +
+                "  `Expiry` = ?,\n" +
+                "  `Type` = ?\n" +
+                "WHERE `serial_id` = ?;";
+
+        PreparedStatement update_stmt = con.prepareStatement(updateSQL);  // Use updateSQL instead of sql
+
+        update_stmt.setString(1, new_med.getName());
+        update_stmt.setFloat(2,new_med.getPrice());
+        update_stmt.setFloat(3,new_med.getQuantity());
+        update_stmt.setFloat(4,new_med.getUnitCost());
+        update_stmt.setString(5, new_med.getDose());
+        update_stmt.setString(6, new_med.getExpiry());
+        update_stmt.setString(7, new_med.getType());
+        update_stmt.setString(8, old_med.getSerial_id());
+
+
+        int rowsAffected = update_stmt.executeUpdate();
+
+        if(rowsAffected > 0)
+        {
+
+            return true;
+        }
+
+        return false;
+
+    }
+
 }

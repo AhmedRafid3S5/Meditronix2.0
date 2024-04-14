@@ -12,7 +12,9 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class UpdateMedicinePanel implements Initializable {
@@ -82,15 +84,45 @@ public class UpdateMedicinePanel implements Initializable {
     {
         String selectedType = updateTypeList.getValue();
     }
-    public void updateMedicine(ActionEvent actionEvent) {
+    public void updateMedicine(ActionEvent actionEvent) throws SQLException {
+
+        Float buyingCost, sellingCost, quantityAdded;
+        String name, type, dose;
+        LocalDate expiryDate;
+        String date;
+        String serial_id;
+
+        Medicine old_medicine = ShopMenu.getInstance().getInventoryTable().getSelectionModel().getSelectedItem();
+        Medicine new_medicine;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        date = updateExpiryDateField.getValue().format(formatter);
+        buyingCost = Float.valueOf(updateBuyCostField.getText());
+        sellingCost = Float.valueOf(updateSellCostField.getText());
+        dose = updateDoseField.getText();
+        quantityAdded = Float.valueOf(updateQuantityField.getText());
+        name = updateNameField.getText();
+        type = updateTypeList.getValue();
+
+        new_medicine = new Medicine(name,dose,date,type,sellingCost,quantityAdded,buyingCost);
+
+        if(localDB.updateMedicine(old_medicine,new_medicine,con))
+        {
+            newWarningLabel.setText("Medicine updated successfully");
+        }
+        else{newWarningLabel.setText("Unable to update selected medicince");}
+
+        ShopMenu.getInstance().refreshList();
+
 
     }
 
     @FXML
     public void showSelectedMed(ActionEvent event)
     {
-        int index = Integer.valueOf(selectByIndexField.getText());
-
+        if(selectByIndexField.getText() != null) {
+            int index = Integer.valueOf(selectByIndexField.getText());
+        }
 
         Medicine medicine = ShopMenu.getInstance().getInventoryTable().getSelectionModel().getSelectedItem();
         updateBuyCostField.setText(String.valueOf(medicine.getUnitCost()));
@@ -100,6 +132,8 @@ public class UpdateMedicinePanel implements Initializable {
         updateTypeList.setValue(medicine.getType());
         updateExpiryDateField.setValue(LocalDate.parse(medicine.getExpiry()));
         updateQuantityField.setText(String.valueOf(medicine.getQuantity()));
+
+
 
     }
 }
