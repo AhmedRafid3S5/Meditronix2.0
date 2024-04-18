@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -212,15 +209,28 @@ public class ShopMenu implements Initializable {
       HPanel.getChildren().remove(addMedicinePane);
    }
 
+   //Delete function to remove an item from list and database
    @FXML
    void removeFromInventory() throws SQLException {
-      int selectID = inventoryTable.getSelectionModel().getSelectedIndex();
-      Medicine m = inventoryTable.getSelectionModel().getSelectedItem();
-      inventoryTable.getItems().remove(selectID);
 
-      //Reflect change on the database
-      //Database db = new Database();
-      GlobalDB.deleteMedicine(m.getSerial_id(),GlobalConnect);
+      int selectID = inventoryTable.getSelectionModel().getSelectedIndex();
+
+      if(selectID >= 0 ) {
+         Medicine m = inventoryTable.getSelectionModel().getSelectedItem();
+         inventoryTable.getItems().remove(selectID);
+
+         //Reflect change on the database
+         //Database db = new Database();
+         GlobalDB.deleteMedicine(m.getSerial_id(), GlobalConnect);
+      }
+      else
+      {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("Error");
+         alert.setHeaderText("No item selected");
+         alert.setContentText("Please select a medicine from the list to delete.");
+         alert.showAndWait();
+      }
    }
 
    @FXML
@@ -229,7 +239,7 @@ public class ShopMenu implements Initializable {
          if(!updatePanelOn && !addPanelOn && !searchPanelOn) {
 
             //set visual button status
-            Update.setStyle("-fx-background-color: linear-gradient(to bottom , #77EED8, rgba(131, 179, 234, 0.5));");
+            Update.setStyle(" -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6)");
             Add.setStyle("-fx-background-color:#118ab2;");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addMedicinePanel.fxml"));
             addMedicinePane = fxmlLoader.load(); // Load content into a Pane
@@ -245,7 +255,7 @@ public class ShopMenu implements Initializable {
          }
          else {
             HPanel.getChildren().remove(addMedicinePane);
-            Add.setStyle("-fx-background-color: linear-gradient(to bottom , #77EED8, rgba(131, 179, 234, 0.5));");
+            Add.setStyle(" -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6)");
 
             //setting flag values
             setPanelOn(false,false,false);
@@ -261,11 +271,13 @@ public class ShopMenu implements Initializable {
    @FXML
    void showUpdatePanel(ActionEvent event){
       try {
-         if(!updatePanelOn && !addPanelOn && !searchPanelOn) {
+         int selected_index = inventoryTable.getSelectionModel().getSelectedIndex();
+
+         if(!updatePanelOn && !addPanelOn && !searchPanelOn && selected_index>= 0) {
 
             //set visual button status
             Update.setStyle("-fx-background-color:#118ab2;");
-            Add.setStyle("-fx-background-color: linear-gradient(to bottom , #77EED8, rgba(131, 179, 234, 0.5));");
+            Add.setStyle(" -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6)");
 
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("updateMedicinePanel.fxml"));
@@ -284,10 +296,16 @@ public class ShopMenu implements Initializable {
          else {
             HPanel.getChildren().remove(addMedicinePane);
 
-            Update.setStyle("-fx-background-color: linear-gradient(to bottom , #77EED8, rgba(131, 179, 234, 0.5));");
+            Update.setStyle(" -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6)");
 
             //setting flag values
             setPanelOn(false,false,false);
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No item selected");
+            alert.setContentText("Please select a medicine from the list to update.");
+            alert.showAndWait();
          }
 
       } catch (Exception e) {
