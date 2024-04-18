@@ -7,9 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,7 +34,7 @@ public class MainScreen implements Initializable{
     private Button login;
 
     @FXML
-    private TextField passWordInput;
+    private PasswordField passWordInput;
 
     @FXML
     private Button signUp;
@@ -119,6 +117,15 @@ public class MainScreen implements Initializable{
 @FXML
     public void login(ActionEvent event) throws IOException, SQLException {
 
+        if(state == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Role not defined");
+            alert.setHeaderText("Role not selected");
+            alert.setContentText("Please select a role to sign in as");
+            alert.showAndWait();
+        }
+
         db = new Database();
         con = db.dbConnect();
 
@@ -193,6 +200,7 @@ public class MainScreen implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userNameInput.setStyle("-fx-text-fill: #0e0707;");
+        userNameInput.setStyle("-fx-background-radius: 20");
     }
 }
 
