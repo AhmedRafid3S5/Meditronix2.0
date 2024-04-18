@@ -4,7 +4,8 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
 
 #vpanel{
     /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
-    -fx-background-color: linear-gradient(to top right, #77EED8, #9EABE4);/* Gradient from light blue to dark blue */
+    /*-fx-background-color: linear-gradient(to top right, #77EED8, #9EABE4);/* Gradient from light blue to dark blue */
+    -fx-background-color: linear-gradient(to top right, #88c1e0, #cbdff8);
     -fx-background-radius: 5; /* Rounded corners */
     -fx-border-radius: 5; /* Rounded corners for the border */
     -fx-border-color: #a8cba8; /* Border color */
@@ -13,7 +14,8 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
 }
 .button{
     /*-fx-background-color: linear-gradient(to bottom, #e4eee4, rgba(28, 101, 81, 0.5)); /* Gradient from light blue to dark blue */
-    -fx-background-color: linear-gradient(to bottom , #77EED8, rgba(131, 179, 234, 0.5));
+    /*-fx-background-color: linear-gradient(to bottom , #77EED8, rgba(131, 179, 234, 0.5));*/
+    -fx-background-color: linear-gradient(to bottom, #88c1e0,#e1e2e4);
     -fx-border-color: #ffffff; /* Border color */
     -fx-border-width: 1; /* Border width */
     -fx-border-radius: 20;
@@ -30,8 +32,9 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
 #HPanel{
     /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
     /*-fx-background-color:background-color: #ffffb5;*/
-    -fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);
+    /*-fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);
     /* Gradient from light blue to dark blue */
+    -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6);
     -fx-background-radius: 10; /* Rounded corners */
     -fx-border-radius: 10; /* Rounded corners for the border */
     -fx-border-color: #a8cba8; /* Border color */
@@ -67,7 +70,7 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
 }
 
 .column-header {
-    -fx-background-color:#77EED8;
+    -fx-background-color: #77caee;
     -fx-text-fill: black;
     -fx-font-weight: bold;
 }
