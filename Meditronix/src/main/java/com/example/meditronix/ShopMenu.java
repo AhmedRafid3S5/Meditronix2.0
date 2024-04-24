@@ -21,6 +21,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -52,6 +53,8 @@ public class ShopMenu implements Initializable {
 
    @FXML
    private TableView<Medicine> inventoryTable;
+   @FXML
+   private TableColumn<Medicine, String> Status;
 
    @FXML
    private VBox vpanel;
@@ -71,10 +74,11 @@ public class ShopMenu implements Initializable {
    private Database GlobalDB;
    private Connection GlobalConnect;
 
+   private int lowStockLimit;
+
    private AddMedicinePanel addMedicinePanel;
-   public boolean addPanelOn;
-   public boolean updatePanelOn;
-   public boolean searchPanelOn;
+   public boolean addPanelOn,updatePanelOn,searchPanelOn;
+
    public Pane addMedicinePane;
 
    private final Tooltip indexTooltip = new Tooltip();
@@ -85,11 +89,31 @@ public class ShopMenu implements Initializable {
        //    new Medicine("Lexotanil","125mg","20/12/25","Specialized", 100.0F, 10.0F, 95.0F)
    );
 
-   //Implementing singleton pattern so any class can access the observable list
+   //Implementing singleton pattern so any class can access the Inventory properties
    public static ShopMenu getInstance(){
-
       return instance;
    }
+
+
+   //A styling function to return buttons to previous visual state
+   String buttonStyling(){
+      String style = "-fx-background-color:\n" +
+              "            linear-gradient(#00d9ff, #5c00be),\n" +
+              "            linear-gradient(#ffeedd 0%, #ffeedd 20%, #66e3ff 100%),\n" +
+              "            linear-gradient(#ffeedd 0%, #ffeedd 20%, #88ffff 100%),\n" +
+              "            linear-gradient(to bottom left, #88c1e0 , #ffe4e4 );\n" +
+              "\n" +
+              "    -fx-background-insets: 0,1,2,3;\n" +
+              "        -fx-background-radius: 20,15,15,15;\n" +
+              "        -fx-border-color: white;\n" +
+              "        -fx-border-radius: 20;\n" +
+              "        -fx-text-fill: black;\n" +
+              "        -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 4,0,0,1 );";
+
+      return style;
+
+   }
+
 
 
 
@@ -110,10 +134,11 @@ public class ShopMenu implements Initializable {
 
    @Override
    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+      lowStockLimit = 5;
       GlobalDB = new Database();
       GlobalConnect = GlobalDB.dbConnect();
       addMedicinePanel = new AddMedicinePanel();
-      //addPanelOn = false; //set addPanel fxml flag to false on bootup
 
       //set all panel flags to false on initialization
       setPanelOn(false,false,false);
@@ -126,6 +151,8 @@ public class ShopMenu implements Initializable {
       UnitCost.setCellValueFactory(new PropertyValueFactory<Medicine,Float>("UnitCost"));
       Price.setCellValueFactory(new PropertyValueFactory<Medicine,Float>("price"));
       Expiry.setCellValueFactory(new PropertyValueFactory<Medicine,String>("Expiry"));
+      Status.setCellValueFactory(new PropertyValueFactory<Medicine,String>("Status"));
+
 
       try {
          rs = new Database().showInventory();
@@ -145,6 +172,8 @@ public class ShopMenu implements Initializable {
          e.printStackTrace();
       }
       inventoryTable.setItems(list);
+      // Row coloring based on quantity
+      detectStockEmpty();
 
 
       //Transfer object reference from created ShopMenu class to static object
@@ -179,8 +208,70 @@ public class ShopMenu implements Initializable {
 
       inventoryTable.setTooltip(indexTooltip);
 
+     //--------------------------Tool tip ends ---------------------------------------------------
+
    }
 
+   public  void changeHoverStyle(Button button) {
+      button.hoverProperty().addListener((observable, oldValue, newValue) -> {
+         if (newValue) {
+            // Mouse is hovering over the button
+            button.setStyle("-fx-background-color: #118ab2;"); // Change the color when hovering
+            // You can also set other style properties or effects if needed
+         }else {
+            if(updatePanelOn)
+               Update.setStyle("-fx-background-color: #118ab2;");
+            else if(addPanelOn)
+               Add.setStyle("-fx-background-color: #118ab2;");
+            else if(searchPanelOn)
+               Search.setStyle("-fx-background-color: #118ab2;");
+            else
+               button.setStyle(""); // Default style
+         }
+      });
+   }
+
+   //Utility function to compare 2 dates
+   boolean medExpired(String expiryDate)
+   {
+      LocalDate currentDate = LocalDate.parse(GlobalDB.currentDate());
+      LocalDate medExpiryDate = LocalDate.parse(expiryDate);
+
+      return currentDate.isAfter(medExpiryDate);
+   }
+
+   //Highlight rows which have expired or low on stock
+   public void detectStockEmpty()
+   {
+      inventoryTable.setRowFactory(tv -> new TableRow<Medicine>() {
+         @Override
+         protected void updateItem(Medicine item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item == null || empty) {
+               setStyle("");
+            } else {
+               //Set priority with higher priority given to expiry date,then to stock level
+               // If quantity is 0, color the row red
+               if(medExpired(item.getExpiry())){
+                  item.setStatus("Expired!");
+                  setStyle("-fx-background-color: #c94059;-fx-font-weight: bold;");
+               }
+               else if (item.getQuantity() == 0) {
+                  item.setStatus("Out of Stock");
+                  setStyle("-fx-background-color: #c98140;-fx-font-weight: bold;");
+               }
+               else if (item.getQuantity() <= lowStockLimit){
+                  item.setStatus("Low Stock");
+                  setStyle("-fx-background-color: #8a61bd;-fx-font-weight: bold;");
+               }
+               else {
+                  item.setStatus("Valid");
+                  setStyle(""); // Default style
+               }
+            }
+         }
+      });
+   }
 
 
    public void refreshList(){
@@ -203,11 +294,13 @@ public class ShopMenu implements Initializable {
          e.printStackTrace();
       }
       inventoryTable.setItems(list);
+
+
+     detectStockEmpty();
+
+
    }
 
-   public void removePanel(){
-      HPanel.getChildren().remove(addMedicinePane);
-   }
 
    //Delete function to remove an item from list and database
    @FXML
@@ -233,14 +326,20 @@ public class ShopMenu implements Initializable {
       }
    }
 
+
+
    @FXML
    public void showAddPanel(ActionEvent event) {
       try {
+         //changeHoverStyle(Update);
+         //changeHoverStyle(Add);
          if(!updatePanelOn && !addPanelOn && !searchPanelOn) {
 
             //set visual button status
-            Update.setStyle(" -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6)");
-            Add.setStyle("-fx-background-color:#118ab2;");
+            //Update.setStyle(buttonStyling());
+            //Add.setStyle("-fx-background-color:#118ab2;");
+
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addMedicinePanel.fxml"));
             addMedicinePane = fxmlLoader.load(); // Load content into a Pane
 
@@ -255,7 +354,7 @@ public class ShopMenu implements Initializable {
          }
          else {
             HPanel.getChildren().remove(addMedicinePane);
-            Add.setStyle(" -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6)");
+            //Add.setStyle(buttonStyling());
 
             //setting flag values
             setPanelOn(false,false,false);
@@ -272,12 +371,13 @@ public class ShopMenu implements Initializable {
    void showUpdatePanel(ActionEvent event){
       try {
          int selected_index = inventoryTable.getSelectionModel().getSelectedIndex();
-
+         //changeHoverStyle(Update);
+         //changeHoverStyle(Add);
          if(!updatePanelOn && !addPanelOn && !searchPanelOn && selected_index>= 0) {
 
             //set visual button status
-            Update.setStyle("-fx-background-color:#118ab2;");
-            Add.setStyle(" -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6)");
+            //Update.setStyle("-fx-background-color:#118ab2;");
+            //Add.setStyle(buttonStyling());
 
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("updateMedicinePanel.fxml"));
@@ -296,7 +396,7 @@ public class ShopMenu implements Initializable {
          else {
             HPanel.getChildren().remove(addMedicinePane);
 
-            Update.setStyle(" -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6)");
+            //Update.setStyle(buttonStyling());
 
             //setting flag values
             setPanelOn(false,false,false);
@@ -315,11 +415,6 @@ public class ShopMenu implements Initializable {
 
    }
 
-   @FXML
-   public void cancelAddRequest(ActionEvent event)
-   {
-      HPanel.getChildren().remove(addMedicinePane);
-   }
 
    private void setPanelOn(boolean updatePanel,boolean addPanel,boolean searchPanel)
    {
