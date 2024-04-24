@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="updatePanel" prefHeight="170.0" prefWidth="845.0" style="-fx-background-radius: 10; -fx-border-color: #FFC300; -fx-border-radius: 10; -fx-border-width: 2;" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.UpdateMedicinePanel">
+<AnchorPane fx:id="updatePanel" prefHeight="170.0" prefWidth="866.0" style="-fx-background-radius: 10; -fx-border-color: #FFC300; -fx-border-radius: 10; -fx-border-width: 2;" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.UpdateMedicinePanel">
     <children>
         <TextField fx:id="updateNameField" layoutX="50.0" layoutY="30.0" promptText="Set Name" />
         <TextField fx:id="updateDoseField" layoutX="50.0" layoutY="73.0" promptText="Dose" />
