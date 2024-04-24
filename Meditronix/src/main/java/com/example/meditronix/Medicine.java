@@ -12,6 +12,8 @@ public class Medicine {
     private Float Quantity;
     private Float UnitCost;
 
+    private String status;
+
     private String serial_id;
 
     public Medicine(String name, String dose, String expiry, String type, Float price, Float quantity, Float unitCost) {
@@ -22,6 +24,9 @@ public class Medicine {
         this.price = price;
         this.Quantity = quantity;
         this.UnitCost = unitCost;
+
+        //set to a default status since status is handled on a system level
+        this.status = "Undefined";
     }
 
     public Medicine(ResultSet rs) throws SQLException {
@@ -33,6 +38,9 @@ public class Medicine {
         this.Quantity = rs.getFloat("Available_Quantity");
         this.UnitCost = rs.getFloat("unit_cost");
         this.serial_id = rs.getString("serial_id");
+
+        //set to a default status since status is handled on a system level
+        this.status = "Undefined";
     }
 
     public String getName() {
@@ -42,6 +50,8 @@ public class Medicine {
     public String getDose() {
         return Dose;
     }
+
+    public  String getStatus(){return status;}
 
     public String getExpiry() {
         return Expiry;
@@ -68,4 +78,6 @@ public class Medicine {
     public void setSerial_id(String id){
         this.serial_id = id;
     }
+
+    public void setStatus(String s){this.status = s;}
 }
