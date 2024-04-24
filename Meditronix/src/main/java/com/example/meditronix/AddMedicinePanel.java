@@ -63,20 +63,6 @@ public class AddMedicinePanel extends Pane implements Initializable {
 
     private final String[] types = {"Prescription","Generic"};
 
-    /*public AddMedicinePanel() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addMedicinePanel.fxml"));
-        fxmlLoader.setController(this);
-        try {
-            Pane content = fxmlLoader.load();
-            this.stage = new Stage();
-            this.stage.setScene(new Scene(content));
-            this.stage.initStyle(StageStyle.UNDECORATED); // Remove decorations (title bar, etc.)
-            this.stage.setResizable(false); // Make the stage non-resizable
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     public void show() {
         stage.show();
     }
@@ -95,8 +81,6 @@ public class AddMedicinePanel extends Pane implements Initializable {
 
           BuyCostField.setText("0.0");
           doseField.setText("-");
-
-
 
     }
 
