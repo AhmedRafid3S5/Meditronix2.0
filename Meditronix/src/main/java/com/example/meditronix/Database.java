@@ -71,6 +71,14 @@ public class Database {
         return currentTime.format(formatter);
 
     }
+
+    public String currentDate()
+    {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return currentTime.format(formatter);
+    }
+
     public void addMedicine(Medicine m,Connection con) throws SQLException{
 
         String sql = "SELECT *\n" +
