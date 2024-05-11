@@ -3,10 +3,14 @@ package com.example.meditronix;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class HelloApplication extends Application {
     @Override
@@ -18,6 +22,11 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 788,510);
         String css = "src/main/resources/com/example/meditronix/ShopInventory.css";
         scene.getStylesheets().add(css);
+
+        InputStream inputStream = getClass().getResourceAsStream("images/medical-team.png");
+        Image image = new Image(inputStream);
+
+        stage.getIcons().add(image);
         stage.setTitle("MEDITRONIX");
         stage.setScene(scene);
         stage.show();

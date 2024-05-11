@@ -56,7 +56,7 @@
             <Font size="10.0" />
          </font>
       </Label>
-      <Label fx:id="warningLabel" layoutX="500.0" layoutY="132.0" />
+      <Label fx:id="warningLabel" layoutX="500.0" layoutY="79.0" prefHeight="58.0" prefWidth="271.0" />
       
    </children>
 </AnchorPane>

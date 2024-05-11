@@ -56,7 +56,7 @@
                 <Font size="10.0" />
             </font>
         </Label>
-        <Label fx:id="newWarningLabel" layoutX="500.0" layoutY="132.0" />
+        <Label fx:id="newWarningLabel" layoutX="500.0" layoutY="123.0" prefHeight="27.0" prefWidth="175.0" wrapText="true" />
       <TextField fx:id="selectByIndexField" layoutX="500.0" layoutY="73.0" prefHeight="26.0" prefWidth="118.0" promptText="Select by index" />
       <Button fx:id="searchByIndexBtn" layoutX="619.0" layoutY="73.0" mnemonicParsing="false" onAction="#showSelectedMed" prefHeight="27.0" prefWidth="58.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" text="Select">
          <font>

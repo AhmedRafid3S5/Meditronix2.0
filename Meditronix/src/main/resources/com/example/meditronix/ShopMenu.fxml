@@ -19,12 +19,13 @@
    <children>
       <MenuBar fx:id="toolbar" layoutY="1.0" prefHeight="34.0" prefWidth="986.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Settings">
+          <Menu fx:id="Settings" mnemonicParsing="false" text="Settings">
             <items>
+                  <MenuItem fx:id="stockSettings" mnemonicParsing="false" onAction="#onLowStockSettingClicked" text="Set low stock value" />
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu fx:id="Help" mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
@@ -34,7 +35,7 @@
             <Blend />
          </effect>
       </MenuBar>
-      <TableView fx:id="inventoryTable" layoutX="119.0" layoutY="34.0" prefHeight="516.0" prefWidth="866.0">
+      <TableView fx:id="inventoryTable" layoutX="121.0" layoutY="35.0" prefHeight="516.0" prefWidth="866.0" AnchorPane.topAnchor="36.0">
         <columns>
           <TableColumn fx:id="Name" prefWidth="159.1999969482422" text="Name" />
           <TableColumn fx:id="Dose" prefWidth="98.4000244140625" text="Dose" />
@@ -46,44 +47,71 @@
             <TableColumn fx:id="Status" prefWidth="122.39990234375" text="Status" />
         </columns>
       </TableView>
-      <VBox fx:id="vpanel" layoutY="34.0" prefHeight="686.0" prefWidth="118.0">
+      <VBox fx:id="vpanel" layoutY="35.0" prefHeight="685.0" prefWidth="120.0" AnchorPane.topAnchor="35.0">
          <children>
-            <Button fx:id="Add" mnemonicParsing="false" onAction="#showAddPanel" prefHeight="95.0" prefWidth="135.0" text="Add">
+            <Button fx:id="Add" mnemonicParsing="false" onAction="#showAddPanel" prefHeight="85.0" prefWidth="118.0" text="Add">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Candara" size="14.0" />
                </font>
                <graphic>
                    <ImageView fitHeight="42.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                       <Image url="@images/icons8-external-link-30.png" />
+                       <Image url="@images/icons8-add-64.png" />
                    </ImageView>
                </graphic>
+               <VBox.margin>
+                  <Insets top="2.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
             </Button>
-            <Button fx:id="Delete" mnemonicParsing="false" onAction="#removeFromInventory" prefHeight="95.0" prefWidth="139.0" text="Delete">
+            <Button fx:id="Delete" mnemonicParsing="false" onAction="#removeFromInventory" prefHeight="85.0" prefWidth="118.0" text="Delete">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Candara" size="14.0" />
                </font>
                <graphic>
                    <ImageView fitHeight="44.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                       <Image url="@images/icons8-delete-30.png" />
+                       <Image url="@images/icons8-delete-64.png" />
                    </ImageView>
                </graphic>
+               <VBox.margin>
+                  <Insets top="2.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets right="1.0" />
+               </padding>
             </Button>
-            <Button fx:id="Update" mnemonicParsing="false" onAction="#showUpdatePanel" prefHeight="95.0" prefWidth="117.0" text="Update">
+            <Button fx:id="Update" mnemonicParsing="false" onAction="#showUpdatePanel" prefHeight="85.0" prefWidth="118.0" text="Update">
                <graphic>
                    <ImageView fitHeight="42.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                       <Image url="@images/icons8-upload-to-the-cloud-30.png" />
-                   </ImageView>
-               </graphic></Button>
-            <Button fx:id="Search" mnemonicParsing="false" prefHeight="95.0" prefWidth="138.0" text="Search">
-               <graphic>
-                   <ImageView fitHeight="41.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                       <Image url="@images/icons8-search-30.png" />
+                       <Image url="@images/icons8-update-tag-64.png" />
                    </ImageView>
                </graphic>
+               <VBox.margin>
+                  <Insets top="2.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets right="3.0" />
+               </padding>
+               <font>
+                  <Font name="Candara" size="14.0" />
+               </font></Button>
+            <Button fx:id="Search" mnemonicParsing="false" prefHeight="85.0" prefWidth="118.0" text="Search">
+               <graphic>
+                   <ImageView fitHeight="41.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                       <Image url="@images/icons8-search-64.png" />
+                   </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="2.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </Button>
          </children>
       </VBox>
-      <HBox fx:id="HPanel" layoutX="118.0" layoutY="550.0" prefHeight="170.0" prefWidth="866.0" />
+      <HBox fx:id="HPanel" layoutX="121.0" layoutY="552.0" prefHeight="168.0" prefWidth="866.0" AnchorPane.topAnchor="553.0" />
    </children>
    <padding>
       <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

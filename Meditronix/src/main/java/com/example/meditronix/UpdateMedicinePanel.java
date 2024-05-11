@@ -1,10 +1,14 @@
 package com.example.meditronix;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -82,6 +86,8 @@ public class UpdateMedicinePanel implements Initializable {
     }
     public void updateMedicine(ActionEvent actionEvent) throws SQLException {
 
+        String updateStatusLabel= null;
+
         Float buyingCost, sellingCost, quantityAdded;
         String name, type, dose;
         LocalDate expiryDate;
@@ -104,13 +110,31 @@ public class UpdateMedicinePanel implements Initializable {
             new_medicine = new Medicine(name, dose, date, type, sellingCost, quantityAdded, buyingCost);
 
             if (localDB.updateMedicine(old_medicine, new_medicine, con)) {
-                newWarningLabel.setText("Medicine updated successfully");
+               updateStatusLabel = "Medicine updated successfully!";
             } else {
-                newWarningLabel.setText("Unable to update selected medicince");
+                updateStatusLabel = "Unable to update selected medicince";
             }
 
             ShopMenu.getInstance().refreshList();
 
+        newWarningLabel.setText(updateStatusLabel);
+
+        newWarningLabel.setVisible(true);
+
+        // Create a Timeline to hide the label after 3 seconds
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        // Hide the warning label after the specified duration
+                        newWarningLabel.setVisible(false);
+                    }
+                })
+        );
+
+        // Play the timeline once to hide the label after 3 seconds
+        timeline.setCycleCount(1);
+        timeline.play();
 
 
 

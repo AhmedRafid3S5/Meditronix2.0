@@ -11,12 +11,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -69,6 +73,8 @@ public class ShopMenu implements Initializable {
    private Button Update;
    @FXML
    private Button Search;
+   @FXML
+   private MenuItem stockSettings;
 
    private ResultSet rs;
    private Database GlobalDB;
@@ -92,6 +98,11 @@ public class ShopMenu implements Initializable {
    //Implementing singleton pattern so any class can access the Inventory properties
    public static ShopMenu getInstance(){
       return instance;
+   }
+
+   public int getLowStockLimit(){return instance.lowStockLimit;}
+   public void setLowStockLimit(int value){
+      instance.lowStockLimit = value;
    }
 
 
@@ -124,6 +135,8 @@ public class ShopMenu implements Initializable {
 
    public Connection getConnection(){return this.GlobalConnect;}
 
+   public Database getGlobalDB(){return this.GlobalDB;}
+
    public TableView<Medicine> getInventoryTable() {
       return this.inventoryTable;
    }
@@ -135,10 +148,11 @@ public class ShopMenu implements Initializable {
    @Override
    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-      lowStockLimit = 5;
+
       GlobalDB = new Database();
       GlobalConnect = GlobalDB.dbConnect();
       addMedicinePanel = new AddMedicinePanel();
+
 
       //set all panel flags to false on initialization
       setPanelOn(false,false,false);
@@ -155,7 +169,9 @@ public class ShopMenu implements Initializable {
 
 
       try {
-         rs = new Database().showInventory();
+         rs = GlobalDB.showInventory();
+         //get low stock limit marker
+         lowStockLimit = GlobalDB.fetchLowStockValue(GlobalConnect);
       } catch (SQLException e) {
          throw new RuntimeException(e);
       }
@@ -184,6 +200,7 @@ public class ShopMenu implements Initializable {
       instance.GlobalConnect = this.GlobalConnect;
       instance.HPanel = this.HPanel;
       instance.addMedicinePane = this.addMedicinePane;
+      instance.lowStockLimit = this.lowStockLimit;
 
 
       //set tooltips for buttons
@@ -258,11 +275,12 @@ public class ShopMenu implements Initializable {
                }
                else if (item.getQuantity() == 0) {
                   item.setStatus("Out of Stock");
-                  setStyle("-fx-background-color: #c98140;-fx-font-weight: bold;");
-               }
-               else if (item.getQuantity() <= lowStockLimit){
-                  item.setStatus("Low Stock");
+
                   setStyle("-fx-background-color: #8a61bd;-fx-font-weight: bold;");
+               }
+               else if (item.getQuantity() <= instance.lowStockLimit){
+                  item.setStatus("Low Stock");
+                  setStyle("-fx-background-color: #d2b939;-fx-font-weight: bold;");
                }
                else {
                   item.setStatus("Valid");
@@ -427,6 +445,12 @@ public class ShopMenu implements Initializable {
       instance.updatePanelOn = this.updatePanelOn;
       instance.addPanelOn = this.addPanelOn;
       instance.searchPanelOn = this.searchPanelOn;
+   }
+
+   @FXML
+   void onLowStockSettingClicked(ActionEvent event) throws IOException {
+      stockSettingController settingController = new stockSettingController();
+      settingController.onLowStockSettingClicked(event);
    }
 
 }
