@@ -1,5 +1,8 @@
 package com.example.meditronix;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -125,7 +129,11 @@ public class ShopMenu implements Initializable {
 
    }
 
+   TableColumn<Medicine, LocalDate> dateAddedColumn = new TableColumn<>("Date Added");
 
+   private void setupDateAddedColumn() {
+      dateAddedColumn.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
+   }
 
 
    //Returns the inventory list to any class requesting it
@@ -166,6 +174,7 @@ public class ShopMenu implements Initializable {
       Price.setCellValueFactory(new PropertyValueFactory<Medicine,Float>("price"));
       Expiry.setCellValueFactory(new PropertyValueFactory<Medicine,String>("Expiry"));
       Status.setCellValueFactory(new PropertyValueFactory<Medicine,String>("Status"));
+      dateAddedColumn.setCellValueFactory(new PropertyValueFactory<Medicine,LocalDate>("serial_id"));
 
 
       try {
@@ -292,6 +301,66 @@ public class ShopMenu implements Initializable {
    }
 
 
+   @FXML
+   public void searchClicked(ActionEvent event) throws IOException {
+
+
+
+      if(!updatePanelOn && !addPanelOn && !searchPanelOn)
+      {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("searchPanel.fxml"));
+         addMedicinePane = fxmlLoader.load();
+         // Add the Pane to the HBox
+         HPanel.getChildren().add(addMedicinePane);
+
+         // Adjust layout to accommodate the added Pane
+         HPanel.layout();
+
+         displaySearchResults();
+         setPanelOn(false,false,true);
+      }
+      else
+      {
+         HPanel.getChildren().remove(addMedicinePane);
+         exitSearchMode();
+         refreshList();
+         setPanelOn(false,false,false);
+      }
+   }
+
+
+   public void displaySearchResults() {
+      int nameColumnIndex = inventoryTable.getColumns().indexOf(Name);  // Get 'Name' column index
+      int dateAddedColumnIndex = nameColumnIndex + 1;
+
+      if (!inventoryTable.getColumns().contains(dateAddedColumn)) {
+         dateAddedColumn.setMinWidth(0);  // Start with 0 width
+         dateAddedColumn.setPrefWidth(0);
+         inventoryTable.getColumns().add(dateAddedColumnIndex, dateAddedColumn);
+
+         // Create a timeline to animate the width of the column
+         Timeline timeline = new Timeline();
+         KeyValue kv = new KeyValue(dateAddedColumn.prefWidthProperty(), 120); // Assume 120 is the target width
+         KeyFrame kf = new KeyFrame(Duration.millis(300), kv);
+         timeline.getKeyFrames().add(kf);
+         timeline.play();
+      }
+   }
+
+
+   public void exitSearchMode() {
+      if (inventoryTable.getColumns().contains(dateAddedColumn)) {
+         // Animation to reduce the width of the column before removing it
+         Timeline timeline = new Timeline(
+                 new KeyFrame(Duration.ZERO, new KeyValue(dateAddedColumn.prefWidthProperty(), dateAddedColumn.getWidth())),
+                 new KeyFrame(Duration.millis(300), new KeyValue(dateAddedColumn.prefWidthProperty(), 0))
+         );
+         timeline.setOnFinished(event -> inventoryTable.getColumns().remove(dateAddedColumn));
+         timeline.play();
+      }
+   }
+
+
    public void refreshList(){
       try {
          this.rs = GlobalDB.showInventory();
@@ -319,6 +388,12 @@ public class ShopMenu implements Initializable {
 
    }
 
+   public void populateWithNewList( ObservableList<Medicine> Newlist){
+      this.list.clear();
+      this.list = Newlist;
+      inventoryTable.setItems(list);
+      detectStockEmpty();
+   }
 
    //Delete function to remove an item from list and database
    @FXML

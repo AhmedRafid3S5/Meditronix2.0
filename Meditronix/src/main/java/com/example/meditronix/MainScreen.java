@@ -57,11 +57,21 @@ public class MainScreen implements Initializable{
     public void doctorButtonPressed()
     {
         state = "doctor";
+        DoctorButton.setStyle("-fx-border-color: #09178f;" +
+                              "-fx-background-radius: 10;" +
+                               "-fx-border-radius: 10");
+        ShopOwnerButton.setStyle("-fx-background-radius: 10");
+        CustomerButton.setStyle("-fx-background-radius: 10");
     }
     @FXML
     public void customerButtonPressed()
     {
         state = "customer";
+        DoctorButton.setStyle("-fx-background-radius: 10");
+        ShopOwnerButton.setStyle("-fx-background-radius: 10");
+        CustomerButton.setStyle("-fx-border-color: #09178f;" +
+                                "-fx-border-radius: 10;" +
+                                "-fx-background-radius: 10");
     }
     @FXML
     public void setStage(Stage stage) {
@@ -70,6 +80,11 @@ public class MainScreen implements Initializable{
     @FXML
     public void shopButtonPressed(ActionEvent event) throws IOException {
         state = "pharmacist";
+        DoctorButton.setStyle("-fx-background-radius: 10");
+        ShopOwnerButton.setStyle("-fx-border-color: #09178f;" +
+                                 "-fx-background-radius: 10;" +
+                                 "-fx-border-radius: 10");
+        CustomerButton.setStyle("-fx-background-radius: 10");
     }
     @FXML
     public void signUpButtonPressed(ActionEvent event) throws IOException {
@@ -100,8 +115,8 @@ public class MainScreen implements Initializable{
         scene = new Scene((Parent) root);
         stage.setScene(scene);
         stage.show();
-        Database db = new Database();
-        db.dbConnect();
+        //Database db = new Database();
+        //db.dbConnect();
     }
 
     public  void switchToDoctorMenu(ActionEvent event) throws IOException {

@@ -47,6 +47,72 @@ public class Database {
 
     }
 
+    public ResultSet searchByName(Connection con, String name) throws SQLException {
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ?;";
+        PreparedStatement pStmt = con.prepareStatement(sql);
+
+        // Include the '%' wildcards directly in the parameter based on name passed
+        char firstChar = name.charAt(0);
+
+        if(Character.isUpperCase(firstChar)) {
+            pStmt.setString(1,  name + "%");
+        }
+        else {
+            pStmt.setString(1,  "%" + name + "%");
+        }
+
+        ResultSet rs = pStmt.executeQuery();
+        return rs;
+    }
+
+    public ResultSet searchByDate(Connection con, String date) throws SQLException {
+        String sql = "SELECT * FROM shop_inventory WHERE serial_id LIKE ?;";
+        PreparedStatement pStmt = con.prepareStatement(sql);
+        pStmt.setString(1,date+"%");
+
+        ResultSet rs = pStmt.executeQuery();
+        return rs;
+    }
+
+    public ResultSet searchByNameDose(Connection con, String name,String dose) throws SQLException {
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ?;";
+        PreparedStatement pStmt = con.prepareStatement(sql);
+        char firstChar = name.charAt(0);
+
+        if(Character.isUpperCase(firstChar)) {
+            pStmt.setString(1,  name + "%");
+        }
+        else {
+            pStmt.setString(1,  "%" + name + "%");
+        }
+
+        pStmt.setString(2,dose);
+
+        ResultSet rs = pStmt.executeQuery();
+        return rs;
+    }
+
+    public ResultSet strictSearch(Connection con, String name,String dose,String date) throws SQLException {
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ? AND serial_id LIKE ?;";
+        PreparedStatement pStmt = con.prepareStatement(sql);
+        char firstChar = name.charAt(0);
+
+        if(Character.isUpperCase(firstChar)) {
+            pStmt.setString(1,  name + "%");
+        }
+        else {
+            pStmt.setString(1,  "%" + name + "%");
+        }
+
+        pStmt.setString(2,dose);
+
+        pStmt.setString(3,date+"%");
+
+        ResultSet rs = pStmt.executeQuery();
+        return rs;
+    }
+
+
     public int fetchLowStockValue(Connection con) throws SQLException{
          Statement stmt = con.createStatement();
          String sql = "SELECT lowStockValue FROM stock_parameters;";

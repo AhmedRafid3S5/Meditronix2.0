@@ -96,7 +96,7 @@
                <font>
                   <Font name="Candara" size="14.0" />
                </font></Button>
-            <Button fx:id="Search" mnemonicParsing="false" prefHeight="85.0" prefWidth="118.0" text="Search">
+            <Button fx:id="Search" mnemonicParsing="false" onAction="#searchClicked" prefHeight="85.0" prefWidth="118.0" text="Search">
                <graphic>
                    <ImageView fitHeight="41.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                        <Image url="@images/icons8-search-64.png" />

@@ -19,7 +19,7 @@ public class HelloApplication extends Application {
         //Scene scene = new Scene(fxmlLoader.load(), 760, 510);
 
         //For dev, use this entry point
-        Scene scene = new Scene(fxmlLoader.load(), 788,510);
+        Scene scene = new Scene(fxmlLoader.load(), 767,510);
         String css = "src/main/resources/com/example/meditronix/ShopInventory.css";
         scene.getStylesheets().add(css);
 

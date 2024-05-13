@@ -72,7 +72,7 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
 
 
     .button:hover {
-        -fx-background-color: #118ab2;
+        -fx-background-color: #7aaae0;
 
     }
 
@@ -145,7 +145,7 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
         -fx-background-color: #118ab2;
     }
 
-    #addPanel, #updatePanel {
+    #addPanel, #updatePanel,searchPanel {
         /*-fx-background-color: linear-gradient(to bottom right, #88c1e0, #d3e5f6);
         -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 6, 0, 0, 3);*/
         /*For testing*/
