@@ -2,10 +2,12 @@ package com.example.meditronix;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -151,6 +153,18 @@ public class ShopMenu implements Initializable {
 
    public void addMedicineToList(Medicine medicine) {
       this.list.add(medicine);
+   }
+
+   private void animateButton(Button button) {
+      // Create a scale transition
+      ScaleTransition st = new ScaleTransition(Duration.millis(200), button);
+      st.setByX(-0.08); // Scale by 10% in X direction
+      st.setByY(-0.08); // Scale by 10% in Y direction
+      st.setAutoReverse(true); // Automatically reverse the animation
+      st.setCycleCount(2); // Play forwards and then backwards
+
+      // Play the animation
+      st.play();
    }
 
    @Override
@@ -304,7 +318,7 @@ public class ShopMenu implements Initializable {
    @FXML
    public void searchClicked(ActionEvent event) throws IOException {
 
-
+       animateButton(Search);
 
       if(!updatePanelOn && !addPanelOn && !searchPanelOn)
       {
@@ -399,6 +413,8 @@ public class ShopMenu implements Initializable {
    @FXML
    void removeFromInventory() throws SQLException {
 
+      animateButton(Delete);
+
       int selectID = inventoryTable.getSelectionModel().getSelectedIndex();
 
       if(selectID >= 0 ) {
@@ -423,6 +439,7 @@ public class ShopMenu implements Initializable {
 
    @FXML
    public void showAddPanel(ActionEvent event) {
+      animateButton(Add);
       try {
          //changeHoverStyle(Update);
          //changeHoverStyle(Add);
@@ -462,6 +479,7 @@ public class ShopMenu implements Initializable {
 
    @FXML
    void showUpdatePanel(ActionEvent event){
+      animateButton(Update);
       try {
          int selected_index = inventoryTable.getSelectionModel().getSelectedIndex();
          //changeHoverStyle(Update);
@@ -526,6 +544,12 @@ public class ShopMenu implements Initializable {
    void onLowStockSettingClicked(ActionEvent event) throws IOException {
       stockSettingController settingController = new stockSettingController();
       settingController.onLowStockSettingClicked(event);
+   }
+
+   @FXML
+   void onHowToUseClicked(ActionEvent event) throws IOException{
+      HelpWindow helpWindow = new HelpWindow();
+      helpWindow.onHowToUseClicked(event);
    }
 
 }

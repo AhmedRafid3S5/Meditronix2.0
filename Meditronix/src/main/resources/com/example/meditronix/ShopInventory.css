@@ -68,6 +68,7 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
         -fx-border-radius: 20;
         -fx-text-fill: black;
         -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
+        -fx-cursor: hand;
     }
 
 
@@ -100,26 +101,28 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
         -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
     }
 
-    /* Text styles (adjust as needed) */
 
-    .table-text {
-        -fx-fill: rgba(0, 0, 0, 0.8); /* Darker gray text for better readability */
-    }
-
-    .table-view {
-        -fx-border-radius: 10; /* Rounded corners for the border */
-        -fx-background-radius: 10;
-        -fx-background-color: #81e0f3;
-        -fx-border-color: #4939be;
-        -fx-border-width: 1px;
-        -fx-table-cell-border-color: rgba(27, 100, 83, 0.5);
-        /* Rounded corners for the border */
-    }
 
 
     #addButton:hover {
         -fx-background-color: #66ea48;
     }
+
+/* Text styles (adjust as needed)
+
+.table-text {
+    -fx-fill: rgba(0, 0, 0, 0.8);
+}
+
+.table-view {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #81e0f3;
+    -fx-border-color: #4939be;
+    -fx-border-width: 1px;
+    -fx-table-cell-border-color: rgba(27, 100, 83, 0.5);
+
+}
 
 
     .table-row-cell:even {
@@ -141,9 +144,49 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
     }
 
     .table-row-cell:selected {
-        /* -fx-background-color: rgba(87, 224, 188, 0.5);*/
+        /* -fx-background-color: rgba(87, 224, 188, 0.5); *
         -fx-background-color: #118ab2;
-    }
+    }*/
+
+/* General table text */
+.table-text {
+    -fx-fill: rgba(0, 0, 0, 0.87); /* Slightly darker for better readability */
+}
+
+/* TableView styling */
+.table-view {
+    -fx-border-radius: 8; /* More subtle rounded corners */
+    -fx-background-radius: 8;
+    -fx-background-color: #f0f4f8; /* Light gray-blue background for a modern look */
+    -fx-border-color: #1e88e5; /* Consistent with your existing color scheme */
+    -fx-border-width: 1px;
+    -fx-table-cell-border-color: rgba(27, 100, 83, 0.2); /* Lighter cell borders for subtle separation */
+}
+
+/* Row styling for alternating colors */
+.table-row-cell:even {
+    -fx-background-color: #e3f2fd; /* Light blue for alternating rows */
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f0f4f8; /* Light gray-blue for alternating rows */
+}
+
+/* Column header styling */
+.column-header {
+    -fx-border-radius: 5;
+    -fx-border-color: #1e88e5; /* Consistent with table border */
+    -fx-background-color: #1976d2; /* Darker blue for headers */
+    -fx-background-radius: 5;
+    -fx-text-fill: white; /* White text for better contrast */
+    -fx-font-weight: bold;
+}
+
+/* Selected row styling */
+.table-row-cell:selected {
+    -fx-background-color: #42a5f5; /* Brighter blue for selected row */
+    -fx-text-fill: white; /* White text for better readability on selected row */
+}
 
     #addPanel, #updatePanel,searchPanel {
         /*-fx-background-color: linear-gradient(to bottom right, #88c1e0, #d3e5f6);
