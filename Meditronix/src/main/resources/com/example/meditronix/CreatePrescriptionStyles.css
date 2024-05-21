@@ -1,0 +1,122 @@
+/* Set the background gradient */
+.root {
+    -fx-background-color: linear-gradient(to bottom, #71c481, #49759e);
+}
+
+/* Style the Label components */
+.label.title {
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-font-size: 20px; /* Font size */
+    -fx-font-family: "Montserrat", sans-serif; /* Use Montserrat font */
+    -fx-font-weight: bold; /* Bold font weight */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); /* Add shadow effect */
+}
+
+
+/* Style the TextField components */
+.text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-text-fill: #000000; /* Black text color */
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.text-field:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-text-fill: #000000; /* Black text color */
+}
+
+/* Style the Button components */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #71c481, #548b96);
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-font-size: 10px;
+    -fx-font-weight: bold; /* Make text bold */
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #67b088, #5fa08e);
+}
+
+#backButton {
+    -fx-background-color: linear-gradient(to bottom, #71c481, #548b96);
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-border-width: 1;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+#backButton:hover {
+    -fx-background-color: linear-gradient(to bottom, #67b088, #5fa08e);
+}
+
+/* Style the ComboBox component */
+.combo-box {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-text-fill: #000000; /* Black text color */
+    -fx-font-size: 14px;
+    -fx-padding: 3px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-text-fill: #000000; /* Black text color */
+}
+
+.combo-box .list-view .list-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-text-fill: #000000; /* Black text color */
+}
+
+/* Style the TableView components */
+.table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000; /* Black text color */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #548b96;
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-text-fill: #000000; /* Black text color */
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #ADD8E6; /* Light Blue color */
+    -fx-text-fill: #000000; /* Black text color */
+}
+
+
+/* Add transparent boxes for segmentation */
+.segment-box {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-margin: 20px; /* Add margin between sections */
+}
+
+/* Style the header inside the segment box */
+.header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding-bottom: 10px;
+}

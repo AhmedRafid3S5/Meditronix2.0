@@ -1,6 +1,12 @@
 package com.example.meditronix;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -41,6 +47,97 @@ public class Database {
 
     }
 
+    public ResultSet searchByName(Connection con, String name) throws SQLException {
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ?;";
+        PreparedStatement pStmt = con.prepareStatement(sql);
+
+        // Include the '%' wildcards directly in the parameter based on name passed
+        char firstChar = name.charAt(0);
+
+        if(Character.isUpperCase(firstChar)) {
+            pStmt.setString(1,  name + "%");
+        }
+        else {
+            pStmt.setString(1,  "%" + name + "%");
+        }
+
+        ResultSet rs = pStmt.executeQuery();
+        return rs;
+    }
+
+    public ResultSet searchByDate(Connection con, String date) throws SQLException {
+        String sql = "SELECT * FROM shop_inventory WHERE serial_id LIKE ?;";
+        PreparedStatement pStmt = con.prepareStatement(sql);
+        pStmt.setString(1,date+"%");
+
+        ResultSet rs = pStmt.executeQuery();
+        return rs;
+    }
+
+    public ResultSet searchByNameDose(Connection con, String name,String dose) throws SQLException {
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ?;";
+        PreparedStatement pStmt = con.prepareStatement(sql);
+        char firstChar = name.charAt(0);
+
+        if(Character.isUpperCase(firstChar)) {
+            pStmt.setString(1,  name + "%");
+        }
+        else {
+            pStmt.setString(1,  "%" + name + "%");
+        }
+
+        pStmt.setString(2,dose);
+
+        ResultSet rs = pStmt.executeQuery();
+        return rs;
+    }
+
+    public ResultSet strictSearch(Connection con, String name,String dose,String date) throws SQLException {
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ? AND serial_id LIKE ?;";
+        PreparedStatement pStmt = con.prepareStatement(sql);
+        char firstChar = name.charAt(0);
+
+        if(Character.isUpperCase(firstChar)) {
+            pStmt.setString(1,  name + "%");
+        }
+        else {
+            pStmt.setString(1,  "%" + name + "%");
+        }
+
+        pStmt.setString(2,dose);
+
+        pStmt.setString(3,date+"%");
+
+        ResultSet rs = pStmt.executeQuery();
+        return rs;
+    }
+
+
+    public int fetchLowStockValue(Connection con) throws SQLException{
+         Statement stmt = con.createStatement();
+         String sql = "SELECT lowStockValue FROM stock_parameters;";
+         ResultSet rs = stmt.executeQuery(sql);
+
+        if(rs.next()) {
+             return rs.getInt("lowStockValue");
+         }
+        else
+            return 1; //default value
+    }
+
+    public void setLowStockValue(Connection con, int newLowStockValue) throws SQLException {
+        String sql = "UPDATE stock_parameters " +
+                "SET lowStockValue = ? " +
+                "WHERE id = 0; ";
+
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setInt(1, newLowStockValue);
+
+        stmt.executeUpdate();
+    }
+
+
+
     public void deleteMedicine(String id, Connection con) throws SQLException {
 
         String sql = "Delete From shop_inventory where serial_id = ?";
@@ -71,7 +168,18 @@ public class Database {
         return currentTime.format(formatter);
 
     }
-    public void addMedicine(Medicine m,Connection con) throws SQLException{
+
+    public String currentDate()
+    {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return currentTime.format(formatter);
+    }
+
+    public void addMedicine(Medicine m, Connection con, Label tellStatus) throws SQLException{
+
+         String added = null;
+
 
         String sql = "SELECT *\n" +
                 "FROM shop_inventory\n" +
@@ -107,9 +215,13 @@ public class Database {
 
 
             int rowsAffected = update_stmt.executeUpdate();
+            if(rowsAffected >0)
+            {
+                added = "Medicine was added to an existing record with same name & expiry";
+            }
 
         } else {
-            System.out.println("No med with same name and expiry exists");
+
             //proceed to add a new medicine to inventory;
             String serial_id = createUniqueID();
 
@@ -132,11 +244,29 @@ public class Database {
 // Execute the insert
             statement.executeUpdate();
 
-            System.out.println("Record inserted successfully!");
-
+            added = "New medicine added to inventory";
 
 
         }
+
+        tellStatus.setText(added);
+        tellStatus.setWrapText(true);
+        tellStatus.setVisible(true);
+
+        // Create a Timeline to hide the label after 3 seconds
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        // Hide the warning label after the specified duration
+                        tellStatus.setVisible(false);
+                    }
+                })
+        );
+
+        // Play the timeline once to hide the label after 3 seconds
+        timeline.setCycleCount(1);
+        timeline.play();
 
         ShopMenu.getInstance().refreshList();
 

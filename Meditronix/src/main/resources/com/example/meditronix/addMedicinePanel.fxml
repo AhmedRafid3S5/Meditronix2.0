@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="addPanel" prefHeight="170.0" prefWidth="845.0" style="-fx-background-radius: 10; -fx-border-color: #118ab2; -fx-border-radius: 10; -fx-border-width: 2;" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.AddMedicinePanel">
+<AnchorPane fx:id="addPanel" prefHeight="170.0" prefWidth="866.0" style="-fx-background-radius: 10; -fx-border-color: #118ab2; -fx-border-radius: 10; -fx-border-width: 2;" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.AddMedicinePanel">
    <children>
       <TextField fx:id="nameField" layoutX="50.0" layoutY="30.0" promptText="Set Name" />
       <TextField fx:id="doseField" layoutX="50.0" layoutY="73.0" promptText="Dose" />
@@ -56,7 +56,7 @@
             <Font size="10.0" />
          </font>
       </Label>
-      <Label fx:id="warningLabel" layoutX="500.0" layoutY="132.0" />
+      <Label fx:id="warningLabel" layoutX="500.0" layoutY="79.0" prefHeight="58.0" prefWidth="271.0" />
       
    </children>
 </AnchorPane>

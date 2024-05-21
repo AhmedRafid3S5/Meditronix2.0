@@ -1,6 +1,9 @@
 package com.example.meditronix;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -63,20 +67,6 @@ public class AddMedicinePanel extends Pane implements Initializable {
 
     private final String[] types = {"Prescription","Generic"};
 
-    /*public AddMedicinePanel() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addMedicinePanel.fxml"));
-        fxmlLoader.setController(this);
-        try {
-            Pane content = fxmlLoader.load();
-            this.stage = new Stage();
-            this.stage.setScene(new Scene(content));
-            this.stage.initStyle(StageStyle.UNDECORATED); // Remove decorations (title bar, etc.)
-            this.stage.setResizable(false); // Make the stage non-resizable
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     public void show() {
         stage.show();
     }
@@ -95,8 +85,6 @@ public class AddMedicinePanel extends Pane implements Initializable {
 
           BuyCostField.setText("0.0");
           doseField.setText("-");
-
-
 
     }
 
@@ -154,9 +142,26 @@ public class AddMedicinePanel extends Pane implements Initializable {
                Medicine medicine = new Medicine(name, dose, date, type, sellingCost, quantityAdded, buyingCost);
 
 
-               localDB.addMedicine(medicine, con);
+               localDB.addMedicine(medicine, con,warningLabel);
            } else {
                warningLabel.setText("Fields with * must be filled!");
+
+               warningLabel.setVisible(true);
+
+               // Create a Timeline to hide the label after 3 seconds
+               Timeline timeline = new Timeline(
+                       new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+                           @Override
+                           public void handle(ActionEvent event) {
+                               // Hide the warning label after the specified duration
+                               warningLabel.setVisible(false);
+                           }
+                       })
+               );
+
+               // Play the timeline once to hide the label after 3 seconds
+               timeline.setCycleCount(1);
+               timeline.play();
            }
 
 

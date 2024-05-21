@@ -39,7 +39,7 @@ public class CreatePrescriptionController {
     private TextField Frequency;
 
     @FXML
-    private TextField Gender;
+    private ComboBox<String> GenderCombobox;
 
     @FXML
     private TextField MedicineName;
@@ -123,15 +123,13 @@ public class CreatePrescriptionController {
     private boolean patientIDGenerated = false;
     private String prescriptionCode;
 
-    private Database database = new Database(); // Instantiate Database class
+    private Database database = new Database();
 
     private int medicineCount = 0;
     private static final int MAX_MEDICINES = 15;
 
-    // Random object for generating codes
     private Random random = new Random();
 
-    // generate a random prescription code
     private String generatePrescriptionCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder code = new StringBuilder();
@@ -141,12 +139,11 @@ public class CreatePrescriptionController {
         return code.toString();
     }
 
-    //generate a random patient ID
     private String generatePatientID() {
         return String.format("%04d", random.nextInt(10000));
     }
 
-    //return the prescription code
+
     private String getPresCode()
     {
         return prescriptionCode;
@@ -166,10 +163,9 @@ public class CreatePrescriptionController {
                 medicines.add(medicine);
                 medicineCount++;
 
-                // Update the label to display the current medicine count
                 MedicineCountLabel.setText("Medicine Count: " + medicineCount);
 
-                // Add medicine to the TableView
+
                 MedicineTableview.getItems().add(medicine);
 
                 System.out.println("Added medicine: " + medicine);
@@ -180,7 +176,6 @@ public class CreatePrescriptionController {
             showErrorAlert("Please fill in all medicine details.");
         }
 
-        // Clear medicine input fields after adding medicine
         clearMedicineFields();
     }
 
@@ -188,15 +183,14 @@ public class CreatePrescriptionController {
     void addPatient(ActionEvent event) {
         String name = Name.getText();
         String ageText = Age.getText();
-        String gender = Gender.getText(); // Get the gender from the TextField
+        String gender = GenderCombobox.getSelectionModel().getSelectedItem();
 
         if (validatePatientFields(name, ageText, gender)) {
             int age = Integer.parseInt(ageText);
-            // Pass the gender value to the Patient constructor
+
             Patient patient = new Patient(name, age, gender);
             patientTable.getItems().add(patient);
 
-            // Clear the input fields after adding the patient
             clearInputFields();
         } else {
             showErrorAlert("Please fill in all patient details.");
@@ -207,14 +201,14 @@ public class CreatePrescriptionController {
 private void clearInputFields() {
     Name.clear();
     Age.clear();
-    Gender.clear();
+    //GenderCombobox.clear();
 }
     private boolean validateMedicineFields(String name, String dosage, String quantity, String frequency) {
         return !name.isEmpty() && !dosage.isEmpty() && !quantity.isEmpty() && !frequency.isEmpty();
     }
 
     private boolean validatePatientFields(String name, String age, String gender) {
-        return !name.isEmpty() && !age.isEmpty() && !gender.isEmpty();
+        return !name.isEmpty() && !age.isEmpty() && gender != null;
     }
 
     private void showErrorAlert(String message) {
@@ -256,21 +250,17 @@ private void clearInputFields() {
     private boolean isValidAge(String age) {
         return age.matches("\\d+") && Integer.parseInt(age) >= 0;
     }
+
     @FXML
-    void genderTfPressed(ActionEvent event) {
-        String genderText = Gender.getText();
-
-        if (!isValidGender(genderText)) {
-            showErrorAlert("Gender must be 'M' or 'F'.");
-        }
-        else{
-            System.out.println("Gender: " + genderText);
+    void genderCbPressed(ActionEvent event) {
+        String selectedGender = GenderCombobox.getSelectionModel().getSelectedItem();
+        if (selectedGender != null) {
+            System.out.println("Selected Gender: " + selectedGender);
+        } else {
+            showErrorAlert("Please select a gender.");
         }
     }
 
-    private boolean isValidGender(String gender) {
-        return gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("F");
-    }
 
     @FXML
     void PrescriptionCodePressed(ActionEvent event) {
@@ -282,11 +272,10 @@ private void clearInputFields() {
             dialog.setTitle("Prescription Code");
             dialog.setHeaderText(null);
 
-            // Create labels for the prescription code and instruction
+
             Label codeLabel = new Label("Prescription Code: " + prescriptionCode);
             Label instructionLabel = new Label("Click the 'Copy' button to copy the code to clipboard.");
 
-            // Create a button for copying the prescription code
             Button copyButton = new Button("Copy");
             copyButton.setOnAction(e -> {
                 Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -296,17 +285,13 @@ private void clearInputFields() {
                 dialog.close();
             });
 
-            // Create a VBox to hold the components
             VBox vbox = new VBox(10);
             vbox.getChildren().addAll(codeLabel, instructionLabel, copyButton);
 
-            // Set the dialog content to the VBox
             dialog.getDialogPane().setContent(vbox);
 
-            // Add a button for closing the dialog
             dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
-            // Show the dialog
             dialog.showAndWait();
         }
     }
@@ -317,12 +302,11 @@ private void clearInputFields() {
         if (!patientIDGenerated) {
             String patientID = generatePatientID();
             System.out.println("Patient ID: " + patientID);
-            patientIDGenerated = true; // Set flag to true indicating ID has been generated
+            patientIDGenerated = true;
 
-            // Show the dialog to display the patient ID and allow copying
             showCopyDialog("Patient ID", patientID);
         } else {
-            // Show the dialog to display the already generated patient ID and allow copying
+
             showCopyDialog("Patient ID", "Already generated: " + generatePatientID());
         }
     }
@@ -333,11 +317,9 @@ private void clearInputFields() {
         dialog.setTitle(title);
         dialog.setHeaderText(null);
 
-        // Create labels for the content and instruction
         Label contentLabel = new Label(content);
         Label instructionLabel = new Label("Click the 'Copy' button to copy the content to clipboard.");
 
-        // Create a button for copying the content
         Button copyButton = new Button("Copy");
         copyButton.setOnAction(e -> {
             Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -347,17 +329,13 @@ private void clearInputFields() {
             dialog.close();
         });
 
-        // Create a VBox to hold the components
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(contentLabel, instructionLabel, copyButton);
 
-        // Set the dialog content to the VBox
         dialog.getDialogPane().setContent(vbox);
 
-        // Add a button for closing the dialog
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
-        // Show the dialog
         dialog.showAndWait();
     }
 
@@ -416,18 +394,19 @@ private void clearInputFields() {
 
     @FXML
     void removeMedicine(ActionEvent event) {
-        // Get the selected medicine
+        // get the selected medicine
         Medicine selectedMedicine = MedicineTableview.getSelectionModel().getSelectedItem();
         if (selectedMedicine != null) {
-            // Remove the selected medicine from the TableView
+
             MedicineTableview.getItems().remove(selectedMedicine);
-            // Remove the selected medicine from the medicines list
+
             medicines.remove(selectedMedicine);
-            // Decrease the medicine count
-            medicineCount--;
-            // Update the label to display the current medicine count
+
+            if(medicineCount > 0) {
+                medicineCount--;
+            }
+
             MedicineCountLabel.setText("Medicine Count: " + medicineCount);
-            // Delete the corresponding data from the database
             database.deleteMedicineData(prescriptionCode, selectedMedicine.getName(), selectedMedicine.getDosage(), selectedMedicine.getQuantity(), selectedMedicine.getFrequency());
         } else {
             System.out.println("No medicine selected to remove.");
@@ -436,12 +415,9 @@ private void clearInputFields() {
 
     @FXML
     void removePatientPressed(ActionEvent event) {
-        // Get the selected patient
         Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
         if (selectedPatient != null) {
-            // Remove the selected patient from the TableView
             patientTable.getItems().remove(selectedPatient);
-            // Delete the corresponding data from the database
             //database.deletePatientData(selectedPatient.getName());
         } else {
             System.out.println("No patient selected to remove.");
@@ -451,13 +427,13 @@ private void clearInputFields() {
     @FXML
     void stopPrescription(ActionEvent event) {
 
-        // Check if at least one medicine has been added
+
         if (medicines.isEmpty()) {
             showErrorAlert("Please add medicine before creating a prescription.");
             return;
         }
 
-        System.out.println("Prescription stopped.");
+        //System.out.println("Prescription stopped.");
 
         // Generate prescription code
 
@@ -465,10 +441,10 @@ private void clearInputFields() {
             System.out.println("Prescription Code: " + prescriptionCode);
 
 
-        // Create a new table for the prescription
+        // Create new table for prescription
         database.createPrescriptionTable(prescriptionCode);
 
-        // Insert medicine data into the table
+        // Insert medicine data into table
         for (Medicine medicine : medicines) {
             try {
                 int quantity = Integer.parseInt(medicine.getQuantity());
@@ -556,12 +532,16 @@ private void clearInputFields() {
 
     @FXML
     public void initialize() {
-        // Initialize TableColumn objects for patient TableView
+        // ComboBox options
+        GenderCombobox.getItems().addAll("Male", "Female");
+        //GenderCombobox.getSelectionModel().selectFirst();
+
+        // patient TableView
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
 
-        // Initialize TableColumn objects for medicine TableView
+        // medicine TableView
         mednamecol.setCellValueFactory(new PropertyValueFactory<>("name"));
         meddosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
         medquantitycol.setCellValueFactory(new PropertyValueFactory<>("quantity"));

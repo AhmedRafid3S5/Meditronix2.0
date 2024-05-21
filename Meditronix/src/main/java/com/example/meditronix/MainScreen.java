@@ -7,9 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,7 +34,7 @@ public class MainScreen implements Initializable{
     private Button login;
 
     @FXML
-    private TextField passWordInput;
+    private PasswordField passWordInput;
 
     @FXML
     private Button signUp;
@@ -59,11 +57,21 @@ public class MainScreen implements Initializable{
     public void doctorButtonPressed()
     {
         state = "doctor";
+        DoctorButton.setStyle("-fx-border-color: #09178f;" +
+                              "-fx-background-radius: 10;" +
+                               "-fx-border-radius: 10");
+        ShopOwnerButton.setStyle("-fx-background-radius: 10");
+        CustomerButton.setStyle("-fx-background-radius: 10");
     }
     @FXML
     public void customerButtonPressed()
     {
         state = "customer";
+        DoctorButton.setStyle("-fx-background-radius: 10");
+        ShopOwnerButton.setStyle("-fx-background-radius: 10");
+        CustomerButton.setStyle("-fx-border-color: #09178f;" +
+                                "-fx-border-radius: 10;" +
+                                "-fx-background-radius: 10");
     }
     @FXML
     public void setStage(Stage stage) {
@@ -72,6 +80,11 @@ public class MainScreen implements Initializable{
     @FXML
     public void shopButtonPressed(ActionEvent event) throws IOException {
         state = "pharmacist";
+        DoctorButton.setStyle("-fx-background-radius: 10");
+        ShopOwnerButton.setStyle("-fx-border-color: #09178f;" +
+                                 "-fx-background-radius: 10;" +
+                                 "-fx-border-radius: 10");
+        CustomerButton.setStyle("-fx-background-radius: 10");
     }
     @FXML
     public void signUpButtonPressed(ActionEvent event) throws IOException {
@@ -102,8 +115,8 @@ public class MainScreen implements Initializable{
         scene = new Scene((Parent) root);
         stage.setScene(scene);
         stage.show();
-        Database db = new Database();
-        db.dbConnect();
+        //Database db = new Database();
+        //db.dbConnect();
     }
 
     public  void switchToDoctorMenu(ActionEvent event) throws IOException {
@@ -118,6 +131,15 @@ public class MainScreen implements Initializable{
 
 @FXML
     public void login(ActionEvent event) throws IOException, SQLException {
+
+        if(state == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Role not defined");
+            alert.setHeaderText("Role not selected");
+            alert.setContentText("Please select a role to sign in as");
+            alert.showAndWait();
+        }
 
         db = new Database();
         con = db.dbConnect();
@@ -194,6 +216,7 @@ public class MainScreen implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userNameInput.setStyle("-fx-text-fill: #0e0707;");
         userNameInput.setStyle("-fx-background-radius:20");
+
     }
 }
 

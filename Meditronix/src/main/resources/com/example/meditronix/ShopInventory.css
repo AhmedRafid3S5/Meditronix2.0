@@ -5,85 +5,254 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
 #vpanel{
     /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
     /*-fx-background-color: linear-gradient(to top right, #77EED8, #9EABE4);/* Gradient from light blue to dark blue */
-    -fx-background-color: linear-gradient(to top right, #88c1e0, #cbdff8);
+    /*-fx-background-color: linear-gradient(to top right, #88c1e0, #cbdff8);
     -fx-background-radius: 5; /* Rounded corners */
-    -fx-border-radius: 5; /* Rounded corners for the border */
-    -fx-border-color: #a8cba8; /* Border color */
+    /*-fx-border-radius: 5; /* Rounded corners for the border */
+    /*-fx-border-color:#607D8B; /* Border color */
+
+    -fx-background-color:
+            linear-gradient(#0033ff, #8d40d3),
+            linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+            linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+            linear-gradient(to top right, #88c1e0, #d3e5f6);
+
+
+    -fx-background-insets: 0,1,1.5,2;
+    -fx-background-radius: 10,10,10,10;
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
 
 
 }
-.button{
+/* previous color gradient */
+/*.button {
     /*-fx-background-color: linear-gradient(to bottom, #e4eee4, rgba(28, 101, 81, 0.5)); /* Gradient from light blue to dark blue */
     /*-fx-background-color: linear-gradient(to bottom , #77EED8, rgba(131, 179, 234, 0.5));*/
-    -fx-background-color: linear-gradient(to bottom, #88c1e0,#e1e2e4);
+    /*-fx-background-color: linear-gradient(to bottom, #88c1e0,#e1e2e4);
     -fx-border-color: #ffffff; /* Border color */
-    -fx-border-width: 1; /* Border width */
+    /*-fx-border-width: 1; /* Border width
     -fx-border-radius: 20;
     -fx-background-radius: 20;
-}
-
-.button:hover,Update:hover,Add:hover{
-    -fx-background-color:#118ab2;
-}
 
 
+    -fx-background-color:
+            linear-gradient(#00d9ff, #5c00be),
+            linear-gradient(#ffeedd 0%, #ffeedd 20%, #66e3ff 100%),
+            linear-gradient(#ffeedd 0%, #ffeedd 20%, #88ffff 100%),
+            linear-gradient(to bottom left, #88c1e0 , #ffe4e4 );
+
+    -fx-background-insets: 0,1,2,3;
+        -fx-background-radius: 20,15,15,15;
+        -fx-border-color: white;
+        -fx-border-radius: 20;
+        -fx-text-fill: black;
+        -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
 
 
-#HPanel{
-    /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
-    /*-fx-background-color:background-color: #ffffb5;*/
-    /*-fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);
-    /* Gradient from light blue to dark blue */
-    -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6);
-    -fx-background-radius: 10; /* Rounded corners */
-    -fx-border-radius: 10; /* Rounded corners for the border */
-    -fx-border-color: #a8cba8; /* Border color */
-}
+}*/
 
-/* Text styles (adjust as needed) */
+    .button {
+
+
+        -fx-background-color:
+                linear-gradient(#0033ff, #8d40d3),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(to bottom left, #88c1e0 , #ffe4e4 );
+
+
+        -fx-background-insets: 0,1,2,3;
+        -fx-background-radius: 20,15,15,15;
+        -fx-border-color: white;
+        -fx-border-radius: 20;
+        -fx-text-fill: black;
+        -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
+        -fx-cursor: hand;
+    }
+
+
+    .button:hover {
+        -fx-background-color: #7aaae0;
+
+    }
+
+
+    #HPanel {
+        /*-fx-background-color: rgba(131, 179, 234, 0.5); /* Light green color with transparency */
+        /*-fx-background-color:background-color: #ffffb5;*/
+        /*-fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);
+        /* Gradient from light blue to dark blue */
+       /* -fx-background-color: linear-gradient(to bottom right, #88c1e0, #d3e5f6);
+        -fx-background-radius: 10; /* Rounded corners */
+        -fx-border-radius: 10; /* Rounded corners for the border */
+        /*-fx-border-color: #607D8B; /* Border color */
+        -fx-background-color:
+                linear-gradient(#0033ff, #8d40d3),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(to bottom right, #88c1e0, #d3e5f6);
+
+
+        -fx-background-insets: 0,1,2,3;
+        -fx-background-radius: 10,10,10,10;
+        -fx-border-color: white;
+        -fx-border-radius: 10;
+        -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
+    }
+
+
+
+
+    #addButton:hover {
+        -fx-background-color: #66ea48;
+    }
+
+/* Text styles (adjust as needed)
+
 .table-text {
-    -fx-fill: rgba(0, 0, 0, 0.8); /* Darker gray text for better readability */
+    -fx-fill: rgba(0, 0, 0, 0.8);
 }
 
 .table-view {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-background-color: #81e0f3;
-    -fx-border-color: #ddd;
+    -fx-border-color: #4939be;
     -fx-border-width: 1px;
     -fx-table-cell-border-color: rgba(27, 100, 83, 0.5);
-    -fx-border-radius: 10; /* Rounded corners for the border */
-    -fx-background-radius: 10;
 
 }
 
 
-#addButton:hover{
-    -fx-background-color: #66ea48;
+    .table-row-cell:even {
+        -fx-background-color: #cde4f6;
+    }
+
+    .table-row-cell:odd {
+        -fx-background-color: #cde4f6;
+    }
+
+
+
+    .column-header {
+        -fx-border-radius: 5;
+        -fx-border-color: #19b0e5;
+        -fx-background-color: #88c1e0;
+        -fx-text-fill: black;
+        -fx-font-weight: bold;
+    }
+
+    .table-row-cell:selected {
+        /* -fx-background-color: rgba(87, 224, 188, 0.5); *
+        -fx-background-color: #118ab2;
+    }*/
+
+/* General table text */
+.table-text {
+    -fx-fill: rgba(0, 0, 0, 0.87); /* Slightly darker for better readability */
 }
 
+/* TableView styling */
+.table-view {
+    -fx-border-radius: 8; /* More subtle rounded corners */
+    -fx-background-radius: 8;
+    -fx-background-color: #f0f4f8; /* Light gray-blue background for a modern look */
+    -fx-border-color: #1e88e5; /* Consistent with your existing color scheme */
+    -fx-border-width: 1px;
+    -fx-table-cell-border-color: rgba(27, 100, 83, 0.2); /* Lighter cell borders for subtle separation */
+}
 
-
+/* Row styling for alternating colors */
 .table-row-cell:even {
-    -fx-background-color: #cde4f6;
-}
-.table-row-cell:odd {
-    -fx-background-color: #e9eff3;
+    -fx-background-color: #e3f2fd; /* Light blue for alternating rows */
 }
 
+.table-row-cell:odd {
+    -fx-background-color: #f0f4f8; /* Light gray-blue for alternating rows */
+}
+
+/* Column header styling */
 .column-header {
-    -fx-background-color: #77caee;
-    -fx-text-fill: black;
+    -fx-border-radius: 5;
+    -fx-border-color: #1e88e5; /* Consistent with table border */
+    -fx-background-color: #1976d2; /* Darker blue for headers */
+    -fx-background-radius: 5;
+    -fx-text-fill: white; /* White text for better contrast */
     -fx-font-weight: bold;
 }
 
+/* Selected row styling */
 .table-row-cell:selected {
-    -fx-background-color: rgba(87, 224, 188, 0.5);
+    -fx-background-color: #42a5f5; /* Brighter blue for selected row */
+    -fx-text-fill: white; /* White text for better readability on selected row */
 }
 
-#addPanel,#updatePanel{
-   /* -fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);*/
-    -fx-background-color: linear-gradient(to bottom right, #88c1e0,#d3e5f6);
+    #addPanel, #updatePanel,searchPanel {
+        /*-fx-background-color: linear-gradient(to bottom right, #88c1e0, #d3e5f6);
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 6, 0, 0, 3);*/
+        /*For testing*/
+        -fx-background-color:
+                linear-gradient(#0033ff, #8d40d3),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(to bottom right, #88c1e0, #d3e5f6);
+
+
+        -fx-background-insets: 0,1,2,3;
+        -fx-background-radius: 20,15,15,15;
+        -fx-border-color: white;
+        -fx-border-radius: 20;
+        -fx-text-fill: black;
+        -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
+    }
+
+    #addHboxPanel {
+        -fx-background-color: linear-gradient(to bottom right, #88c1e0, #d3e5f6);
+    }
+#toolbar {
+    -fx-background-color: linear-gradient(to right, #4A00E0, #8E2DE2);
+    -fx-background-radius: 10;
+    -fx-text-fill: #fdfbfb;
+}
+.menu-bar .menu  {
+    -fx-text-fill: #fdfbfb;  /* Light gray almost white text color */
+    -fx-font-weight: bold;
 }
 
-#addHboxPanel{
-    -fx-background-color: linear-gradient(to bottom right, #77EED8, #9EABE4);
-}
+
+
+    .choice-box {
+        -fx-pref-width: 150;
+        -fx-border-color: #607D8B;
+        -fx-border-width: 1px;
+        -fx-border-radius: 5px;
+    }
+
+    .choice-box.list-cell:showing {
+        -fx-text-fill: #fdfdfd;
+        -fx-pref-width: 150;
+        -fx-border-color: #607D8B;
+    }
+
+    .choice-box.list-cell:selected {
+        -fx-background-color: #118ab2;
+        -fx-text-fill: white;
+    }
+
+    #StockSettingBox {
+        -fx-background-color:
+                linear-gradient(#0033ff, #8d40d3),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(to bottom left, #88c1e0 , #ffe4e4 );
+
+
+        -fx-background-insets: 0,1,2,3;
+        -fx-background-radius: 20,15,15,15;
+        -fx-border-color: white;
+        -fx-border-radius: 20;
+        -fx-text-fill: black;
+        -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
+    }
+
