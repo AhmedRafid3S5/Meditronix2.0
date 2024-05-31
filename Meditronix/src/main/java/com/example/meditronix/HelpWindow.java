@@ -65,6 +65,17 @@ public class HelpWindow implements Initializable {
             questionPane6= fxmlLoader6.load();
 
 
+            FXMLLoader fxmlLoader7 = new FXMLLoader(getClass().getResource("infoPane.fxml"));
+            Pane questionPane7 = null; // Load content into a Pane
+
+            questionPane7= fxmlLoader7.load();
+
+            FXMLLoader fxmlLoader8 = new FXMLLoader(getClass().getResource("infoPane.fxml"));
+            Pane questionPane8 = null; // Load content into a Pane
+
+            questionPane8= fxmlLoader8.load();
+
+
         //Retrieve controller instances of each pane
         InfoPaneController FAQ1 = fxmlLoader1.getController();
         InfoPaneController FAQ2 = fxmlLoader2.getController();
@@ -72,6 +83,8 @@ public class HelpWindow implements Initializable {
         InfoPaneController FAQ4 = fxmlLoader4.getController();
         InfoPaneController FAQ5 = fxmlLoader5.getController();
         InfoPaneController FAQ6 = fxmlLoader6.getController();
+        InfoPaneController FAQ7 = fxmlLoader7.getController();
+        InfoPaneController FAQ8 = fxmlLoader8.getController();
 
         //Add questions and answers
         FAQ1.setQuestion("How to delete a medicine from inventory?");
@@ -107,13 +120,30 @@ public class HelpWindow implements Initializable {
                 "same dose,expiry, type and name as an existing one, the added medicine is added to the existing record . Do keep " +
                 "in mind that the price will be equal to the new price of the added medicine." +
                 "  If no such record exists, this medicine will be considered a new entry and added as a new row.");
+
+
+            FAQ7.setQuestion("How updating works");
+            FAQ7.setAnswer("Fist select a medicine from the table you want to update. You can click on the medicin and hover the cursor" +
+                    " to reveal its current index in the inventory. Then click on update to modify any data. Want to continue updating? " +
+                    "You can type in the index and update the specific medicine. To exit, click on the update button again.");
+            FAQ7.setParent(this);
+
+            FAQ8.setQuestion("How to use the search panel");
+            FAQ8.setAnswer("Click on the search button. Then select the type of search you want to perform. " +
+                    "In Search by name mode, type an uppercase letter to find medicines starting with those characters " +
+                    "Any lowercase letter search will search for medicines with that substring. " +
+                    "You can see the date a medicine was added in and search medicines by name, date, dose or combinations there of."
+            );
+            FAQ8.setParent(this);
         // Add the Pane to the VBox
         helpBox.getChildren().addAll(questionPane,questionPane2,questionPane3,
-                                     questionPane4,questionPane5,questionPane6);
+                                     questionPane4,questionPane5,questionPane6,questionPane7,questionPane8);
 
         // Adjust layout to accommodate the added Pane
         helpBox.layout();
-        updatePositions();
+            scrollField.setContent(helpBox);
+            scrollField.layout();
+            updatePositions();
 
         } catch (IOException e) {
             throw new RuntimeException(e);

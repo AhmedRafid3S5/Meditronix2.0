@@ -17,19 +17,75 @@
 
 <AnchorPane prefHeight="722.0" prefWidth="957.0" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.ShopMenu">
    <children>
-      <MenuBar fx:id="toolbar" layoutY="1.0" prefHeight="34.0" prefWidth="986.0">
+      <MenuBar fx:id="toolbar" layoutY="1.0" prefHeight="34.0" prefWidth="986.0" stylesheets="@ShopInventory.css">
         <menus>
           <Menu fx:id="Settings" mnemonicParsing="false" text="Settings">
             <items>
-                  <MenuItem fx:id="stockSettings" mnemonicParsing="false" onAction="#onLowStockSettingClicked" text="Set low stock value" />
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="stockSettings" mnemonicParsing="false" onAction="#onLowStockSettingClicked" text="Set low stock value">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/icons8-stock-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-settings-80.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
           </Menu>
           <Menu fx:id="Help" mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id="howToUse" mnemonicParsing="false" onAction="#onHowToUseClicked" text="How to use?" />
+              <MenuItem fx:id="howToUse" mnemonicParsing="false" onAction="#onHowToUseClicked" text="How to use?">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/icons8-question-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-help-80.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
           </Menu>
+            <Menu mnemonicParsing="false" text="Accounts">
+              <items>
+                <MenuItem fx:id="changeCredentials" mnemonicParsing="false" text="Change credentials">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/icons8_Slider__32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logout" text="Logout">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/icons8_Sign_Out_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+              </items>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-test-account-80.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Menu>
         </menus>
          <effect>
             <Blend />

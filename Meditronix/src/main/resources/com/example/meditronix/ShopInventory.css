@@ -215,10 +215,17 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
     -fx-background-radius: 10;
     -fx-text-fill: #fdfbfb;
 }
-.menu-bar .menu  {
-    -fx-text-fill: #fdfbfb;  /* Light gray almost white text color */
+
+.menu .label {
+    -fx-text-fill: white; /* Change text color of Menu */
     -fx-font-weight: bold;
+    -fx-font-size: 14;
 }
+
+.menu-item .label {
+    -fx-text-fill: black; /* Change text color of MenuItem */
+}
+
 
 
 
@@ -249,9 +256,9 @@ background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%)
 
 
         -fx-background-insets: 0,1,2,3;
-        -fx-background-radius: 20,15,15,15;
+        -fx-background-radius: 5,2,2,2;
         -fx-border-color: white;
-        -fx-border-radius: 20;
+        -fx-border-radius: 5;
         -fx-text-fill: black;
         -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
     }

@@ -1,0 +1,14 @@
+.button{
+    -fx-border-color: transparent;
+
+    -fx-border-width: 0;
+}
+
+#helpBox{
+    -fx-background-color: linear-gradient( to bottom right,
+    #c9d6ff
+    ,#e2e2e2);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 4);
+    -fx-font-family: Arial;
+}
