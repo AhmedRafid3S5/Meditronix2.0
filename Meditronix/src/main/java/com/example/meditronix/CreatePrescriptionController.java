@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -130,6 +131,12 @@ public class CreatePrescriptionController {
 
     private Random random = new Random();
 
+    private String name;
+    private String ageText;
+    private String gender;
+
+    LocalDateTime now = LocalDateTime.now();
+
     private String generatePrescriptionCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder code = new StringBuilder();
@@ -181,7 +188,7 @@ public class CreatePrescriptionController {
 
     @FXML
     void addPatient(ActionEvent event) {
-        String name = Name.getText();
+        name = Name.getText();
         String ageText = Age.getText();
         String gender = GenderCombobox.getSelectionModel().getSelectedItem();
 
@@ -200,7 +207,7 @@ public class CreatePrescriptionController {
 
 private void clearInputFields() {
     Name.clear();
-    Age.clear();
+    //Age.clear();
     //GenderCombobox.clear();
 }
     private boolean validateMedicineFields(String name, String dosage, String quantity, String frequency) {
@@ -426,42 +433,39 @@ private void clearInputFields() {
 
     @FXML
     void stopPrescription(ActionEvent event) {
-
-
         if (medicines.isEmpty()) {
             showErrorAlert("Please add medicine before creating a prescription.");
             return;
         }
 
-        //System.out.println("Prescription stopped.");
 
         // Generate prescription code
+        prescriptionCode = generatePrescriptionCode();
+        System.out.println("Prescription Code: " + prescriptionCode);
 
-            prescriptionCode = generatePrescriptionCode();
-            System.out.println("Prescription Code: " + prescriptionCode);
+        String ageText = Age.getText();
+        String gender = GenderCombobox.getSelectionModel().getSelectedItem();
 
 
-        // Create new table for prescription
-        database.createPrescriptionTable(prescriptionCode);
+
+        // Create new table for prescription and insert patient data
+        database.createPrescriptionTable(prescriptionCode, name, now, ageText, gender);
 
         // Insert medicine data into table
         for (Medicine medicine : medicines) {
             try {
                 int quantity = Integer.parseInt(medicine.getQuantity());
-                database.insertMedicineData(prescriptionCode, medicine.getName(), medicine.getDosage(), quantity, medicine.getFrequency());
+                database.insertMedicineData(prescriptionCode, medicine.getName(), medicine.getDosage(), quantity, medicine.getFrequency(), now);
             } catch (NumberFormatException e) {
                 showErrorAlert("Quantity must be a valid integer.");
             }
-
         }
 
         medicines.clear();
         medicineCount = 0;
-        if(medicineCount>=0) {
+        if (medicineCount >= 0) {
             MedicineCountLabel.setText("Medicine Count: " + medicineCount);
         }
-
-
     }
 
 

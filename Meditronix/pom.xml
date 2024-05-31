@@ -45,7 +45,21 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.33</version>
-    </dependency></dependencies>
+    </dependency>
+      <!-- https://mvnrepository.com/artifact/com.itextpdf/itext7-core -->
+      <dependency>
+          <groupId>com.itextpdf</groupId>
+          <artifactId>kernel</artifactId>
+          <version>7.2.1</version>
+      </dependency>
+      <dependency>
+          <groupId>com.itextpdf</groupId>
+          <artifactId>layout</artifactId>
+          <version>7.2.1</version>
+      </dependency>
+
+
+  </dependencies>
 
   <build>
     <plugins>
