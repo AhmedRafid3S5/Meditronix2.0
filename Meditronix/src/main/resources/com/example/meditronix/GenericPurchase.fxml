@@ -20,12 +20,12 @@
             <TableColumn fx:id="QuantityColumn" prefWidth="82.0" text="Quantity" />
         </columns>
       </TableView>
-      <TableView layoutX="524.0" layoutY="143.0" prefHeight="302.0" prefWidth="306.0">
+      <TableView fx:id="CartTable" layoutX="524.0" layoutY="143.0" prefHeight="302.0" prefWidth="306.0">
         <columns>
-          <TableColumn prefWidth="125.0" text="Name" />
-          <TableColumn prefWidth="58.0" text="Dosage" />
-            <TableColumn prefWidth="55.5" text="Quantity" />
-            <TableColumn prefWidth="66.5" text="Price" />
+          <TableColumn fx:id="CartNameColumn" prefWidth="125.0" text="Name" />
+          <TableColumn fx:id="CartDosageColumn" prefWidth="58.0" text="Dosage" />
+            <TableColumn fx:id="CartQuantityColumn" prefWidth="55.5" text="Quantity" />
+            <TableColumn fx:id="CartPriceColumn" prefWidth="66.5" text="Price" />
         </columns>
       </TableView>
       <Label alignment="CENTER" layoutX="30.0" layoutY="103.0" prefHeight="17.0" prefWidth="450.0" style="-fx-background-color: white;" text="Inventory">
@@ -38,8 +38,8 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Button layoutX="524.0" layoutY="510.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="153.0" text="Delete" />
-      <Button layoutX="286.0" layoutY="531.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="194.0" text="ADD" />
+      <Button fx:id="deleteButton" layoutX="524.0" layoutY="510.0" mnemonicParsing="false" onAction="#DeleteButtonPressed" prefHeight="46.0" prefWidth="153.0" text="Delete" />
+      <Button fx:id="AddToCart" layoutX="286.0" layoutY="531.0" mnemonicParsing="false" onAction="#AddToCartButtonPressed" prefHeight="25.0" prefWidth="194.0" text="ADD" />
       <Button layoutX="690.0" layoutY="510.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="146.0" text="Checkout" />
       <Label alignment="CENTER" layoutX="-5.0" layoutY="36.0" prefHeight="46.0" prefWidth="858.0" style="-fx-background-color: white;" text="GENERIC MEDICINES">
          <font>
@@ -57,6 +57,6 @@
             <Image url="@images/back.png" />
          </image>
       </ImageView>
-      <Label layoutX="638.0" layoutY="464.0" prefHeight="25.0" prefWidth="194.0" text="Subtotal : " />
+      <Label fx:id="subtotalLabel" layoutX="638.0" layoutY="464.0" prefHeight="25.0" prefWidth="194.0" text="Subtotal : " />
    </children>
 </Pane>

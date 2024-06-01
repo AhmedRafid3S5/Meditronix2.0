@@ -370,6 +370,7 @@ public class Database {
 
     }
 
+
     //SQL function to update a selected med in inventory
     public boolean updateMedicine(Medicine old_med,Medicine new_med,Connection con) throws SQLException {
         String updateSQL = "UPDATE `shop_inventory`\n" +
