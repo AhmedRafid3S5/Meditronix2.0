@@ -40,7 +40,7 @@
       </Label>
       <Button fx:id="deleteButton" layoutX="524.0" layoutY="510.0" mnemonicParsing="false" onAction="#DeleteButtonPressed" prefHeight="46.0" prefWidth="153.0" text="Delete" />
       <Button fx:id="AddToCart" layoutX="286.0" layoutY="531.0" mnemonicParsing="false" onAction="#AddToCartButtonPressed" prefHeight="25.0" prefWidth="194.0" text="ADD" />
-      <Button layoutX="690.0" layoutY="510.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="146.0" text="Checkout" />
+      <Button fx:id="Checkout" layoutX="690.0" layoutY="510.0" mnemonicParsing="false" onAction="#checkoutButtonPressed" prefHeight="46.0" prefWidth="146.0" text="Checkout" />
       <Label alignment="CENTER" layoutX="-5.0" layoutY="36.0" prefHeight="46.0" prefWidth="858.0" style="-fx-background-color: white;" text="GENERIC MEDICINES">
          <font>
             <Font name="Berlin Sans FB" size="41.0" />
