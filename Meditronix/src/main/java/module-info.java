@@ -4,6 +4,10 @@ module com.example.meditronix {
 
     requires org.kordamp.ikonli.javafx;
     requires java.sql;
+    requires kernel;
+    requires layout;
+    requires io;
+    requires java.desktop;
     //requires mysql.connector;
 
     opens com.example.meditronix to javafx.fxml;

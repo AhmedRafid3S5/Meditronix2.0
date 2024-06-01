@@ -466,6 +466,50 @@ public class Database {
 
     }
 
+    public boolean addMemo() throws SQLException {
+        Connection con = null;
+        Statement stmt = null;
+
+        try {
+            con = dbConnect();
+            stmt = con.createStatement();
+
+            // Insert a new row into the 'memos' table
+            String insertSql = "INSERT INTO memos () VALUES ()";
+            int rowsAffected = stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
+
+            return rowsAffected > 0; // Return true if insert was successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Return false if there was an error
+        } finally {
+            // Close resources
+            if (stmt != null) stmt.close();
+            if (con != null) con.close();
+        }
+    }
+
+
+    public int getLastMemoValue() throws SQLException {
+        Connection con = dbConnect();
+        Statement stmt = con.createStatement();
+
+        String sql = "SELECT No FROM memos ORDER BY No DESC LIMIT 1";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        int lastValue = -1;
+        if (rs.next()) {
+            lastValue = rs.getInt("No");
+        }
+
+        // Close resources
+        rs.close();
+        stmt.close();
+        con.close();
+
+        return lastValue;
+    }
+
 
     //SQL function to update a selected med in inventory
     public boolean updateMedicine(Medicine old_med,Medicine new_med,Connection con) throws SQLException {

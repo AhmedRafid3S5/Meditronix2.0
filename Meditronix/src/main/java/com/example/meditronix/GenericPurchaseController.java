@@ -1,5 +1,26 @@
 package com.example.meditronix;
 
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Cell;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,13 +34,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
+
 
 public class GenericPurchaseController implements Initializable {
 
@@ -70,6 +96,8 @@ public class GenericPurchaseController implements Initializable {
 
     @FXML
     private Button BackButton;
+    @FXML
+    private Button Checkout;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -233,5 +261,128 @@ public class GenericPurchaseController implements Initializable {
         }
         // Update the subtotal label with the calculated subtotal
         subtotalLabel.setText(String.format("Subtotal:        %.2f   Tk", subtotal));
+    }
+
+    @FXML
+    void checkoutButtonPressed(ActionEvent event) throws IOException {
+        try {
+            // Step 1: Call addMemo function
+            boolean memoAdded = GlobalDB.addMemo();
+
+            if (memoAdded) {
+                // Step 2: Get the last memo value
+                int lastMemoValue = GlobalDB.getLastMemoValue();
+
+                // Step 3: Generate the PDF
+                generatePdfForCart(lastMemoValue);
+
+                showCheckoutSuccessAlert("Checkout Successful", "Your cart has been checked out and a memo has been generated.");
+            } else {
+                showAlert("Checkout Failed", "Failed to add memo. Please try again.");
+            }
+        } catch (SQLException | FileNotFoundException e) {
+            e.printStackTrace();
+            showAlert("Error", "An error occurred during checkout. Please try again.");
+        }
+
+        //Back to previous menu
+        Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("PurchaseTypeSelection.fxml")));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene((Parent) root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+
+    public void showCheckoutSuccessAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, content, ButtonType.OK);
+        alert.setTitle(title);
+        alert.setHeaderText("Thank You FOr Your Purchase");
+        alert.showAndWait();
+    }
+    private void generatePdfForCart(int memoNo) throws FileNotFoundException {
+        String dest = "memos/" + memoNo + ".pdf";
+        PdfWriter writer = new PdfWriter(dest);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        try {
+            PdfFont boldFont = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
+            PdfFont regularFont = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+
+            // Add heading "Meditronix"
+            Paragraph heading = new Paragraph("Meditronix")
+                    .setFont(boldFont)
+                    .setFontSize(48)
+                    .setTextAlignment(TextAlignment.CENTER);
+            document.add(heading);
+
+            // Get current date and time
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter);
+
+            // Add title "Memo No: <memoNo>" and current date and time
+            Paragraph title = new Paragraph("Invoice No: " + memoNo + "\nTime: " + formattedDateTime)
+                    .setFont(regularFont)
+                    .setFontSize(12)
+                    .setTextAlignment(TextAlignment.LEFT)
+                    .setMarginBottom(20);
+            document.add(title);
+
+            // Create a table with the same columns as the cartTable
+            Table table = new Table(UnitValue.createPercentArray(new float[]{2, 2, 2, 2}))
+                    .useAllAvailableWidth()
+                    .setMarginBottom(20);
+
+            // Add header row with custom formatting
+            table.addHeaderCell(new Cell().add(new Paragraph("Name").setFont(boldFont).setFontSize(12).setPadding(5)).setBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.addHeaderCell(new Cell().add(new Paragraph("Dose").setFont(boldFont).setFontSize(12).setPadding(5)).setBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.addHeaderCell(new Cell().add(new Paragraph("Quantity").setFont(boldFont).setFontSize(12).setPadding(5)).setBackgroundColor(ColorConstants.LIGHT_GRAY));
+            table.addHeaderCell(new Cell().add(new Paragraph("Price").setFont(boldFont).setFontSize(12).setPadding(5)).setBackgroundColor(ColorConstants.LIGHT_GRAY));
+
+            // Calculate subtotal
+            float subtotal = 0;
+
+            // Add rows from cartList with custom formatting
+            for (Medicine medicine : cartList) {
+                table.addCell(new Cell().add(new Paragraph(medicine.getName()).setFont(regularFont).setFontSize(12).setPadding(5)));
+                table.addCell(new Cell().add(new Paragraph(medicine.getDose()).setFont(regularFont).setFontSize(12).setPadding(5)));
+                table.addCell(new Cell().add(new Paragraph(medicine.getQuantity().toString()).setFont(regularFont).setFontSize(12).setPadding(5)));
+                table.addCell(new Cell().add(new Paragraph(medicine.getPrice().toString()).setFont(regularFont).setFontSize(12).setPadding(5)));
+                subtotal += medicine.getQuantity() * medicine.getPrice();
+            }
+
+            // Add table to document
+            document.add(table);
+
+            // Add subtotal to document
+            Paragraph subtotalParagraph = new Paragraph("Subtotal: " + subtotal + "  Tk")
+                    .setFont(boldFont)
+                    .setFontSize(12)
+                    .setTextAlignment(TextAlignment.RIGHT);
+            document.add(subtotalParagraph);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // Close document
+            document.close();
+        }
+
+        String filePath =  "memos/" + memoNo + ".pdf";
+
+        try {
+            File file = new File(filePath);
+
+            if (file.exists()) {
+                Desktop.getDesktop().open(file);
+            } else {
+                System.out.println("The specified file does not exist.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
