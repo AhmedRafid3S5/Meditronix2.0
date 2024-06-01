@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.DoctorMenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722" prefWidth="957" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.DoctorMenuController">
    <children>
-      <Label alignment="CENTER" layoutY="3.0" prefHeight="56.0" prefWidth="600.0" text="DOCTOR MENU" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="27.0" />
-         </font>
-      </Label>
-      <Button fx:id="createprescription" layoutY="121.0" mnemonicParsing="false" onAction="#createPrescription" prefHeight="279.0" prefWidth="200.0" text="Create Prescription" />
-      <Button fx:id="viewPrescription" layoutX="200.0" layoutY="121.0" mnemonicParsing="false" onAction="#viewPrescription" prefHeight="279.0" prefWidth="200.0" text="View Prescription" />
-      <Button fx:id="searchpatient" layoutX="400.0" layoutY="121.0" mnemonicParsing="false" onAction="#searchPatient" prefHeight="279.0" prefWidth="200.0" text="Search Patient" />
+      <VBox prefHeight="722.0" prefWidth="951.0">
+         <children>
+            <HBox prefHeight="36.0" prefWidth="951.0">
+               <children>
+                  <Label text="Meditronix">
+                     <font>
+                        <Font name="Cambria Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="4.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="181.0" prefWidth="951.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="431.0" text="DOCTOR MENU">
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="createprescription" layoutX="94.0" layoutY="190.0" mnemonicParsing="false" onAction="#createPrescription" prefHeight="279.0" prefWidth="200.0" styleClass="root" text="Create Prescription" />
+      <Button fx:id="viewPrescription" layoutX="327.0" layoutY="190.0" mnemonicParsing="false" onAction="#viewPrescription" prefHeight="279.0" prefWidth="200.0" text="View Prescription" />
+      <Button fx:id="searchpatient" layoutX="572.0" layoutY="190.0" mnemonicParsing="false" onAction="#searchPatient" prefHeight="279.0" prefWidth="200.0" text="Search Patient" />
    </children>
 </Pane>

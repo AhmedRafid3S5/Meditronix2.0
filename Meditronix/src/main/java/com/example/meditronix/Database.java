@@ -1,6 +1,7 @@
 package com.example.meditronix;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,6 +12,8 @@ import javafx.util.Duration;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Database {
 
@@ -273,20 +276,54 @@ public class Database {
     }
 
     //to create a new table for a prescription
-    public void createPrescriptionTable(String prescriptionCode) {
+    public void createPrescriptionTable(String prescriptionCode, String patientName, LocalDateTime dateTime, String age, String gender) {
         try {
             Connection con = dbConnect();
             Statement stmt = con.createStatement();
+
+            System.out.println("Prescription table created: " + prescriptionCode);
+            System.out.println("passed patient name in creatprestablefunction: " + patientName);
 
             // Create a new table for the prescription
             String sql = "CREATE TABLE IF NOT EXISTS " + prescriptionCode + " (" +
                     "medicine_name VARCHAR(255), " +
                     "dosage VARCHAR(50), " +
                     "quantity INT, " +
-                    "frequency VARCHAR(50))";
+                    "frequency VARCHAR(50), " +
+                    "generated_date DATE, " +
+                    "generated_time TIME)";
             stmt.executeUpdate(sql);
 
-            System.out.println("Prescription table created: " + prescriptionCode);
+
+
+            // Insert patient data into the 'patients' table
+            insertPatientDataIntoPatients(prescriptionCode, patientName, dateTime, age, gender);
+
+            // Close resources
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertPatientDataIntoPatients(String prescriptionCode, String patientName, LocalDateTime dateTime, String age, String gender) {
+        try {
+            Connection con = dbConnect();
+            System.out.println("Passed patient name in insertPatientDataIntoPatients function: " + patientName);
+
+            // Insert patient data into the 'patients' table with date, time, age, and gender
+            String sql = "INSERT INTO patients (uniqueid, name, age, gender, generated_date, generated_time) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, prescriptionCode);
+            stmt.setString(2, patientName);
+            stmt.setString(3, age); // Set the age value
+            stmt.setString(4, gender); // Set the gender value
+            stmt.setDate(5, java.sql.Date.valueOf(dateTime.toLocalDate()));
+            stmt.setTime(6, java.sql.Time.valueOf(dateTime.toLocalTime()));
+            stmt.executeUpdate();
+
+            System.out.println("Patient data inserted into 'patients' table: " + patientName);
 
             // Close resources
             stmt.close();
@@ -297,18 +334,20 @@ public class Database {
     }
 
     //to insert medicine data into the prescription table
-    public void insertMedicineData(String prescriptionCode, String medicineName, String dosage, int quantity, String frequency) {
+    public void insertMedicineData(String prescriptionCode, String medicineName, String dosage, int quantity, String frequency, LocalDateTime dateTime) {
         try {
             Connection con = dbConnect();
 
-            // Insert medicine data into the prescription table
-            String sql = "INSERT INTO " + prescriptionCode + " (medicine_name, dosage, quantity, frequency) " +
-                    "VALUES (?, ?, ?, ?)";
+            // Insert medicine data into the prescription table with date and time
+            String sql = "INSERT INTO " + prescriptionCode + " (medicine_name, dosage, quantity, frequency, generated_date, generated_time) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, medicineName);
             pstmt.setString(2, dosage);
             pstmt.setInt(3, quantity);
             pstmt.setString(4, frequency);
+            pstmt.setDate(5, java.sql.Date.valueOf(dateTime.toLocalDate())); // Convert LocalDateTime to Date
+            pstmt.setTime(6, java.sql.Time.valueOf(dateTime.toLocalTime())); // Convert LocalDateTime to Time
             pstmt.executeUpdate();
 
             System.out.println("Medicine data inserted into prescription table: " + prescriptionCode);
@@ -319,6 +358,62 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Prescription> getPrescriptionCodesByPatientName(String patientName) {
+        List<Prescription> prescriptions = new ArrayList<>();
+        try (Connection conn = dbConnect();
+             PreparedStatement stmt = conn.prepareStatement("SELECT LOWER(uniqueid) AS uniqueid, generated_date, generated_time FROM patients WHERE name = ?")) {
+            stmt.setString(1, patientName);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String uniqueId = rs.getString("uniqueid");
+                Date generatedDate = rs.getDate("generated_date");
+                Time generatedTime = rs.getTime("generated_time");
+                prescriptions.add(new Prescription(uniqueId, generatedDate, generatedTime));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return prescriptions;
+    }
+
+
+    //to retrieve patient name age gender for prescription
+    public PatientDataPrescription getPatientData(String prescriptionCode) {
+        try (Connection conn = dbConnect();
+             PreparedStatement stmt = conn.prepareStatement("SELECT name, age, gender FROM patients WHERE uniqueid = ?")) {
+            stmt.setString(1, prescriptionCode.toLowerCase());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString("name");
+                String age = rs.getString("age");
+                String gender = rs.getString("gender");
+                return new PatientDataPrescription(name, age, gender);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //to retrive medicine data for prescription
+    public ObservableList<MedicineDataPrescription> getMedicineData(String prescriptionCode) {
+        ObservableList<MedicineDataPrescription> medicineDataList = FXCollections.observableArrayList();
+        try (Connection conn = dbConnect();
+             PreparedStatement stmt = conn.prepareStatement("SELECT medicine_name, dosage, quantity, frequency FROM " + prescriptionCode)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String medicineName = rs.getString("medicine_name");
+                String dosage = rs.getString("dosage");
+                int quantity = rs.getInt("quantity");
+                String frequency = rs.getString("frequency");
+                medicineDataList.add(new MedicineDataPrescription(medicineName, dosage, quantity, frequency));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return medicineDataList;
     }
 
     // to delete medicine data from the database
@@ -343,8 +438,9 @@ public class Database {
 
 
 
+
     // to delete patient data from the database
-    public void deletePatientData(String patientName) {
+   /* public void deletePatientData(String patientName) {
         String sql = "DELETE FROM PatientTable WHERE Name = ?";
         try (Connection conn = dbConnect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -354,7 +450,7 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Error deleting patient data from the database: " + e.getMessage());
         }
-    }
+    }*/
 
 
 
