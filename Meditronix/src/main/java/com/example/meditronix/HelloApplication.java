@@ -16,11 +16,13 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MainScreen.fxml"));
+       // FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PurchaseTypeSelection.fxml"));
         //Scene scene = new Scene(fxmlLoader.load(), 760, 510);
 
         //For dev, use this entry point
         Scene scene = new Scene(fxmlLoader.load(), 767,510);
         String css = "src/main/resources/com/example/meditronix/ShopInventory.css";
+
         scene.getStylesheets().add(css);
 
         InputStream inputStream = getClass().getResourceAsStream("images/medical-team.png");

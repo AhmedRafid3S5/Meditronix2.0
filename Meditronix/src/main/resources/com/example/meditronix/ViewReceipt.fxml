@@ -6,11 +6,12 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.ViewReceiptController">
    <children>
       <RadioButton layoutX="76.0" layoutY="129.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="116.0" text="Invoice No" />
       <RadioButton layoutX="76.0" layoutY="169.0" mnemonicParsing="false" text="Prescription Code" />
@@ -34,5 +35,11 @@
          </font>
       </Label>
       <Label alignment="CENTER_RIGHT" layoutX="286.0" layoutY="432.0" prefHeight="35.0" prefWidth="457.0" text="SUBTOTAL : " />
+      <Button fx:id="backfromreceiptview" layoutX="28.0" layoutY="25.0" mnemonicParsing="false" onAction="#Backfromreceiptviewpress" prefHeight="65.0" prefWidth="85.0" />
+      <ImageView fitHeight="44.0" fitWidth="48.0" layoutX="47.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/back.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

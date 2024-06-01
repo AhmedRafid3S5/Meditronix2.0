@@ -215,7 +215,8 @@ public class MainScreen implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userNameInput.setStyle("-fx-text-fill: #0e0707;");
-        userNameInput.setStyle("-fx-background-radius: 20");
+        userNameInput.setStyle("-fx-background-radius:20");
+
     }
 }
 

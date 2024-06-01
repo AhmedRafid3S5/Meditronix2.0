@@ -28,6 +28,14 @@ public class Medicine {
         //set to a default status since status is handled on a system level
         this.status = "Undefined";
     }
+    public Medicine(String name, String dose, Float quantity ,Float price) {
+        this.Name = name;
+        this.Dose = dose;
+        this.price = price;
+        this.Quantity = quantity;
+        //set to a default status since status is handled on a system level
+        this.status = "Undefined";
+    }
 
     public Medicine(ResultSet rs) throws SQLException {
         this.Name = rs.getString("Name");
@@ -80,4 +88,5 @@ public class Medicine {
     }
 
     public void setStatus(String s){this.status = s;}
+    public void setQuantity(float quantity) { this.Quantity = quantity; }
 }
