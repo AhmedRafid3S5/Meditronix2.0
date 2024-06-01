@@ -28,6 +28,7 @@ public class PurchaseTypeSelectorController {
     @FXML
     private Button ReceiptButton;
 
+
     @FXML
     private void BackButtonPress(ActionEvent event) throws IOException {
         Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));
@@ -60,6 +61,17 @@ public class PurchaseTypeSelectorController {
     @FXML
     private void MemoButtonPressed(ActionEvent event) throws IOException {
         Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ViewReceipt.fxml")));
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene((Parent) root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    @FXML
+    void viewPrescriptionPressed(ActionEvent event) throws IOException {
+        Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("CustomerViewPrescription.fxml")));
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene((Parent) root);

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="533.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.CustomerViewPrescription">
+   <children>
+      <Label layoutX="220.0" layoutY="31.0" prefHeight="39.0" prefWidth="245.0" text="View Prescription ">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="99.0" text="Prescription Code:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="prescriptionCode" layoutX="220.0" layoutY="95.0" onAction="#prescriptionCodeTfPressed" />
+      <Button fx:id="loadPrescriptionButton" layoutX="413.0" layoutY="95.0" mnemonicParsing="false" onAction="#loadPrescriptionButtonPressed" text="Load Prescription" />
+      <Label layoutX="87.0" layoutY="142.0" prefHeight="6.0" prefWidth="108.0" text="Patient Info:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="172.0" text="Name:" />
+      <Label layoutX="87.0" layoutY="203.0" text="Age:" />
+      <Label layoutX="87.0" layoutY="232.0" text="Gender: " />
+      <Label fx:id="nameLabel" layoutX="141.0" layoutY="168.0" prefHeight="25.0" prefWidth="216.0" />
+      <Label fx:id="ageLabel" layoutX="141.0" layoutY="200.0" prefHeight="20.0" prefWidth="90.0" />
+      <Label fx:id="genderLabel" layoutX="141.0" layoutY="231.0" prefHeight="20.0" prefWidth="90.0" />
+      <TableView fx:id="medTable" layoutX="87.0" layoutY="298.0" prefHeight="152.0" prefWidth="521.0">
+        <columns>
+          <TableColumn fx:id="medNameColumn" prefWidth="164.00000762939453" text="Name" />
+          <TableColumn fx:id="medDosageColumn" prefWidth="110.4000244140625" text="Dosage" />
+            <TableColumn fx:id="medQuantityColumn" prefWidth="128.800048828125" text="Quantity" />
+            <TableColumn fx:id="medFrequencyColumn" prefWidth="114.60000610351562" text="Frequency" />
+        </columns>
+      </TableView>
+      <Label layoutX="87.0" layoutY="266.0" prefHeight="6.0" prefWidth="108.0" text="Medicine Info:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="downloadPDF" layoutX="85.0" layoutY="476.0" mnemonicParsing="false" onAction="#downloadPDFPressed" prefHeight="25.0" prefWidth="108.0" text="Download PDF" />
+      <Button fx:id="backButton" layoutX="556.0" layoutY="476.0" mnemonicParsing="false" onAction="#backButtonPressed" text="Back" />
+   </children>
+</Pane>

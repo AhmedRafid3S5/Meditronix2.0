@@ -20,8 +20,6 @@ public class DoctorMenuController {
     @FXML
     private Button createPrescription;
 
-    @FXML
-    private Button searchPatient;
 
     @FXML
     private Button viewPrescription;
@@ -30,20 +28,6 @@ public class DoctorMenuController {
     void createPrescription(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreatePrescription.fxml"));
-            Parent root = fxmlLoader.load();
-            scene = new Scene(root);
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void searchPatient(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SearchPatient.fxml"));
             Parent root = fxmlLoader.load();
             scene = new Scene(root);
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

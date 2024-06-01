@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -102,6 +103,15 @@ public class ViewPrescriptionController {
             });
             return row;
         });
+
+        searchpatientnametf.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                List<String> suggestions = database.getPatientNameSuggestions(newValue);
+                showSuggestions(suggestions);
+            } else {
+                hideSuggestions();
+            }
+        });
     }
 
     private void openPrescriptionScene(String prescriptionCode) {
@@ -120,4 +130,35 @@ public class ViewPrescriptionController {
             e.printStackTrace();
         }
     }
+
+    private void showSuggestions(List<String> suggestions) {
+        // Create a new ListView to display the suggestions
+        ListView<String> suggestionsListView = new ListView<>();
+        suggestionsListView.getItems().addAll(suggestions);
+
+        // Set the size and position of the ListView
+        suggestionsListView.setPrefWidth(searchpatientnametf.getWidth());
+        suggestionsListView.setPrefHeight(100);
+        suggestionsListView.setLayoutX(searchpatientnametf.getLayoutX());
+        suggestionsListView.setLayoutY(searchpatientnametf.getLayoutY() + searchpatientnametf.getHeight());
+
+        // Add an event handler to handle selection of a suggestion
+        suggestionsListView.setOnMouseClicked(event -> {
+            String selectedSuggestion = suggestionsListView.getSelectionModel().getSelectedItem();
+            if (selectedSuggestion != null) {
+                searchpatientnametf.setText(selectedSuggestion);
+                hideSuggestions();
+            }
+        });
+
+        // Add the ListView to the scene
+        ((Pane) searchpatientnametf.getParent()).getChildren().add(suggestionsListView);
+    }
+
+    private void hideSuggestions() {
+        // Remove the ListView from the scene
+        ((Pane) searchpatientnametf.getParent()).getChildren().removeIf(node -> node instanceof ListView);
+    }
+
+
 }

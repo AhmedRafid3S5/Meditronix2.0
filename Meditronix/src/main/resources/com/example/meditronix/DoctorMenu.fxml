@@ -35,8 +35,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="createprescription" layoutX="94.0" layoutY="190.0" mnemonicParsing="false" onAction="#createPrescription" prefHeight="279.0" prefWidth="200.0" styleClass="root" text="Create Prescription" />
-      <Button fx:id="viewPrescription" layoutX="327.0" layoutY="190.0" mnemonicParsing="false" onAction="#viewPrescription" prefHeight="279.0" prefWidth="200.0" text="View Prescription" />
-      <Button fx:id="searchpatient" layoutX="572.0" layoutY="190.0" mnemonicParsing="false" onAction="#searchPatient" prefHeight="279.0" prefWidth="200.0" text="Search Patient" />
+      <Button fx:id="createprescription" layoutX="194.0" layoutY="190.0" mnemonicParsing="false" onAction="#createPrescription" prefHeight="279.0" prefWidth="200.0" styleClass="root" text="Create Prescription" />
+      <Button fx:id="viewPrescription" layoutX="581.0" layoutY="190.0" mnemonicParsing="false" onAction="#viewPrescription" prefHeight="279.0" prefWidth="200.0" text="View Prescription" />
    </children>
 </Pane>

@@ -32,7 +32,7 @@
             <Font name="Arial Narrow Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="PrescriptionButton" layoutX="393.0" layoutY="316.0" mnemonicParsing="false" prefHeight="185.0" prefWidth="375.0" text="VIEW PRESCRIPTIONS">
+      <Button fx:id="PrescriptionButton" layoutX="393.0" layoutY="316.0" mnemonicParsing="false" onAction="#viewPrescriptionPressed" prefHeight="185.0" prefWidth="375.0" text="VIEW PRESCRIPTIONS">
          <font>
             <Font name="Arial Narrow Bold" size="20.0" />
          </font>
