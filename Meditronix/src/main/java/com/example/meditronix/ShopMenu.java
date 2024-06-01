@@ -577,4 +577,10 @@ public class ShopMenu implements Initializable {
       stage.show();
    }
 
+   @FXML
+   void onAccountsChangeCredentialsClicked(ActionEvent event) throws  IOException{
+      ChangeCredentialsController changeWindow = new ChangeCredentialsController();
+      changeWindow.onChangeCredentialsClicked(event);
+   }
+
 }

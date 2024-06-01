@@ -59,7 +59,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Accounts">
               <items>
-                <MenuItem fx:id="changeCredentials" mnemonicParsing="false" text="Change credentials">
+                <MenuItem fx:id="changeCredentials" mnemonicParsing="false" onAction="#onAccountsChangeCredentialsClicked" text="Change credentials">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
@@ -407,5 +408,60 @@ public class Database {
         return false;
 
     }
+
+    //SQL function to change password and username Date 2nd June
+    public boolean changeCredentials(Connection con, String currentUsername,String currentPassword,
+                                     String newUsername, String newPassword) throws SQLException {
+
+        String returned_username = null;
+        String returned_password = null;
+
+        String sql = "Select * From users where username = ? ";
+
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setString(1,currentUsername);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if(rs.next()){
+            returned_username = rs.getString("username");
+            returned_password = rs.getString("password");
+            
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error");
+            alert.setTitle("Account info");
+            alert.setContentText("Invalid changes or current username or passwaord invalid");
+            alert.showAndWait();
+            
+        }
+
+        if(returned_username.equals(currentUsername) && returned_password.equals(currentPassword)) {
+            String sql2 = "UPDATE users " +
+                    "SET username = ?, " +
+                    "password = ? " +
+                    "WHERE username = ?";
+
+            PreparedStatement update_stms = con.prepareStatement(sql2);
+
+            update_stms.setString(1, newUsername);
+            update_stms.setString(2, newPassword);
+            update_stms.setString(3, currentUsername);
+
+            int update = update_stms.executeUpdate();
+
+            if (update > 0)
+                return true;
+            else
+                return false;
+        }
+
+        return false;
+
+
+    }
+
 
 }
