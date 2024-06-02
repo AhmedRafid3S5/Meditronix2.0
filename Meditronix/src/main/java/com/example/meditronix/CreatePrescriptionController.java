@@ -3,6 +3,7 @@ package com.example.meditronix;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -589,6 +590,23 @@ public class CreatePrescriptionController {
         ((Pane) MedicineName.getParent()).getChildren().removeIf(node -> node instanceof ListView);
     }
 
+    private void showDosageSuggestions(List<String> dosages) {
+        ContextMenu contextMenu = new ContextMenu();
+        for (String dosage : dosages) {
+            MenuItem item = new MenuItem(dosage);
+            item.setOnAction(e -> Dosage.setText(dosage));
+            contextMenu.getItems().add(item);
+        }
+        Dosage.setContextMenu(contextMenu);
+        contextMenu.show(Dosage, Side.BOTTOM, 0, 0);
+    }
+
+    private void hideDosageSuggestions() {
+        if (Dosage.getContextMenu() != null) {
+            Dosage.getContextMenu().hide();
+        }
+    }
+
 
     @FXML
     public void initialize() {
@@ -617,6 +635,17 @@ public class CreatePrescriptionController {
                 showSuggestions(suggestions);
             } else {
                 hideSuggestions();
+            }
+        });
+
+        Dosage.textProperty().addListener((observable, oldValue, newValue) -> {
+            String medicineName = MedicineName.getText();
+            if (!medicineName.isEmpty()) {
+                List<String> dosages = database.getDosagesByMedicineName(medicineName);
+                showDosageSuggestions(dosages);
+            }
+            else {
+                hideDosageSuggestions();
             }
         });
 

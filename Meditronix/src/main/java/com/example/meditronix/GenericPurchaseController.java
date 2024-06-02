@@ -196,7 +196,7 @@ public class GenericPurchaseController implements Initializable {
     }
 
     @FXML
-    void AddToCartButtonPressed(ActionEvent event) {
+    void AddToCartButtonPressed(ActionEvent event) throws SQLException {
         Medicine selectedMedicine = GenericTable.getSelectionModel().getSelectedItem();
         Integer quantityValue = QuantityBox.getValue();
 
@@ -210,6 +210,12 @@ public class GenericPurchaseController implements Initializable {
         if (selectedMedicine == null) {
             showAlert("No Selection", "No medicine selected. Please select a medicine.");
         } else {
+            try (Connection con = GlobalDB.dbConnect()) {
+                if (GlobalDB.isMedicineExpired(selectedMedicine.getName(), selectedMedicine.getDose(), con)) {
+                    showAlert("Expired Stock","The selected medicine is expired.");
+                    return;
+                }
+            }
             if (selectedMedicine.getQuantity() >= selectedQuantity) {
                 // Calculate the new quantity
                 Float newQuantity = selectedMedicine.getQuantity() - selectedQuantity;
@@ -348,7 +354,7 @@ public class GenericPurchaseController implements Initializable {
         alert.showAndWait();
     }
     private void generatePdfForCart(int memoNo) throws FileNotFoundException {
-        String dest = "memos/" + memoNo + ".pdf";
+        String dest = "C:\\Users\\Rafid\\IdeaProjects\\Meditronix2.0-main-Merged\\Meditronix2.0-main\\Meditronix\\memos\\" + memoNo + ".pdf";
         PdfWriter writer = new PdfWriter(dest);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
@@ -417,7 +423,7 @@ public class GenericPurchaseController implements Initializable {
             document.close();
         }
 
-        String filePath =  "memos/" + memoNo + ".pdf";
+        String filePath = "C:\\Users\\Rafid\\IdeaProjects\\Meditronix2.0-main-Merged\\Meditronix2.0-main\\Meditronix\\memos\\" +memoNo+ ".pdf";
 
         try {
             File file = new File(filePath);

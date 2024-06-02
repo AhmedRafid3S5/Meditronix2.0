@@ -40,7 +40,7 @@ public class ViewReceiptController {
             int invoiceNumber = Integer.parseInt(invoiceNumberText);
 
             // Construct the file path for the PDF file
-            String filePath = "./memos/" + invoiceNumber + ".pdf";
+            String filePath = "C:\\Users\\Rafid\\IdeaProjects\\Meditronix2.0-main-Merged\\Meditronix2.0-main\\Meditronix\\memos\\" + invoiceNumber + ".pdf";
             File pdfFile = new File(filePath);
 
             // Check if the PDF file exists

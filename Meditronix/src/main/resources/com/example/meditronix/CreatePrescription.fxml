@@ -71,7 +71,6 @@
             <TableColumn fx:id="medfreqcol" prefWidth="72.60003662109375" text="Frequency" />
         </columns>
       </TableView>
-      <Button fx:id="removePatientButton" layoutX="386.0" layoutY="184.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Remove" />
       <ComboBox fx:id="GenderCombobox" layoutX="209.0" layoutY="184.0" onAction="#genderCbPressed" prefHeight="25.0" prefWidth="117.0" />
       <Label layoutX="587.0" layoutY="76.0" text="Entered Patient Info:">
          <font>

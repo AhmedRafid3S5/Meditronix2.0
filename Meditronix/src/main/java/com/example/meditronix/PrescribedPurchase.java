@@ -169,6 +169,12 @@ public class PrescribedPurchase implements Initializable {
                 showError("No medicine selected in the table.");
                 return;
             }
+            try (Connection con = GlobalDB.dbConnect()) {
+                if (GlobalDB.isMedicineExpired(selectedMedicine.getMedicineName(), selectedMedicine.getDosage(), con)) {
+                    showError("The selected medicine is expired.");
+                    return;
+                }
+            }
             if (quantityToAdd <= selectedMedicine.getQuantity()) {
                 float availableQuantity = GlobalDB.getMedicineQuantity("shop_inventory", selectedMedicine.getMedicineName(),selectedMedicine.getDosage());
                 if (quantityToAdd <= availableQuantity) {
@@ -254,7 +260,7 @@ public class PrescribedPurchase implements Initializable {
         alert.showAndWait();
     }
     private void generatePdfForCart(int memoNo) throws FileNotFoundException {
-        String dest = "memos/"+ memoNo + ".pdf";
+        String dest = "C:\\Users\\Rafid\\IdeaProjects\\Meditronix2.0-main-Merged\\Meditronix2.0-main\\Meditronix\\memos\\" + memoNo + ".pdf";
         PdfWriter writer = new PdfWriter(dest);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
@@ -323,7 +329,7 @@ public class PrescribedPurchase implements Initializable {
             document.close();
         }
 
-        String filePath =  "memos/" + memoNo + ".pdf";
+        String filePath = "C:\\Users\\Rafid\\IdeaProjects\\Meditronix2.0-main-Merged\\Meditronix2.0-main\\Meditronix\\memos\\" + memoNo + ".pdf";
 
         try {
             File file = new File(filePath);

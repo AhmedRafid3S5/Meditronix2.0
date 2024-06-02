@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
@@ -51,6 +52,9 @@ public class SearchPanelController implements Initializable {
 
     private String searchMode;
 
+    private Database localdb;
+    private Connection con;
+
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     ObservableList<String> Units = FXCollections.observableArrayList(
             Arrays.asList(units)
@@ -58,6 +62,8 @@ public class SearchPanelController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        localdb = new Database();
+        con = localdb.dbConnect();
         searchType.getItems().addAll(types);
         searchType.setOnAction(this::returnSearchType);
 
@@ -189,7 +195,7 @@ public class SearchPanelController implements Initializable {
             if (Objects.equals(searchMode, types[0])) {
                 int matches = 0;
                 try {
-                    rs = ShopMenu.getInstance().getGlobalDB().searchByName(ShopMenu.getInstance().getConnection(), name);
+                    rs = localdb.searchByName(con, name);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -214,7 +220,7 @@ public class SearchPanelController implements Initializable {
                 String date;
                 date = searchDateField.getValue().format(formatter);
                 try {
-                    rs = ShopMenu.getInstance().getGlobalDB().searchByDate(ShopMenu.getInstance().getConnection(), date);
+                    rs = localdb.searchByDate(con, date);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -241,7 +247,7 @@ public class SearchPanelController implements Initializable {
                 String doseUnit = unitSelector.getValue();
                 String dose = doseValue + doseUnit;
                 try {
-                    rs = ShopMenu.getInstance().getGlobalDB().searchByNameDose(ShopMenu.getInstance().getConnection(), name, dose);
+                    rs = localdb.searchByNameDose(con, name, dose);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -270,7 +276,7 @@ public class SearchPanelController implements Initializable {
                 String doseUnit = unitSelector.getValue();
                 String dose = doseValue + doseUnit;
                 try {
-                    rs = ShopMenu.getInstance().getGlobalDB().strictSearch(ShopMenu.getInstance().getConnection(), name, dose, date);
+                    rs = localdb.strictSearch(con, name, dose, date);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

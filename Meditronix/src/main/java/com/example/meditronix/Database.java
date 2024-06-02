@@ -11,42 +11,35 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
 
-     public Connection dbConnect()  {
-         try {
-             //Updated driver class--------------------------------------------------
-             Class.forName("com.mysql.cj.jdbc.Driver");
+    public Connection dbConnect()  {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            //String url = "jdbc:mysql://database-1.czywou6sao7o.ap-southeast-2.rds.amazonaws.com:3306/mydb?characterEncoding=UTF-8";
+            //String username = "admin";
+            String url = "jdbc:mysql://127.0.0.1:3306/mylocaldb";
+            String username = "root";
+            String password = "admin1234";
 
+            Connection con = DriverManager.getConnection(url, username, password);
+            System.out.println("Connected to database successfully");
+            return con;
 
-             //-------------Local connection configuration---------------------------
-             /*String url = "jdbc:mysql://127.0.0.1:3306/mylocaldb";
-             String username = "root";
-             String password = "admin1234";*/
-             //----------------------------------------------------------------------
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-             //------------Aiven MySQL connection configuration----------------------
-             String host = "meditronix-ahmedrafidx360-5ecd.f.aivencloud.com";
-             String port = "22467";
-             String databaseName = "meditronix";
-             String userName = "avnadmin";
-             String password = "AVNS_8kqCs13cKGsjHicTaW5";
-             Connection con =DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + databaseName + "?sslmode=require", userName, password);
-             System.out.println("Connected to database successfully");
-             return con;
-
-         }
-         catch (Exception e) {
-             System.out.println("Error: " + e.getMessage());
-         }
-
-         return null;
-     }
+        return null;
+    }
 
     public ResultSet showInventory() throws SQLException {
 
@@ -469,7 +462,7 @@ public class Database {
 
 
     // to delete patient data from the database
-   /* public void deletePatientData(String patientName) {
+   public void deletePatientData(String patientName) {
         String sql = "DELETE FROM PatientTable WHERE Name = ?";
         try (Connection conn = dbConnect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -479,7 +472,7 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Error deleting patient data from the database: " + e.getMessage());
         }
-    }*/
+    }
 
 
 
@@ -720,6 +713,63 @@ public class Database {
 
 
     }
+
+    public static boolean isMedicineExpired(String medicineName, String dose,Connection con) {
+        String sql = "SELECT Expiry FROM shop_inventory WHERE Name = ? AND Dose = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, medicineName);
+            pstmt.setString(2, dose);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String expiryDateStr = rs.getString("Expiry");
+                    if (expiryDateStr != null) {
+                        // Define the date format used in the Expiry field
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                        // Parse the expiry date string into a LocalDate object
+                        LocalDate expiryDate = LocalDate.parse(expiryDateStr, formatter);
+
+                        // Get the current date
+                        LocalDate currentDate = LocalDate.now();
+
+                        // Compare the expiry date with the current date
+                        return expiryDate.isBefore(currentDate);
+                    } else {
+                        // Handle the case where the expiry date is null
+                        return false;
+                    }
+                } else {
+                    // No record found for the specified medicine name and dose
+                    return false;
+                }
+            }
+        } catch (SQLException | DateTimeParseException e) {
+            // Handle potential SQL and date parsing errors here
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    //for dosage suggestion
+    public List<String> getDosagesByMedicineName(String medicineName) {
+        List<String> dosages = new ArrayList<>();
+        String query = "SELECT DISTINCT Dose FROM shop_inventory WHERE Name = ?";
+        try (Connection con = dbConnect();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, medicineName);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                dosages.add(rs.getString("Dose"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dosages;
+    }
+
+
+
 
 
 }
