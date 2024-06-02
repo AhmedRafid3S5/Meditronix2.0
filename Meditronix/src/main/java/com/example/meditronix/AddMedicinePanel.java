@@ -79,8 +79,8 @@ public class AddMedicinePanel extends Pane implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
           typeList.getItems().addAll(types);
           typeList.setOnAction(this::returnType);
-          localDB = new Database();
-          con = localDB.dbConnect();
+          localDB = ShopMenu.getInstance().getGlobalDB();
+          con = ShopMenu.getInstance().getConnection();
 
 
           BuyCostField.setText("0.0");

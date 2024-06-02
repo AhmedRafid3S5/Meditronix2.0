@@ -17,14 +17,23 @@ public class Database {
 
      public Connection dbConnect()  {
          try {
-             Class.forName("com.mysql.jdbc.Driver");
-             //String url = "jdbc:mysql://database-1.czywou6sao7o.ap-southeast-2.rds.amazonaws.com:3306/mydb?characterEncoding=UTF-8";
-             //String username = "admin";
-             String url = "jdbc:mysql://127.0.0.1:3306/meditronix";
-             String username = "root";
-             String password = "12345";
+             //Updated driver class--------------------------------------------------
+             Class.forName("com.mysql.cj.jdbc.Driver");
 
-             Connection con = DriverManager.getConnection(url, username, password);
+
+             //-------------Local connection configuration---------------------------
+             /*String url = "jdbc:mysql://127.0.0.1:3306/mylocaldb";
+             String username = "root";
+             String password = "admin1234";*/
+             //----------------------------------------------------------------------
+
+             //------------Aiven MySQL connection configuration----------------------
+             String host = "meditronix-ahmedrafidx360-5ecd.f.aivencloud.com";
+             String port = "22467";
+             String databaseName = "meditronix";
+             String userName = "avnadmin";
+             String password = "AVNS_8kqCs13cKGsjHicTaW5";
+             Connection con =DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + databaseName + "?sslmode=require", userName, password);
              System.out.println("Connected to database successfully");
              return con;
 
