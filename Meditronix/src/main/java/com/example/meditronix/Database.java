@@ -307,6 +307,7 @@ public class Database {
         }
     }
 
+    //to insert patients data into patients table
     public void insertPatientDataIntoPatients(String prescriptionCode, String patientName, LocalDateTime dateTime, String age, String gender) {
         try {
             Connection con = dbConnect();
@@ -360,6 +361,7 @@ public class Database {
         }
     }
 
+    //matched named patients unique id is retrived to show on to the tableview of view prescription
     public List<Prescription> getPrescriptionCodesByPatientName(String patientName) {
         List<Prescription> prescriptions = new ArrayList<>();
         try (Connection conn = dbConnect();
@@ -436,6 +438,23 @@ public class Database {
         }
     }
 
+    public List<String> getPatientNameSuggestions(String nameSubstring) {
+        List<String> suggestions = new ArrayList<>();
+        try {
+            String query = "SELECT name FROM patients WHERE name LIKE ?";
+            Connection conn = dbConnect();
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, "%" + nameSubstring + "%");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                suggestions.add(name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return suggestions;
+    }
 
 
 

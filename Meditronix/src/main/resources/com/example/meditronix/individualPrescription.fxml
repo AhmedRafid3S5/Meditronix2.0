@@ -38,7 +38,7 @@
          </font>
       </Label>
       <Label fx:id="presCode" layoutX="527.0" layoutY="26.0" prefHeight="17.0" prefWidth="103.0" />
-      <Button fx:id="backButton" layoutX="579.0" layoutY="469.0" mnemonicParsing="false" onAction="#backButtonPressed" text="Back" />
+      <Button fx:id="backButton" layoutX="579.0" layoutY="469.0" mnemonicParsing="false" onAction="#backButtonPressed" text="Log Out" />
       <Label layoutX="65.0" layoutY="220.0" text="Medicines:">
          <font>
             <Font name="System Bold" size="12.0" />

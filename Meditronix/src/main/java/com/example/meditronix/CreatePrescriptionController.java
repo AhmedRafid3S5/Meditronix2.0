@@ -7,11 +7,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
@@ -57,8 +60,6 @@ public class CreatePrescriptionController {
     @FXML
     private Button backButton;
 
-    @FXML
-    private Button PatientID;
 
     @FXML
     private Button PrescriptionCode;
@@ -91,19 +92,6 @@ public class CreatePrescriptionController {
     private Label MedicineCountLabel;
 
     @FXML
-    private TableView<Patient> patientTable;
-
-
-    @FXML
-    private TableColumn<Patient, String> nameColumn;
-
-    @FXML
-    private TableColumn<Patient, Integer> ageColumn;
-
-    @FXML
-    private TableColumn<Patient, String> genderColumn;
-
-    @FXML
     private TableView<Medicine> MedicineTableview;
 
     @FXML
@@ -120,8 +108,7 @@ public class CreatePrescriptionController {
 
     private List<Medicine> medicines = new ArrayList<>();
 
-   // private boolean prescriptionCodeGenerated = false;
-    private boolean patientIDGenerated = false;
+
     private String prescriptionCode;
 
     private Database database = new Database();
@@ -135,6 +122,17 @@ public class CreatePrescriptionController {
     private String ageText;
     private String gender;
 
+    @FXML
+    private Label enteredPatientAge;
+
+    @FXML
+    private Label enteredPatientGender;
+
+    @FXML
+    private Label enteredPatientName;
+
+    private boolean patientHasCreated = false;
+
     LocalDateTime now = LocalDateTime.now();
 
     private String generatePrescriptionCode() {
@@ -145,11 +143,6 @@ public class CreatePrescriptionController {
         }
         return code.toString();
     }
-
-    private String generatePatientID() {
-        return String.format("%04d", random.nextInt(10000));
-    }
-
 
     private String getPresCode()
     {
@@ -186,37 +179,18 @@ public class CreatePrescriptionController {
         clearMedicineFields();
     }
 
-    @FXML
-    void addPatient(ActionEvent event) {
-        name = Name.getText();
-        String ageText = Age.getText();
-        String gender = GenderCombobox.getSelectionModel().getSelectedItem();
-
-        if (validatePatientFields(name, ageText, gender)) {
-            int age = Integer.parseInt(ageText);
-
-            Patient patient = new Patient(name, age, gender);
-            patientTable.getItems().add(patient);
-
-            clearInputFields();
-        } else {
-            showErrorAlert("Please fill in all patient details.");
-        }
-    }
 
 
-private void clearInputFields() {
+
+    private void clearInputFields() {
     Name.clear();
     //Age.clear();
     //GenderCombobox.clear();
-}
+    }
     private boolean validateMedicineFields(String name, String dosage, String quantity, String frequency) {
         return !name.isEmpty() && !dosage.isEmpty() && !quantity.isEmpty() && !frequency.isEmpty();
     }
 
-    private boolean validatePatientFields(String name, String age, String gender) {
-        return !name.isEmpty() && !age.isEmpty() && gender != null;
-    }
 
     private void showErrorAlert(String message) {
         Alert alert = new Alert(AlertType.ERROR);
@@ -226,20 +200,78 @@ private void clearInputFields() {
         alert.showAndWait();
     }
 
+    private void showNotification(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Notification");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+
+    @FXML
+    void addPatient(ActionEvent event) {
+        name = Name.getText();
+        String ageText = Age.getText();
+        String gender = GenderCombobox.getSelectionModel().getSelectedItem();
+
+        if (validatePatientFields(name, ageText, gender) && !patientHasCreated) {
+            // Update the labels with the entered patient information
+            enteredPatientName.setText(name);
+            enteredPatientAge.setText(ageText);
+            enteredPatientGender.setText(gender);
+
+            patientHasCreated = true;
+
+            clearInputFields();
+        }
+        else if(patientHasCreated) {
+            showErrorAlert("You can only provide 1 patient's information.");
+        }else {
+            showErrorAlert("Please fill in all patient details correctly.");
+        }
+    }
+
+    private boolean validatePatientFields(String name, String age, String gender) {
+        return isValidName(name) && isValidAge(age) && isValidGender(gender);
+    }
+
+
+
+
+    private boolean isValidName(String name) {
+        return !name.matches(".*\\d.*") && name.matches("[a-zA-Z ]+");
+    }
+
+    private boolean isValidGender(String gender) {
+        return gender.equals("Male") || gender.equals("Female");
+    }
+
     @FXML
     void nameTfPressed(ActionEvent event) {
         String nameText = Name.getText();
 
         if (!isValidName(nameText)) {
             showErrorAlert("Patient name cannot contain numerical values.");
-        }
-        else{
+            Name.clear(); // Clear the invalid input
+        } else {
             System.out.println("Name: " + nameText);
         }
     }
 
-    private boolean isValidName(String name) {
-        return !name.matches(".*\\d.*");
+    @FXML
+    void genderCbPressed(ActionEvent event) {
+        String selectedGender = GenderCombobox.getSelectionModel().getSelectedItem();
+        if (selectedGender != null) {
+            if (!isValidGender(selectedGender)) {
+                showErrorAlert("Invalid gender selected.");
+            } else {
+                System.out.println("Selected Gender: " + selectedGender);
+            }
+        } else {
+            showErrorAlert("Please select a gender.");
+        }
     }
 
     @FXML
@@ -247,7 +279,7 @@ private void clearInputFields() {
         String ageText = Age.getText();
 
         if (!isValidAge(ageText)) {
-            showErrorAlert("Age must be a non-negative numerical value.");
+            showErrorAlert("Please enter a valid age.");
         }
         else{
             System.out.println("Age: " + ageText);
@@ -255,18 +287,11 @@ private void clearInputFields() {
     }
 
     private boolean isValidAge(String age) {
-        return age.matches("\\d+") && Integer.parseInt(age) >= 0;
+        return age.matches("\\d{1,3}") && Integer.parseInt(age) >= 0;
     }
 
-    @FXML
-    void genderCbPressed(ActionEvent event) {
-        String selectedGender = GenderCombobox.getSelectionModel().getSelectedItem();
-        if (selectedGender != null) {
-            System.out.println("Selected Gender: " + selectedGender);
-        } else {
-            showErrorAlert("Please select a gender.");
-        }
-    }
+
+
 
 
     @FXML
@@ -280,7 +305,8 @@ private void clearInputFields() {
             dialog.setHeaderText(null);
 
 
-            Label codeLabel = new Label("Prescription Code: " + prescriptionCode);
+            Label codeLabel = new Label("Prescription Code: " + prescriptionCode.toLowerCase());
+
             Label instructionLabel = new Label("Click the 'Copy' button to copy the code to clipboard.");
 
             Button copyButton = new Button("Copy");
@@ -304,19 +330,7 @@ private void clearInputFields() {
     }
 
 
-    @FXML
-    void PatientIDPressed(ActionEvent event) {
-        if (!patientIDGenerated) {
-            String patientID = generatePatientID();
-            System.out.println("Patient ID: " + patientID);
-            patientIDGenerated = true;
 
-            showCopyDialog("Patient ID", patientID);
-        } else {
-
-            showCopyDialog("Patient ID", "Already generated: " + generatePatientID());
-        }
-    }
 
     private void showCopyDialog(String title, String content) {
         // Create a custom dialog pane
@@ -372,32 +386,54 @@ private void clearInputFields() {
     }
 
     @FXML
-    void dosageTfPressed(ActionEvent event) {
-        String dosageText = Dosage.getText();
-        System.out.println("Dosage: " + dosageText);
-    }
-
-    @FXML
-    void frequencyTfPressed(ActionEvent event) {
-        String frequencyText = Frequency.getText();
-        System.out.println("Frequency: " + frequencyText);
-    }
-
-
-
-    @FXML
     void medicineNameTfPressed(ActionEvent event) {
         String medicineNameText = MedicineName.getText();
-        System.out.println("Medicine Name: " + medicineNameText);
+        if (!medicineNameText.matches("[a-zA-Z0-9 ]+")) {
+            showErrorAlert("Medicine name should only contain letters, numbers, and spaces.");
+            MedicineName.clear();
+        } else {
+            System.out.println("Medicine Name: " + medicineNameText);
+            hideSuggestions();
+        }
     }
 
-
+    @FXML
+    void dosageTfPressed(ActionEvent event) {
+        String dosageText = Dosage.getText();
+        if (!dosageText.matches("[a-zA-Z0-9 ]+")) {
+            showErrorAlert("Dosage should only contain letters, numbers, and spaces.");
+            Dosage.clear();
+        } else {
+            System.out.println("Dosage: " + dosageText);
+        }
+    }
 
     @FXML
     void quantityTfPressed(ActionEvent event) {
         String quantityText = Quantity.getText();
-        System.out.println("Quantity: " + quantityText);
+        if (!quantityText.matches("\\d+")) {
+            showErrorAlert("Quantity should only contain integers.");
+            Quantity.clear();
+        } else {
+            System.out.println("Quantity: " + quantityText);
+        }
     }
+
+
+    @FXML
+    void frequencyTfPressed(ActionEvent event) {
+        String frequencyText = Frequency.getText();
+        if (frequencyText.isEmpty()) {
+            showErrorAlert("Frequency cannot be empty.");
+            Frequency.clear();
+        } else {
+            System.out.println("Frequency: " + frequencyText);
+        }
+    }
+
+
+
+
 
     @FXML
     void removeMedicine(ActionEvent event) {
@@ -420,16 +456,6 @@ private void clearInputFields() {
         }
     }
 
-    @FXML
-    void removePatientPressed(ActionEvent event) {
-        Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
-        if (selectedPatient != null) {
-            patientTable.getItems().remove(selectedPatient);
-            //database.deletePatientData(selectedPatient.getName());
-        } else {
-            System.out.println("No patient selected to remove.");
-        }
-    }
 
     @FXML
     void stopPrescription(ActionEvent event) {
@@ -437,11 +463,19 @@ private void clearInputFields() {
             showErrorAlert("Please add medicine before creating a prescription.");
             return;
         }
+        else if(!patientHasCreated)
+        {
+            showErrorAlert("Please add patient info before making prescription.");
+            return;
+        }
 
 
         // Generate prescription code
         prescriptionCode = generatePrescriptionCode();
-        System.out.println("Prescription Code: " + prescriptionCode);
+
+        showNotification("Prescription has been created. Prescription Code: " + prescriptionCode.toLowerCase());
+
+        System.out.println("Prescription Code: " + prescriptionCode.toLowerCase());
 
         String ageText = Age.getText();
         String gender = GenderCombobox.getSelectionModel().getSelectedItem();
@@ -510,29 +544,51 @@ private void clearInputFields() {
         }
     }
 
-    public class Patient {
-        private String name;
-        private int age;
-        private String gender;
+    private List<String> getSuggestions(String input) {
+        List<String> suggestions = new ArrayList<>();
 
-        public Patient(String name, int age, String gender) {
-            this.name = name;
-            this.age = age;
-            this.gender = gender;
+        try (Connection con = database.dbConnect()) {
+            ResultSet rs = database.searchByName(con, input);
+            while (rs.next()) {
+                String name = rs.getString("Name");
+                suggestions.add(name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        public String getName() {
-            return name;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        public String getGender() {
-            return gender;
-        }
+        return suggestions;
     }
+
+    private void showSuggestions(List<String> suggestions) {
+        // Create a new ListView to display the suggestions
+        ListView<String> suggestionsListView = new ListView<>();
+        suggestionsListView.getItems().addAll(suggestions);
+
+        // Set the size and position of the ListView
+        suggestionsListView.setPrefWidth(MedicineName.getWidth());
+        suggestionsListView.setPrefHeight(100);
+        suggestionsListView.setLayoutX(MedicineName.getLayoutX());
+        suggestionsListView.setLayoutY(MedicineName.getLayoutY() + MedicineName.getHeight());
+
+        // Add an event handler to handle selection of a suggestion
+        suggestionsListView.setOnMouseClicked(event -> {
+            String selectedSuggestion = suggestionsListView.getSelectionModel().getSelectedItem();
+            if (selectedSuggestion != null) {
+                MedicineName.setText(selectedSuggestion);
+                hideSuggestions();
+            }
+        });
+
+        // Add the ListView to the scene
+        ((Pane) MedicineName.getParent()).getChildren().add(suggestionsListView);
+    }
+
+    private void hideSuggestions() {
+        // Remove the ListView from the scene
+        ((Pane) MedicineName.getParent()).getChildren().removeIf(node -> node instanceof ListView);
+    }
+
 
     @FXML
     public void initialize() {
@@ -540,15 +596,30 @@ private void clearInputFields() {
         GenderCombobox.getItems().addAll("Male", "Female");
         //GenderCombobox.getSelectionModel().selectFirst();
 
-        // patient TableView
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
-        genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-
         // medicine TableView
         mednamecol.setCellValueFactory(new PropertyValueFactory<>("name"));
         meddosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
         medquantitycol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         medfreqcol.setCellValueFactory(new PropertyValueFactory<>("frequency"));
+
+        TextFormatter<String> medicineNameFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("[a-zA-Z0-9 ]+")) {
+                return change;
+            }
+            return null;
+        });
+        //MedicineName.setTextFormatter(medicineNameFormatter);
+
+        MedicineName.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                List<String> suggestions = getSuggestions(newValue);
+                showSuggestions(suggestions);
+            } else {
+                hideSuggestions();
+            }
+        });
+
     }
+
 }
