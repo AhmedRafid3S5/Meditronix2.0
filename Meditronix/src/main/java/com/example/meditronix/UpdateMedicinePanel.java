@@ -63,8 +63,8 @@ public class UpdateMedicinePanel implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTypeList.getItems().addAll(types);
         updateTypeList.setOnAction(this::returnType);
-        localDB = new Database();
-        con = localDB.dbConnect();
+        localDB = ShopMenu.getInstance().getGlobalDB();
+        con = ShopMenu.getInstance().getConnection();
 
         //Fetch selected medicine
         Medicine medicine = ShopMenu.getInstance().getInventoryTable().getSelectionModel().getSelectedItem();

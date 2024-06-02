@@ -82,6 +82,13 @@ public class ShopMenu implements Initializable {
    @FXML
    private MenuItem stockSettings;
 
+
+   @FXML
+   private MenuItem logout;
+
+   @FXML
+   private MenuItem changeCredentials;
+
    private ResultSet rs;
    private Database GlobalDB;
    private Connection GlobalConnect;
@@ -550,6 +557,30 @@ public class ShopMenu implements Initializable {
    void onHowToUseClicked(ActionEvent event) throws IOException{
       HelpWindow helpWindow = new HelpWindow();
       helpWindow.onHowToUseClicked(event);
+   }
+
+
+   @FXML
+   void logout(ActionEvent event) throws IOException{
+// Load the new FXML file
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+      Parent root = loader.load();
+
+      // Get the current stage from the event's source
+      Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+
+      // Create a new scene with the loaded root
+      Scene scene = new Scene(root);
+
+      // Set the new scene on the stage
+      stage.setScene(scene);
+      stage.show();
+   }
+
+   @FXML
+   void onAccountsChangeCredentialsClicked(ActionEvent event) throws  IOException{
+      ChangeCredentialsController changeWindow = new ChangeCredentialsController();
+      changeWindow.onChangeCredentialsClicked(event);
    }
 
 }

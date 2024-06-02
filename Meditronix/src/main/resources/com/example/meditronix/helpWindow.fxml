@@ -2,19 +2,23 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.HelpWindow">
+<AnchorPane prefHeight="500.0" prefWidth="717.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.HelpWindow">
    <children>
-      <ScrollPane fx:id="scrollField" prefHeight="500.0" prefWidth="700.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <VBox fx:id="helpBox" prefHeight="200.0" prefWidth="100.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+      <BorderPane prefHeight="500.0" prefWidth="550.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <center>
+            <ScrollPane fx:id="scrollField" fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" hvalue="1.0" pannable="true" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: black;" stylesheets="@HelpWindow.css" vbarPolicy="ALWAYS" vvalue="1.0" BorderPane.alignment="CENTER">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="485.0" prefWidth="710.0">
+                     <children>
+                        <VBox fx:id="helpBox" layoutX="3.0" layoutY="14.0" prefHeight="200.0" prefWidth="697.0" stylesheets="@HelpWindow.css" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

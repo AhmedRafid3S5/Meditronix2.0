@@ -48,7 +48,8 @@ public class InfoPaneController implements Initializable {
         answer.setPrefWidth(700); // Set answer label width
         answer.setStyle("-fx-border-radius: 10;" +
                 "-fx-border-color: #5413b6;"+
-                "-fx-background-radius: 10"
+                "-fx-background-radius: 10;" +
+                "-fx-font-size: 14"
         ); // Add padding to answer label
 
         answer.setVisible(false); // Initially hide answer
