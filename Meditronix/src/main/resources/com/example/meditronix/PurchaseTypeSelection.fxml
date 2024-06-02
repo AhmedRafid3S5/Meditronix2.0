@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="788.0" style="-fx-background-color: #d0eceb;" stylesheets="@TypeSelector.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.PurchaseTypeSelectorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722.0" prefWidth="957.0" style="-fx-background-color: #d0eceb;" stylesheets="@TypeSelector.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.PurchaseTypeSelectorController">
    <children>
       <Label alignment="CENTER" layoutY="37.0" prefHeight="52.0" prefWidth="788.0" style="-fx-background-color: rgba(84,139,150,0.6); -fx-text-fill: white;" text="WELCOME TO THE MEDICAL STORE" textFill="WHITE">
          <font>
@@ -19,7 +19,7 @@
             <Font name="Arial Narrow Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="PrescribedButton" layoutX="393.0" layoutY="123.0" mnemonicParsing="false" prefHeight="185.0" prefWidth="375.0" text="BUY PRESCRIBED MEDICINE">
+      <Button fx:id="PrescribedButton" layoutX="393.0" layoutY="123.0" mnemonicParsing="false" onAction="#PrescribedButtonPress" prefHeight="185.0" prefWidth="375.0" text="BUY PRESCRIBED MEDICINE">
          <font>
             <Font name="Arial Narrow Bold" size="20.0" />
          </font></Button>
