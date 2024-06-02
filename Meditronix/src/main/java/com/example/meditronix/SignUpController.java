@@ -5,16 +5,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.*;
 import java.util.EventObject;
@@ -33,10 +33,24 @@ public class SignUpController implements Initializable {
     private TextField SignUpName;
 
     @FXML
-    private TextField SignUpPassword;
+    private PasswordField SignUpPassword;
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SignUpName.setStyle("-fx-text-fill: #0e0707;");
+        SignUpPassword.setPromptText("Enter password");
+        SignUpPassword.setStyle("-fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);");
+        SignUpPassword.setStyle("-fx-font-family: 'Arial';");
+        SignUpPassword.setStyle("-fx-font-size: 13px;");
     }
+
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     @FXML
     void CreateAccountPress(ActionEvent event) throws IOException {
@@ -57,11 +71,14 @@ public class SignUpController implements Initializable {
 
         if (con != null) {
             try {
+                // Hash the password using SHA-256
+                String hashedPassword = hashPassword(password);
+
                 // Prepare the INSERT statement
                 String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, 'customer')";
                 PreparedStatement statement = con.prepareStatement(sql);
                 statement.setString(1, username);
-                statement.setString(2, password);
+                statement.setString(2, hashedPassword);
 
                 // Execute the INSERT statement
                 int rowsInserted = statement.executeUpdate();
@@ -86,9 +103,11 @@ public class SignUpController implements Initializable {
                     System.out.println("Failed to insert user!");
                 }
             } catch (SQLException e) {
-                System.out.println("Error inserting user: " + e.getMessage());
+                showErrorAlert("The username already exists, try a different username.");
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
             } finally {
                 try {
                     // Close the connection
@@ -101,6 +120,20 @@ public class SignUpController implements Initializable {
             System.out.println("Failed to connect to the database!");
         }
     }
+
+    private String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+
+
     @FXML
     void ReturnPress(ActionEvent event) throws IOException{
         Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));

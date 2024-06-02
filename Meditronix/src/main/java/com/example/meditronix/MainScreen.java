@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.EventObject;
 import java.util.Objects;
@@ -129,11 +132,9 @@ public class MainScreen implements Initializable{
 
     }
 
-@FXML
-    public void login(ActionEvent event) throws IOException, SQLException {
-
-        if(state == null)
-        {
+    @FXML
+    public void login(ActionEvent event) throws IOException, SQLException, NoSuchAlgorithmException {
+        if (state == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Role not defined");
             alert.setHeaderText("Role not selected");
@@ -147,68 +148,60 @@ public class MainScreen implements Initializable{
         String username = userNameInput.getText();
         String password = passWordInput.getText();
         String returned_username;
-        String returned_password;
+        String returned_hashed_password;
         String role;
 
-        String sql = "Select * From users where username = ? ";
-
+        String sql = "SELECT * FROM users WHERE username = ?";
         PreparedStatement stmt = con.prepareStatement(sql);
-        stmt.setString(1,username);
-
+        stmt.setString(1, username);
         ResultSet rs = stmt.executeQuery();
 
-        if(rs.next()){
+        if (rs.next()) {
             returned_username = rs.getString("username");
-            returned_password = rs.getString("password");
+            returned_hashed_password = rs.getString("password");
             role = rs.getString("role");
-        }
-        else
-        {
+        } else {
             userNameInput.setStyle("-fx-text-fill: red;");
             userNameInput.setText("Username does not exist or is invalid");
-           // userNameInput.setStyle("-fx-text-fill: #0e0707;");
             return;
         }
 
-        if(state.equals(role) && username.equals(returned_username) && password.equals(returned_password))
-        {
+        // Hash the entered password
+        String hashedPassword = hashPassword(password);
+
+        System.out.println("Hashed value: " + hashedPassword);
+
+        if (state.equals(role) && username.equals(returned_username) && hashedPassword.equals(returned_hashed_password)) {
             loginNotify.setStyle("-fx-text-fill: #36e036");
             loginNotify.setText("Access Granted!! Logging in.....");
-            //user is verified and showed the corresponding screen
-            if(state.equals("pharmacist"))
-            {
-                con.close();
 
+            if (state.equals("pharmacist")) {
+                con.close();
                 switchToInventory(event);
-            }
-            else if(state.equals("customer"))
-            {
+            } else if (state.equals("customer")) {
                 con.close();
-
-                //switch to customer scene
-
                 switchToShop(event);
-            }
-            else if (state.equals("doctor"))
-            {
+            } else if (state.equals("doctor")) {
                 con.close();
-
-                //switch to doctor scene
                 switchToDoctorMenu(event);
             }
-        }
-
-        else
-        {
+        } else {
             userNameInput.setStyle("-fx-text-fill: red;");
             userNameInput.setText("Credentials or requested role doesn't match");
-            //userNameInput.setStyle("-fx-text-fill: #0e0707;");
             return;
         }
+    }
 
-
-
-
+    private String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 
 
