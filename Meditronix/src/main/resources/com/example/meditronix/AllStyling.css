@@ -1,0 +1,94 @@
+    .button {
+
+
+        -fx-background-color:
+                linear-gradient(#0033ff, #8d40d3),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
+                linear-gradient(to bottom left,rgba(136, 193, 224,0.6), #ffe4e4 );
+
+
+        -fx-background-insets: 0,1,2,3;
+        -fx-background-radius: 20,15,15,15;
+        -fx-border-color: white;
+        -fx-border-radius: 20;
+        -fx-text-fill: black;
+        -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
+        -fx-cursor: hand;
+    }
+
+
+
+    .button:hover {
+        -fx-background-color: #7aaae0;
+
+    }
+
+    .labels{
+        -fx-background-color: #ffffff;
+        -fx-background-radius: 10;
+        -fx-padding: 10;
+
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 10, 0, 0, 0);
+    }
+
+
+
+    .table-view {
+        -fx-background-color: transparent;
+        -fx-border-color: #ffffff;
+        -fx-border-radius: 10;
+        -fx-background-radius: 10;
+        -fx-padding: 10;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    }
+
+    .table-view .column-header-background {
+        -fx-background-color: linear-gradient(to bottom, #f0f0f0, #d0d0d0);
+        -fx-border-radius: 10 10 0 0;
+        -fx-background-radius: 10 10 0 0;
+    }
+
+    .table-view .column-header {
+        -fx-border-color: transparent transparent #dddddd transparent;
+        -fx-border-width: 0 0 2 0;
+        -fx-font-weight: bold;
+    }
+
+    .table-view .table-row-cell {
+        -fx-background-color: transparent;
+        -fx-border-color: transparent;
+        -fx-border-width: 0;
+    }
+
+    .table-view .table-row-cell:filled:selected, .table-view .table-row-cell:filled:hover {
+        -fx-background-color: #e6f7ff;
+    }
+
+    .table-view .table-cell {
+        -fx-padding: 10;
+        -fx-border-color: #dddddd;
+        -fx-border-width: 0 0 1 0;
+    }
+
+    .table-view .table-cell:selected {
+        -fx-background-color: #cceeff;
+        -fx-text-fill: black;
+    }
+
+    .table-view .table-row-cell:odd {
+        -fx-background-color: #f9f9f9;
+    }
+
+    .table-view .table-row-cell:even {
+        -fx-background-color: #ffffff;
+    }
+
+    .table-view .column-header .label {
+        -fx-font-size: 14px;
+        -fx-text-fill: #333333;
+    }
+
+    .table-view .table-cell .label {
+        -fx-font-size: 12px;
+    }

@@ -307,6 +307,7 @@ public class Database {
         }
     }
 
+    //to insert patients data into patients table
     public void insertPatientDataIntoPatients(String prescriptionCode, String patientName, LocalDateTime dateTime, String age, String gender) {
         try {
             Connection con = dbConnect();
@@ -360,6 +361,7 @@ public class Database {
         }
     }
 
+    //matched named patients unique id is retrived to show on to the tableview of view prescription
     public List<Prescription> getPrescriptionCodesByPatientName(String patientName) {
         List<Prescription> prescriptions = new ArrayList<>();
         try (Connection conn = dbConnect();
@@ -436,6 +438,23 @@ public class Database {
         }
     }
 
+    public List<String> getPatientNameSuggestions(String nameSubstring) {
+        List<String> suggestions = new ArrayList<>();
+        try {
+            String query = "SELECT name FROM patients WHERE name LIKE ?";
+            Connection conn = dbConnect();
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, "%" + nameSubstring + "%");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                suggestions.add(name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return suggestions;
+    }
 
 
 
@@ -510,7 +529,97 @@ public class Database {
         return lastValue;
     }
 
+    public float getMedicineQuantity(String tableName, String medicineName, String dosage) throws SQLException {
+        String sql = "SELECT Available_Quantity FROM " + tableName + " WHERE Name = ? AND Dose = ?";
+        try (Connection con = dbConnect(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, medicineName);
+            pstmt.setString(2, dosage);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getFloat("Available_Quantity");
+                } else {
+                    throw new SQLException("No record found for the specified medicine and dosage.");
+                }
+            }
+        }
+    }
 
+    public boolean removeMedFromCart(String tableName, String medicineName, String dosage, float addedQuantity) throws SQLException {
+        String updateTableSql = "UPDATE " + tableName + " SET quantity = quantity + ? WHERE medicine_name = ? AND dosage = ?";
+        String updateInventorySql = "UPDATE shop_inventory SET Available_Quantity = Available_Quantity + ? WHERE Name = ? AND Dose = ?";
+
+        try (Connection con = dbConnect();
+             PreparedStatement pstmt1 = con.prepareStatement(updateTableSql);
+             PreparedStatement pstmt2 = con.prepareStatement(updateInventorySql)) {
+
+            // Update quantity in the specified table
+            pstmt1.setFloat(1, addedQuantity);
+            pstmt1.setString(2, medicineName);
+            pstmt1.setString(3, dosage);
+            int rowsUpdated1 = pstmt1.executeUpdate();
+
+            // Update quantity in the shop_inventory table
+            pstmt2.setFloat(1, addedQuantity);
+            pstmt2.setString(2, medicineName);
+            pstmt2.setString(3, dosage);
+            int rowsUpdated2 = pstmt2.executeUpdate();
+
+            // Check if both updates were successful
+            return rowsUpdated1 > 0 && rowsUpdated2 > 0;
+        }
+    }
+
+    public float updateMedicineQuantity(String tableName, String medicineName, String dosage, float addedQuantity) throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        float price = 0;
+
+        try {
+            con = dbConnect();
+            con.setAutoCommit(false); // Start transaction
+
+            // Update quantity in the specified table
+            String updateTableSql = "UPDATE " + tableName + " SET quantity = quantity - ? WHERE medicine_name = ? AND dosage = ?";
+            pstmt = con.prepareStatement(updateTableSql);
+            pstmt.setFloat(1, addedQuantity);
+            pstmt.setString(2, medicineName);
+            pstmt.setString(3, dosage);
+            pstmt.executeUpdate();
+
+            // Update quantity in the shop_inventory table and get the price
+            String updateInventorySql = "UPDATE shop_inventory SET Available_Quantity = Available_Quantity - ? WHERE Name = ? AND Dose = ?";
+            pstmt = con.prepareStatement(updateInventorySql);
+            pstmt.setFloat(1, addedQuantity);
+            pstmt.setString(2, medicineName);
+            pstmt.setString(3, dosage);
+            pstmt.executeUpdate();
+
+            String getPriceSql = "SELECT Selling_price FROM shop_inventory WHERE Name = ? AND Dose = ?";
+            pstmt = con.prepareStatement(getPriceSql);
+            pstmt.setString(1, medicineName);
+            pstmt.setString(2, dosage);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                price = rs.getFloat("Selling_price");
+            } else {
+                throw new SQLException("No record found for the specified medicine and dosage in the shop inventory.");
+            }
+
+            con.commit(); // Commit transaction
+        } catch (SQLException e) {
+            if (con != null) {
+                con.rollback(); // Rollback transaction on error
+            }
+            throw e;
+        } finally {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        }
+
+        return price;
+    }
     //SQL function to update a selected med in inventory
     public boolean updateMedicine(Medicine old_med,Medicine new_med,Connection con) throws SQLException {
         String updateSQL = "UPDATE `shop_inventory`\n" +

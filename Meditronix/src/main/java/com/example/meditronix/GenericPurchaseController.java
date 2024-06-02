@@ -142,6 +142,52 @@ public class GenericPurchaseController implements Initializable {
 
     @FXML
     void BackButtonPressed(ActionEvent event) throws IOException {
+        // Iterate over each medicine in the cartList
+        for (Medicine medInCart : cartList) {
+            try {
+                // Retrieve the ResultSet containing all medicines from the database
+                ResultSet rs = new Database().showGeneric();
+
+
+                boolean found = false;
+
+                // Find the corresponding medicine in the ResultSet
+                while (rs.next()) {
+                    Medicine medicine = new Medicine(rs);
+
+                    // Check if the current medicine matches the one selected in the cart
+                    if (medicine.getName().equals(medInCart.getName()) &&
+                            medicine.getDose().equals(medInCart.getDose()) &&
+                            medicine.getPrice().equals(medInCart.getPrice())) {
+
+                        // Update the corresponding entry in the database
+                        medicine.setQuantity(medInCart.getQuantity() + medicine.getQuantity());
+
+                        // Attempt to update the database entry
+                        if (GlobalDB.updateMedicine(medicine, medicine, GlobalConnect)) {
+                            found = true;
+                        } else {
+                            showAlert("Database Update Error", "Failed to update the database.");
+                        }
+                    }
+
+                }
+
+                // Check if the medicine was found in the ResultSet
+                if (!found) {
+                    showAlert("Medicine Not Found", "Selected medicine not found in the database.");
+                }
+
+
+
+            } catch (SQLException e) {
+                showAlert("Database Error", "An error occurred while accessing the database: " + e.getMessage());
+                e.printStackTrace(); // Print the stack trace for debugging
+            }
+        }
+
+
+
         Object root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("PurchaseTypeSelection.fxml")));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene((Parent) root);
@@ -298,7 +344,7 @@ public class GenericPurchaseController implements Initializable {
     public void showCheckoutSuccessAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, content, ButtonType.OK);
         alert.setTitle(title);
-        alert.setHeaderText("Thank You FOr Your Purchase");
+        alert.setHeaderText("Thank You For Your Purchase");
         alert.showAndWait();
     }
     private void generatePdfForCart(int memoNo) throws FileNotFoundException {
