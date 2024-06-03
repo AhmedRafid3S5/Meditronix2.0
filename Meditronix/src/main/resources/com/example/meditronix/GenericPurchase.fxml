@@ -5,12 +5,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722.0" prefWidth="957.0" style="-fx-background-color: rgba(207,226,243);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.GenericPurchaseController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722.0" prefWidth="957.0" styleClass="signup-pane" stylesheets="@AllStyling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.GenericPurchaseController">
    <children>
       <TableView fx:id="GenericTable" layoutX="38.0" layoutY="96.0" prefHeight="527.0" prefWidth="473.0" stylesheets="@AllStyling.css">
         <columns>
@@ -28,46 +26,41 @@
             <TableColumn fx:id="CartPriceColumn" prefWidth="75.5" text="Price" />
         </columns>
       </TableView>
-      <Label alignment="CENTER" layoutX="663.0" layoutY="31.0" prefHeight="32.0" prefWidth="183.0" style="-fx-background-color: rgba(255,255,255,0.99);" styleClass="labels" stylesheets="@AllStyling.css" text="Cart" textFill="#000000db">
+      <Label alignment="CENTER" layoutX="669.0" layoutY="32.0" prefHeight="32.0" prefWidth="183.0" styleClass="custom-label2" stylesheets="@AllStyling.css" text="CART" textFill="#000000db">
          <font>
             <Font name="Berlin Sans FB" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="deleteButton" layoutX="565.0" layoutY="632.0" mnemonicParsing="false" onAction="#DeleteButtonPressed" prefHeight="46.0" prefWidth="153.0" stylesheets="@AllStyling.css" text="DELETE" textFill="#000000c9">
+      <Button fx:id="deleteButton" layoutX="565.0" layoutY="632.0" mnemonicParsing="false" onAction="#DeleteButtonPressed" prefHeight="46.0" prefWidth="153.0" styleClass="custom-button2" stylesheets="@AllStyling.css" text="DELETE" textFill="#000000be">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font name="Berlin Sans FB" size="19.0" />
          </font></Button>
-      <Button fx:id="AddToCart" layoutX="316.0" layoutY="632.0" mnemonicParsing="false" onAction="#AddToCartButtonPressed" prefHeight="46.0" prefWidth="194.0" stylesheets="@AllStyling.css" text="ADD" textFill="#000000ce">
+      <Button fx:id="AddToCart" layoutX="316.0" layoutY="632.0" mnemonicParsing="false" onAction="#AddToCartButtonPressed" prefHeight="46.0" prefWidth="194.0" styleClass="custom-button2" stylesheets="@AllStyling.css" text="ADD" textFill="#000000a9">
          <font>
             <Font name="System Bold" size="17.0" />
          </font></Button>
-      <Button fx:id="Checkout" layoutX="775.0" layoutY="632.0" mnemonicParsing="false" onAction="#checkoutButtonPressed" prefHeight="46.0" prefWidth="153.0" stylesheets="@AllStyling.css" text="CHECKOUT" textFill="#000000db">
+      <Button fx:id="Checkout" layoutX="775.0" layoutY="632.0" mnemonicParsing="false" onAction="#checkoutButtonPressed" prefHeight="46.0" prefWidth="153.0" styleClass="custom-button2" stylesheets="@AllStyling.css" text="CHECKOUT" textFill="#000000c7">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font name="Berlin Sans FB" size="20.0" />
          </font></Button>
-      <Label alignment="CENTER" layoutX="130.0" layoutY="31.0" prefHeight="32.0" prefWidth="287.0" style="-fx-background-color: white;" styleClass="labels" stylesheets="@AllStyling.css" text="GENERIC MEDICINES" textFill="#000000df">
+      <Label alignment="CENTER" layoutX="130.0" layoutY="31.0" prefHeight="32.0" prefWidth="287.0" styleClass="custom-label2" stylesheets="@AllStyling.css" text="GENERIC MEDICINES" textFill="#000000df">
          <font>
             <Font name="Berlin Sans FB" size="23.0" />
          </font>
       </Label>
       <ComboBox fx:id="QuantityBox" layoutX="38.0" layoutY="662.0" prefHeight="25.0" prefWidth="243.0" promptText="Quantity" style="-fx-background-radius: 20; -fx-background-color: white;" stylesheets="@ShopInventory.css" />
-      <Button fx:id="BackButton" layoutX="31.0" layoutY="20.0" mnemonicParsing="false" onAction="#BackButtonPressed" prefHeight="54.0" prefWidth="62.0" stylesheets="@AllStyling.css">
+      <Button fx:id="BackButton" layoutX="38.0" layoutY="32.0" mnemonicParsing="false" onAction="#BackButtonPressed" prefHeight="36.0" prefWidth="62.0" styleClass="custom-button2" stylesheets="@AllStyling.css" text="BACK" textFill="#000000bc">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Berlin Sans FB" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="32.0" fitWidth="35.0" layoutX="46.0" layoutY="31.0" opacity="0.55" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/back.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="subtotalLabel" layoutX="728.0" layoutY="588.0" prefHeight="25.0" prefWidth="194.0" text="Subtotal : ">
+      <Label fx:id="subtotalLabel" layoutX="693.0" layoutY="588.0" prefHeight="25.0" prefWidth="229.0" styleClass="custom-label2" text="   SUBTOTAL  :    " textFill="#000000b0">
          <font>
-            <Font name="Bodoni MT" size="16.0" />
+            <Font name="Berlin Sans FB" size="16.0" />
          </font></Label>
-      <Label layoutX="38.0" layoutY="632.0" prefHeight="17.0" prefWidth="243.0" style="-fx-background-color: rgba(255,255,255,0.6); -fx-background-radius: 10;" text="   Quantity" textFill="#000000c9">
+      <Label layoutX="38.0" layoutY="632.0" prefHeight="25.0" prefWidth="243.0" styleClass="custom-label2" stylesheets="@AllStyling.css" text="     QUANTITY" textFill="#000000c9">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font name="Berlin Sans FB" size="14.0" />
          </font>
       </Label>
    </children>

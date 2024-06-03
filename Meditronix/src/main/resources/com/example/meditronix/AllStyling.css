@@ -1,28 +1,4 @@
-    .button {
 
-
-        -fx-background-color:
-                linear-gradient(#0033ff, #8d40d3),
-                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
-                linear-gradient(#ffeedd 0%, #698fe0 20%, #c766ff 100%),
-                linear-gradient(to bottom left,rgba(136, 193, 224,0.6), #ffe4e4 );
-
-
-        -fx-background-insets: 0,1,2,3;
-        -fx-background-radius: 20,15,15,15;
-        -fx-border-color: white;
-        -fx-border-radius: 20;
-        -fx-text-fill: black;
-        -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 6,0,0,3 );
-        -fx-cursor: hand;
-    }
-
-
-
-    .button:hover {
-        -fx-background-color: #7aaae0;
-
-    }
 
     .labels{
         -fx-background-color: #ffffff;
@@ -92,3 +68,71 @@
     .table-view .table-cell .label {
         -fx-font-size: 12px;
     }
+
+
+    .signup-pane {
+        -fx-background-color:
+             linear-gradient(to bottom right,
+                 #a3eff0,
+                 #a3ddf0 20%,
+                 #a3c8f0 40%,
+                 #a3bdf0 60%,
+                 #aca3f0 80%,
+                 #6a5acd), /* Add a darker shade */
+             linear-gradient(to top left,
+                 rgba(163,239,240,0.7),
+                 rgba(163,221,240,0.7) 20%,
+                 rgba(163,200,240,0.7) 40%,
+                 rgba(163,189,240,0.7) 60%,
+                 rgba(172,163,240,0.7) 80%,
+                 rgba(106,90,205,0.7)); /* Add a darker shade with transparency */;
+
+    }
+
+.transparent-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.7); /* Lighter white with reduced opacity */
+    -fx-background-radius: 30; /* Rounded corners with radius of 30 */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.2, 4, 4); /* Outer drop shadow effect */
+    -fx-padding: 10; /* Optional: Add padding to prevent shadow clipping */
+}
+
+.rounded-label1 {
+     -fx-background-color:  rgba(163,200,240,0.8);
+
+    -fx-background-radius: 15; /* Rounded corners with radius of 15 */
+    -fx-padding: 5 10; /* Padding for the label content */
+
+}
+.custom-label2 {
+    -fx-background-color: rgba(255, 255, 255, 0.8); /* White background with 0.8 opacity */
+    -fx-background-radius: 10; /* Rounded edges with radius of 10 */
+    -fx-padding: 5; /* Padding for label content */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.2, 2, 2); /* Drop shadow effect */
+}
+.custom-drop-shadow {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 2, 2);
+}
+
+.custom-button {
+    -fx-background-color: #fbfbfb; /* White background */
+    -fx-background-radius: 20; /* Rounded edges */
+    -fx-padding: 8 16; /* Padding for button content */
+    -fx-border-color: rgba(163,200,240,0.8); /* Blue border color */
+    -fx-border-width: 2;
+    -fx-border-radius : 20;/* Border width */
+}
+/* Button hover effect */
+.custom-button:hover {
+    -fx-background-color: rgba(163,200,240,0.8); /* Light blue background on hover */
+}
+
+.custom-button2 {
+    -fx-background-color: #fbfbfb; /* White background */
+    -fx-background-radius: 8; /* Rounded edges */
+    -fx-border-color: rgba(163,200,240,0.8); /* Blue border color */
+    -fx-border-width: 2;
+    -fx-border-radius : 8;/* Border width */
+}
+.custom-button2:hover {
+    -fx-background-color: rgba(215, 238, 250,0.9);
+}

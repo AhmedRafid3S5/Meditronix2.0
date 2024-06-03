@@ -1,0 +1,174 @@
+.createprescription-pane {
+        -fx-background-color:
+             linear-gradient(to bottom right,
+                 rgba(163,239,240,0.2), /* Adjust opacity */
+                 rgba(163,221,240,0.2) 20%,
+                 rgba(163,200,240,0.2) 40%,
+                 rgba(163,189,240,0.2) 60%,
+                 rgba(172,163,240,0.2) 80%,
+                 rgba(106,90,205,0.5)), /* Add a darker shade */
+             linear-gradient(to top left,
+                 rgba(163,239,240,0.7),
+                 rgba(163,221,240,0.7) 20%,
+                 rgba(163,200,240,0.7) 40%,
+                 rgba(163,189,240,0.7) 60%,
+                 rgba(172,163,240,0.7) 80%,
+                 rgba(106,90,205,0.7)); /* Add a darker shade with transparency */
+    }
+
+
+.transparent-pane1 {
+    -fx-background-color: rgba(255, 255, 255, 0.3); /* Adjust the opacity as needed */
+    -fx-background-radius: 10; /* Rounded corners with radius of 10 */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.2, 2, 2); /* Outer drop shadow effect */
+    -fx-padding: 10; /* Add padding to prevent shadow clipping */
+}
+
+.transparent-pane1 .label,
+.transparent-pane1 .text-field {
+    -fx-text-fill: #333333; /* Text color */
+    -fx-font-family: "Berlin Sans FB"; /* Font family */
+    -fx-font-weight: normal; /* Set font weight to normal */
+}
+
+.transparent-pane1 .text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.6); /* Slightly transparent background */
+    -fx-background-radius: 15; /* Rounded corners */
+    -fx-border-color: #ccc; /* Thin border color */
+    -fx-border-width: 1; /* Thin border width */
+    -fx-border-radius: 7; /* Border radius to match background radius */
+    -fx-padding: 2 7; /* Padding inside the text field */
+}
+
+.transparent-pane1 .combo-box {
+    -fx-background-color: rgba(255, 255, 255, 0.6); /* Slightly transparent background */
+    -fx-background-radius: 7; /* Rounded corners */
+    -fx-border-color: #ccc; /* Thin border color */
+    -fx-border-width: 1; /* Thin border width */
+    -fx-border-radius: 7; /* Border radius to match background radius */
+}
+
+.transparent-pane1 .combo-box .list-cell {
+    -fx-background-color: rgba(255, 255, 255, 0.6); /* Slightly transparent background for dropdown cells */
+    -fx-text-fill: #333333; /* Text color */
+    -fx-border-color: #ccc; /* Border color for dropdown cells */
+    -fx-border-width: 1; /* Thin border width */
+}
+
+.transparent-pane1 .combo-box .list-cell:hover {
+    -fx-background-color: rgba(106, 90, 205, 0.2); /* Light purple on hover */
+}
+
+.transparent-pane1 .combo-box .arrow-button {
+    -fx-background-color: rgba(255, 255, 255, 0.6); /* Slightly transparent background for arrow button */
+    -fx-background-radius: 4; /* Rounded corners */
+    -fx-border-color: #ccc; /* Thin border color */
+    -fx-border-width: 1; /* Thin border width */
+    -fx-border-radius: 4; /* Border radius to match background radius */
+}
+
+
+.transparent-pane1 .button {
+    -fx-background-color: white; /* Original color */
+    -fx-text-fill: #333333; /* Text color */
+    -fx-font-family: "Berlin Sans FB"; /* Font family */
+    -fx-background-radius: 7; /* Rounded corners */
+    -fx-border-color: #8a2be2; /* Border color */
+    -fx-border-width: 1; /* Border width */
+    -fx-border-radius: 7; /* Border radius to match background radius */
+    -fx-padding: 2 7; /* Padding inside the button */
+    -fx-cursor: hand; /* Hand cursor on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.2, 2, 2); /* Outer drop shadow effect */
+    -fx-background-insets: 0, 1; /* Prevent background bleeding */
+    -fx-transition: background-color 0.3s, border-color 0.3s; /* Smooth transition for background and border */
+}
+
+.transparent-pane1 .button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #e0bbff, #b3e5fc); /* Light purple-light bluish gradient */
+    -fx-border-color: #b3e5fc; /* Change border color on hover */
+}
+
+.table-view {
+    -fx-background-color: transparent; /* Transparent background for the table */
+    -fx-border-color: #ccc; /* Border color */
+    -fx-border-width: 1; /* Border width */
+    -fx-border-radius: 5; /* Rounded corners */
+    -fx-padding: 5; /* Padding */
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #f0f0f0, #d0d0d0); /* Gradient background for header */
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+    -fx-border-color: #ccc;
+    -fx-border-width: 0 0 1 0; /* Bottom border */
+    -fx-font-family: "Berlin Sans FB"; /* Font family */
+    -fx-font-size: 14px; /* Font size */
+    -fx-text-fill: #333333; /* Text color */
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background for rows */
+    -fx-border-color: #ccc; /* Border color */
+    -fx-border-width: 0 0 1 0; /* Bottom border */
+    -fx-font-family: "Berlin Sans FB"; /* Font family */
+    -fx-font-size: 14px; /* Font size */
+    -fx-text-fill: #333333; /* Text color */
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgba(106, 90, 205, 0.3); /* Light purple-blueish color for selected row */
+}
+
+.table-view .table-cell {
+    -fx-padding: 5; /* Cell padding */
+}
+
+.table-view .table-cell:hover {
+    -fx-background-color: rgba(106, 90, 205, 0.1); /* Light purple on hover */
+}
+
+.table-view .table-column-header-background {
+    -fx-border-color: transparent transparent #ccc transparent; /* Bottom border */
+    -fx-border-width: 0 0 1 0; /* Bottom border */
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: normal; /* Remove bold */
+}
+
+.stylish-button {
+    -fx-background-color: white; /* Base color */
+    -fx-background-radius: 10; /* Rounded corners */
+    -fx-border-color: #ccc; /* Border color */
+    -fx-border-width: 0; /* Border width */
+    -fx-text-fill: #333333; /* Text color */
+    -fx-font-family: "Berlin Sans FB"; /* Font family */
+    -fx-padding: 10 20; /* Padding for top-bottom and left-right */
+    -fx-cursor: hand; /* Change cursor to hand on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.2, 2, 2); /* Drop shadow effect */
+}
+
+.stylish-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #e6e6fa, #d8bfd8); /* Light purple-blueish gradient on hover */
+    -fx-background-radius: 10; /* Keep rounded corners on hover */
+    -fx-border-color: #b0c4de; /* Slightly darker border on hover */
+    -fx-border-width: 1; /* Border width */
+    -fx-text-fill: #333333; /* Text color */
+}
+
+.transparent-pane2 {
+    -fx-background-color:
+        linear-gradient(
+            to bottom right,
+            rgba(25, 25, 112, 0.4), /* Midnight blue with transparency */
+            rgba(123, 104, 238, 0.3) 50%, /* Medium slate blue with more transparency */
+            rgba(230, 230, 250, 0.2) 100% /* Lavender with more transparency */
+        ); /* Darker blue to light purplish gradient */
+    -fx-background-radius: 10; /* Rounded corners with radius of 10 */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.2, 2, 2); /* Outer drop shadow effect */
+    -fx-padding: 10; /* Add padding to prevent shadow clipping */
+}

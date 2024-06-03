@@ -18,6 +18,10 @@ public class DoctorMenuController {
     private Scene scene;
 
     @FXML
+    private Button logOut;
+
+
+    @FXML
     private Button createPrescription;
 
 
@@ -42,6 +46,20 @@ public class DoctorMenuController {
     void viewPrescription(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ViewPrescription.fxml"));
+            Parent root = fxmlLoader.load();
+            scene = new Scene(root);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void logOutPressed(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
             Parent root = fxmlLoader.load();
             scene = new Scene(root);
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

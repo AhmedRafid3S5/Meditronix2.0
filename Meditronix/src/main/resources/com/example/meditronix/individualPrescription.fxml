@@ -7,51 +7,59 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.IndividualPrescription">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722.0" prefWidth="957.0" styleClass="createprescription-pane" stylesheets="@AllStylingDoctorsMenu.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.IndividualPrescription">
    <children>
-      <Label layoutX="262.0" layoutY="22.0" prefHeight="46.0" prefWidth="134.0" text="Prescription">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="65.0" layoutY="99.0" prefHeight="24.0" prefWidth="103.0" text="Patient's Name: ">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
       <Label fx:id="patientNameLabel" layoutX="176.0" layoutY="103.0" prefHeight="17.0" prefWidth="114.0" />
-      <Label layoutX="65.0" layoutY="131.0" prefHeight="24.0" prefWidth="76.0" text="Age:">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
       <Label fx:id="patientAgeLabel" layoutX="176.0" layoutY="135.0" prefHeight="17.0" prefWidth="114.0" />
-      <Label layoutX="65.0" layoutY="166.0" prefHeight="24.0" prefWidth="76.0" text="Gender: ">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
       <Label fx:id="patientGenderLabel" layoutX="176.0" layoutY="170.0" prefHeight="17.0" prefWidth="114.0" />
-      <Label layoutX="477.0" layoutY="22.0" prefHeight="24.0" prefWidth="38.0" text="Code:">
+      <Button fx:id="backButton" layoutX="836.0" layoutY="650.0" mnemonicParsing="false" onAction="#backButtonPressed" styleClass="stylish-button" stylesheets="@AllStylingDoctorsMenu.css" text="Log Out" />
+      <Label layoutX="66.0" layoutY="237.0" text="Medicines:">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="presCode" layoutX="527.0" layoutY="26.0" prefHeight="17.0" prefWidth="103.0" />
-      <Button fx:id="backButton" layoutX="579.0" layoutY="469.0" mnemonicParsing="false" onAction="#backButtonPressed" text="Log Out" />
-      <Label layoutX="65.0" layoutY="220.0" text="Medicines:">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <TableView fx:id="medTable" layoutX="65.0" layoutY="261.0" prefHeight="166.0" prefWidth="521.0">
+      <TableView fx:id="medTable" layoutX="62.0" layoutY="282.0" prefHeight="337.0" prefWidth="828.0">
         <columns>
-          <TableColumn fx:id="medName" prefWidth="166.39996337890625" text="Name" />
-          <TableColumn fx:id="medDosage" minWidth="0.0" prefWidth="137.6000213623047" text="Dosage" />
-            <TableColumn fx:id="medQuantity" minWidth="0.0" prefWidth="111.20001220703125" text="Quantity" />
-            <TableColumn fx:id="medFreq" minWidth="0.0" prefWidth="111.20001220703125" text="Frequency" />
+          <TableColumn fx:id="medName" prefWidth="338.39991760253906" text="Name" />
+          <TableColumn fx:id="medDosage" minWidth="0.0" prefWidth="155.2000732421875" text="Dosage" />
+            <TableColumn fx:id="medQuantity" minWidth="0.0" prefWidth="165.5999755859375" text="Quantity" />
+            <TableColumn fx:id="medFreq" minWidth="0.0" prefWidth="164.00006103515625" text="Frequency" />
         </columns>
       </TableView>
-      <Button fx:id="dnldPDF" layoutX="69.0" layoutY="469.0" mnemonicParsing="false" onAction="#downloadPDF" text="Download PDF" />
+      <Pane layoutX="-15.0" layoutY="-7.0" prefHeight="83.0" prefWidth="982.0" styleClass="transparent-pane2" stylesheets="@AllStylingDoctorsMenu.css">
+         <children>
+            <Label alignment="CENTER" layoutX="339.0" layoutY="25.0" prefHeight="34.0" prefWidth="283.0" text="Prescription">
+               <font>
+                  <Font name="Berlin Sans FB" size="23.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="54.0" layoutY="84.0" prefHeight="126.0" prefWidth="828.0" styleClass="transparent-pane1" stylesheets="@AllStylingDoctorsMenu.css">
+         <children>
+            <Label fx:id="presCode" layoutX="581.0" layoutY="91.0" prefHeight="17.0" prefWidth="103.0" />
+            <Label layoutX="470.0" layoutY="85.0" prefHeight="24.0" prefWidth="114.0" text="Prescription Code:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="16.0" layoutY="52.0" prefHeight="24.0" prefWidth="76.0" text="Age:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="16.0" prefHeight="24.0" prefWidth="103.0" text="Patient's Name: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="87.0" prefHeight="24.0" prefWidth="258.0" text="Gender: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="dnldPDF" layoutX="745.0" layoutY="225.0" mnemonicParsing="false" onAction="#downloadPDF" prefHeight="42.0" prefWidth="138.0" styleClass="stylish-button" stylesheets="@AllStylingDoctorsMenu.css" text="Download PDF" />
    </children>
 </Pane>

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="searchPanel" prefHeight="170.0" prefWidth="866.0" style="-fx-background-radius: 10; -fx-border-color: #39FF14; -fx-border-radius: 10; -fx-border-width: 2;" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.SearchPanelController">
+<AnchorPane fx:id="searchPanel" prefHeight="170.0" prefWidth="866.0" style="-fx-background-radius: 10; -fx-border-color: #8a61bd; -fx-border-radius: 10; -fx-border-width: 2;" stylesheets="@ShopInventory.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.SearchPanelController">
    <children>
       <Button fx:id="searchButton" layoutX="773.0" layoutY="127.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="27.0" prefWidth="57.0" text="Search">
          <font>
