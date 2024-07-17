@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722.0" prefWidth="957.0" styleClass="signup-pane" stylesheets="@AllStyling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.SignUpController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="768.0" styleClass="signup-pane" stylesheets="@AllStyling.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.meditronix.SignUpController">
    <children>
-      <Pane layoutX="151.0" layoutY="52.0" prefHeight="619.0" prefWidth="656.0" styleClass="transparent-pane" stylesheets="@AllStyling.css">
+      <Pane layoutX="66.0" layoutY="36.0" prefHeight="411.0" prefWidth="637.0" styleClass="transparent-pane" stylesheets="@AllStyling.css">
          <children>
-            <Label alignment="CENTER" layoutX="121.0" layoutY="62.0" prefHeight="39.0" prefWidth="407.0" stylesheets="@AllStyling.css" text="CUSTOMER SIGN UP" textFill="#000000c6">
+            <Label alignment="CENTER" layoutX="116.0" layoutY="62.0" prefHeight="39.0" prefWidth="407.0" stylesheets="@AllStyling.css" text="CUSTOMER SIGN UP" textFill="#000000c6">
                <font>
                   <Font name="Berlin Sans FB" size="39.0" />
                </font>
@@ -21,8 +21,8 @@
                   <String fx:value="custom-drop-shadow" />
                </styleClass>
             </Label>
-            <TextField fx:id="SignUpName" layoutX="168.0" layoutY="225.0" prefHeight="25.0" prefWidth="313.0" promptText="Name" style="-fx-background-radius: 10;" />
-            <Button fx:id="CreateAccount" layoutX="170.0" layoutY="351.0" mnemonicParsing="false" onAction="#CreateAccountPress" prefHeight="88.0" prefWidth="302.0" stylesheets="@AllStyling.css" text="CREATE ACCOUNT" textFill="#000000c2">
+            <TextField fx:id="SignUpName" layoutX="168.0" layoutY="176.0" prefHeight="25.0" prefWidth="313.0" promptText="Name" style="-fx-background-radius: 10;" />
+            <Button fx:id="CreateAccount" layoutX="176.0" layoutY="273.0" mnemonicParsing="false" onAction="#CreateAccountPress" prefHeight="53.0" prefWidth="302.0" stylesheets="@AllStyling.css" text="CREATE ACCOUNT" textFill="#000000c2">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
@@ -31,8 +31,8 @@
                   <String fx:value="custom-drop-shadow" />
                </styleClass>
             </Button>
-            <PasswordField fx:id="SignUpPassword" layoutX="167.0" layoutY="271.0" prefHeight="25.0" prefWidth="313.0" promptText="Password" style="-fx-background-radius: 10;" />
-            <Button fx:id="BackButton" layoutX="557.0" layoutY="541.0" mnemonicParsing="false" onAction="#ReturnPress" prefHeight="43.0" prefWidth="65.0" styleClass="custom-button" stylesheets="@AllStyling.css" text="BACK" textFill="#000000a2">
+            <PasswordField fx:id="SignUpPassword" layoutX="169.0" layoutY="225.0" prefHeight="25.0" prefWidth="313.0" promptText="Password" style="-fx-background-radius: 10;" />
+            <Button fx:id="BackButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnPress" prefHeight="43.0" prefWidth="65.0" styleClass="custom-button" stylesheets="@AllStyling.css" text="BACK" textFill="#000000a2">
                <font>
                   <Font name="Berlin Sans FB" size="11.0" />
                </font>

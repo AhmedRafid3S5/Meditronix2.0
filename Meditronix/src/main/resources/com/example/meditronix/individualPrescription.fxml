@@ -37,7 +37,7 @@
       </Pane>
       <Pane layoutX="54.0" layoutY="84.0" prefHeight="126.0" prefWidth="828.0" styleClass="transparent-pane1" stylesheets="@AllStylingDoctorsMenu.css">
          <children>
-            <Label fx:id="presCode" layoutX="581.0" layoutY="91.0" prefHeight="17.0" prefWidth="103.0" />
+            <Label fx:id="presCode" layoutX="581.0" layoutY="87.0" prefHeight="17.0" prefWidth="103.0" />
             <Label layoutX="470.0" layoutY="85.0" prefHeight="24.0" prefWidth="114.0" text="Prescription Code:">
                <font>
                   <Font name="System Bold" size="12.0" />

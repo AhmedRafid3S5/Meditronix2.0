@@ -23,8 +23,6 @@ public class Database {
     public Connection dbConnect()  {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            //String url = "jdbc:mysql://database-1.czywou6sao7o.ap-southeast-2.rds.amazonaws.com:3306/mydb?characterEncoding=UTF-8";
-            //String username = "admin";
             String url = "jdbc:mysql://127.0.0.1:3306/mylocaldb";
             String username = "root";
             String password = "admin1234";
