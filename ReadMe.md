@@ -12,4 +12,10 @@ Intellij project file structure was followed. We recommend using intellij IDE to
  - We recommend using MySQL for database handling since all sql statements were written with respect to  MySQL  syntax.
  - Login info is stored in the `users` table.
  - Currently no install wizard has been employed.
- - All table structure and example data are given in `meditronixDataExport.sql` file  
+ - All table structure and example data are given in `meditronixDataExport.sql` file
+
+## Contributors
+
+ - Ahmed Rafid  | CSE | IUT | [AhmedRafid3S5](https://github.com/AhmedRafid3S5)
+ - Rumman Adib  | CSE | IUT | [Rumman023](https://github.com/Rumman023)
+ - Fariya Ahmed | CSE | IUT | [Fa-riya](https://github.com/Fa-riya)
