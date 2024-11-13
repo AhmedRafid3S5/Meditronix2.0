@@ -39,18 +39,36 @@ public class Database {
         return null;
     }
 
-    public ResultSet showInventory() throws SQLException {
+    public String fetch_store_location(Connection con,String current_user) throws SQLException {
 
-         Connection con = dbConnect();
-         Statement stmt = con.createStatement();
-
-         String sql = "SELECT * FROM shop_inventory; ";
-         ResultSet rs = stmt.executeQuery(sql);
-
-         return rs;
-
+        String sql = "SELECT location From user_location WHERE username = ?;";
+        PreparedStatement Pstmt = con.prepareStatement(sql);
+        Pstmt.setString(1,current_user);
+        ResultSet rs = Pstmt.executeQuery();
+        if(rs.next())
+        {
+            return  rs.getString("location");
+        }
+        return null;
     }
 
+    //Change this function to accept user location, fetch values where user location matches
+    public ResultSet showInventory(Connection con,String store_location) throws SQLException {
+
+
+         /*Statement stmt = con.createStatement();
+
+         String sql = "SELECT * FROM shop_inventory; ";
+         ResultSet rs = stmt.executeQuery(sql);*/
+
+        String sql = "SELECT * FROM shop_inventory WHERE store_location = ?;";
+        PreparedStatement Pstmt = con.prepareStatement(sql);
+        Pstmt.setString(1,store_location);
+
+        return Pstmt.executeQuery(); //returns a result set
+
+    }
+    //Must match user location here as well
     public ResultSet searchByName(Connection con, String name) throws SQLException {
         String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ?;";
         PreparedStatement pStmt = con.prepareStatement(sql);
@@ -68,7 +86,7 @@ public class Database {
         ResultSet rs = pStmt.executeQuery();
         return rs;
     }
-
+    //Must match user location here as well
     public ResultSet searchByDate(Connection con, String date) throws SQLException {
         String sql = "SELECT * FROM shop_inventory WHERE serial_id LIKE ?;";
         PreparedStatement pStmt = con.prepareStatement(sql);
@@ -77,7 +95,7 @@ public class Database {
         ResultSet rs = pStmt.executeQuery();
         return rs;
     }
-
+    //Must match user location here as well
     public ResultSet searchByNameDose(Connection con, String name,String dose) throws SQLException {
         String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ?;";
         PreparedStatement pStmt = con.prepareStatement(sql);
@@ -95,7 +113,7 @@ public class Database {
         ResultSet rs = pStmt.executeQuery();
         return rs;
     }
-
+    //Must match user location here as well
     public ResultSet strictSearch(Connection con, String name,String dose,String date) throws SQLException {
         String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ? AND serial_id LIKE ?;";
         PreparedStatement pStmt = con.prepareStatement(sql);
@@ -141,7 +159,7 @@ public class Database {
     }
 
 
-
+    //Must match user location here as well
     public void deleteMedicine(String id, Connection con) throws SQLException {
 
         String sql = "Delete From shop_inventory where serial_id = ?";
@@ -179,7 +197,7 @@ public class Database {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return currentTime.format(formatter);
     }
-
+    //Must match user location here as well
     public void addMedicine(Medicine m, Connection con, Label tellStatus) throws SQLException{
 
          String added = null;
@@ -622,6 +640,7 @@ public class Database {
         return price;
     }
     //SQL function to update a selected med in inventory
+    //Must match user location here as well
     public boolean updateMedicine(Medicine old_med,Medicine new_med,Connection con) throws SQLException {
         String updateSQL = "UPDATE `shop_inventory`\n" +
                 "SET\n" +

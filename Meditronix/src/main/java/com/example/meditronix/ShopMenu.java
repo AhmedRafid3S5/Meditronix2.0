@@ -36,6 +36,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ShopMenu implements Initializable {
+   private String store_location;
 
    @FXML
    private TableColumn<Medicine, String> Dose;
@@ -182,6 +183,12 @@ public class ShopMenu implements Initializable {
       GlobalConnect = GlobalDB.dbConnect();
       addMedicinePanel = new AddMedicinePanel();
 
+      // fetch the store location
+      try {
+         store_location = GlobalDB.fetch_store_location(GlobalConnect,MainScreen.currentUser);
+      } catch (SQLException e) {
+         throw new RuntimeException(e);
+      }
 
       //set all panel flags to false on initialization
       setPanelOn(false,false,false);
@@ -199,7 +206,7 @@ public class ShopMenu implements Initializable {
 
 
       try {
-         rs = GlobalDB.showInventory();
+         rs = GlobalDB.showInventory(GlobalConnect,store_location);
          //get low stock limit marker
          lowStockLimit = GlobalDB.fetchLowStockValue(GlobalConnect);
       } catch (SQLException e) {
@@ -384,7 +391,7 @@ public class ShopMenu implements Initializable {
 
    public void refreshList(){
       try {
-         this.rs = GlobalDB.showInventory();
+         this.rs = GlobalDB.showInventory(GlobalConnect,store_location);
       } catch (SQLException e) {
          throw new RuntimeException(e);
       }

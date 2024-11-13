@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class MainScreen implements Initializable{
 
+    public  static  String currentUser;
     @FXML
     private Button CustomerButton;
     @FXML
@@ -56,6 +57,7 @@ public class MainScreen implements Initializable{
     private Database db;
     @FXML
     private Connection con;
+
     @FXML
     public void doctorButtonPressed()
     {
@@ -174,7 +176,7 @@ public class MainScreen implements Initializable{
         if (state.equals(role) && username.equals(returned_username) && hashedPassword.equals(returned_hashed_password)) {
             loginNotify.setStyle("-fx-text-fill: #36e036");
             loginNotify.setText("Access Granted!! Logging in.....");
-
+            currentUser = returned_username;
             if (state.equals("pharmacist")) {
                 con.close();
                 switchToInventory(event);
