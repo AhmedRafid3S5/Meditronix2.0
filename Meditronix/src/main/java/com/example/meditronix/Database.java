@@ -39,6 +39,8 @@ public class Database {
         return null;
     }
 
+
+
     public String fetch_store_location(Connection con,String current_user) throws SQLException {
 
         String sql = "SELECT location From user_location WHERE username = ?;";
@@ -52,8 +54,8 @@ public class Database {
         return null;
     }
 
-    //Change this function to accept user location, fetch values where user location matches
-    public ResultSet showInventory(Connection con,String store_location) throws SQLException {
+    //Change this function to accept user location, fetch values where user location matches -> Implemented
+    public ResultSet showInventory(Connection con) throws SQLException {
 
 
          /*Statement stmt = con.createStatement();
@@ -61,6 +63,7 @@ public class Database {
          String sql = "SELECT * FROM shop_inventory; ";
          ResultSet rs = stmt.executeQuery(sql);*/
 
+        String store_location = fetch_store_location(con,MainScreen.currentUser);
         String sql = "SELECT * FROM shop_inventory WHERE store_location = ?;";
         PreparedStatement Pstmt = con.prepareStatement(sql);
         Pstmt.setString(1,store_location);
@@ -68,9 +71,10 @@ public class Database {
         return Pstmt.executeQuery(); //returns a result set
 
     }
-    //Must match user location here as well
+    //Must match user location here as well -> IMPLEMENTED
     public ResultSet searchByName(Connection con, String name) throws SQLException {
-        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ?;";
+        String store_location = fetch_store_location(con,MainScreen.currentUser);
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND store_location = ?;";
         PreparedStatement pStmt = con.prepareStatement(sql);
 
         // Include the '%' wildcards directly in the parameter based on name passed
@@ -78,26 +82,29 @@ public class Database {
 
         if(Character.isUpperCase(firstChar)) {
             pStmt.setString(1,  name + "%");
+
         }
         else {
             pStmt.setString(1,  "%" + name + "%");
         }
-
+        pStmt.setString(2,store_location);
         ResultSet rs = pStmt.executeQuery();
         return rs;
     }
-    //Must match user location here as well
+    //Must match user location here as well -> IMPLEMENTED
     public ResultSet searchByDate(Connection con, String date) throws SQLException {
-        String sql = "SELECT * FROM shop_inventory WHERE serial_id LIKE ?;";
+        String store_location = fetch_store_location(con,MainScreen.currentUser);
+        String sql = "SELECT * FROM shop_inventory WHERE serial_id LIKE ? AND store_location = ?;";
         PreparedStatement pStmt = con.prepareStatement(sql);
         pStmt.setString(1,date+"%");
+        pStmt.setString(2,store_location);
 
         ResultSet rs = pStmt.executeQuery();
         return rs;
     }
-    //Must match user location here as well
+    //Must match user location here as well->IMPLEMENTED
     public ResultSet searchByNameDose(Connection con, String name,String dose) throws SQLException {
-        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ?;";
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ? AND store_location = ?;";
         PreparedStatement pStmt = con.prepareStatement(sql);
         char firstChar = name.charAt(0);
 
@@ -109,13 +116,15 @@ public class Database {
         }
 
         pStmt.setString(2,dose);
+        String store_location = fetch_store_location(con,MainScreen.currentUser);
+        pStmt.setString(3,store_location);
 
         ResultSet rs = pStmt.executeQuery();
         return rs;
     }
-    //Must match user location here as well
+    //Must match user location here as well->IMPLEMENTED
     public ResultSet strictSearch(Connection con, String name,String dose,String date) throws SQLException {
-        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ? AND serial_id LIKE ?;";
+        String sql = "SELECT * FROM shop_inventory WHERE Name LIKE ? AND dose Like ? AND serial_id LIKE ? AND store_location = ?;";
         PreparedStatement pStmt = con.prepareStatement(sql);
         char firstChar = name.charAt(0);
 
@@ -129,6 +138,8 @@ public class Database {
         pStmt.setString(2,dose);
 
         pStmt.setString(3,date+"%");
+        String store_location = fetch_store_location(con,MainScreen.currentUser);
+        pStmt.setString(4,store_location);
 
         ResultSet rs = pStmt.executeQuery();
         return rs;
@@ -159,12 +170,16 @@ public class Database {
     }
 
 
-    //Must match user location here as well
+    //Must match user location here as well->Implemented
     public void deleteMedicine(String id, Connection con) throws SQLException {
 
-        String sql = "Delete From shop_inventory where serial_id = ?";
+        //fetch the store location of current user
+        String store_location = fetch_store_location(con,MainScreen.currentUser);
+
+        String sql = "Delete From shop_inventory where serial_id = ? and store_location = ?;";
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1,id);
+        stmt.setString(2,store_location);
 
         int rowsDeleted = stmt.executeUpdate();
 
@@ -186,7 +201,7 @@ public class Database {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         // Format the LocalDateTime to a string using the formatter
-
+        //To avoid cases where 2 users make an entry at the same exact time(very very rare)
         return currentTime.format(formatter);
 
     }
@@ -197,24 +212,26 @@ public class Database {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return currentTime.format(formatter);
     }
-    //Must match user location here as well
+    //Must match user location here as well -> IMPLEMENTED
     public void addMedicine(Medicine m, Connection con, Label tellStatus) throws SQLException{
 
          String added = null;
-
+         String store_location = fetch_store_location(con,MainScreen.currentUser);
 
         String sql = "SELECT *\n" +
                 "FROM shop_inventory\n" +
                 "WHERE `Name` = ?\n" +
                 "  AND `Dose` = ?\n" +
                 "  AND `expiry` = ?\n" +  // Use the expiry date directly in the new format
-                "  AND `type` = ?;";
+                "  AND `type` = ?" +
+                "  AND `store_location` = ?;";
 
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1,m.getName());
         stmt.setString(2,m.getDose());
         stmt.setString(3, m.getExpiry());
         stmt.setString(4,m.getType());
+        stmt.setString(5,store_location);
 
         ResultSet rowsSelected = stmt.executeQuery();
 
@@ -225,7 +242,8 @@ public class Database {
                     "  `Selling_price` = ?, \n" +
                     "  `Available_Quantity` = ?, \n" +
                     "  `unit_cost` = ?  \n" +
-                    "WHERE `Name` = ? AND `Expiry` = ?;";
+                    "WHERE `Name` = ? AND `Expiry` = ?" +
+                    "AND `store_location` = ?;";
 
             PreparedStatement update_stmt = con.prepareStatement(updateSQL);  // Use updateSQL instead of sql
 
@@ -234,6 +252,7 @@ public class Database {
             update_stmt.setFloat(3, m.getUnitCost());                                   // Set unit_cost
             update_stmt.setString(4, m.getName());                                      // Set Name
             update_stmt.setString(5, m.getExpiry());                                    // Set Expiry
+            update_stmt.setString(6,store_location);                                    // Set user store location
 
 
             int rowsAffected = update_stmt.executeUpdate();
@@ -247,8 +266,8 @@ public class Database {
             //proceed to add a new medicine to inventory;
             String serial_id = createUniqueID();
 
-            String sql_insert = "INSERT INTO `shop_inventory` (`serial_id`, `Name`, `Dose`, `Selling_price`, `Expiry`, `Type`, `Available_Quantity`, `unit_cost`) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql_insert = "INSERT INTO `shop_inventory` (`serial_id`, `Name`, `Dose`, `Selling_price`, `Expiry`, `Type`, `Available_Quantity`, `unit_cost`,`store_location`) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
 
 
             PreparedStatement statement = con.prepareStatement(sql_insert);
@@ -262,6 +281,7 @@ public class Database {
             statement.setString(6, m.getType());
             statement.setFloat(7, m.getQuantity());
             statement.setFloat(8, m.getUnitCost());
+            statement.setString(9,store_location);
 
 // Execute the insert
             statement.executeUpdate();
@@ -290,7 +310,7 @@ public class Database {
         timeline.setCycleCount(1);
         timeline.play();
 
-        ShopMenu.getInstance().refreshList();
+        //ShopMenu.getInstance().refreshList();
 
     }
 
@@ -640,8 +660,9 @@ public class Database {
         return price;
     }
     //SQL function to update a selected med in inventory
-    //Must match user location here as well
+    //Must match user location here as well -> IMPLEMENTED
     public boolean updateMedicine(Medicine old_med,Medicine new_med,Connection con) throws SQLException {
+        String store_location = fetch_store_location(con,MainScreen.currentUser);
         String updateSQL = "UPDATE `shop_inventory`\n" +
                 "SET\n" +
                 "  `Name` = ?,\n" +
@@ -651,7 +672,8 @@ public class Database {
                 "  `Dose` = ?,\n" +
                 "  `Expiry` = ?,\n" +
                 "  `Type` = ?\n" +
-                "WHERE `serial_id` = ?;";
+                "WHERE `serial_id` = ?" +
+                "AND `store_location` = ?;";
 
         PreparedStatement update_stmt = con.prepareStatement(updateSQL);  // Use updateSQL instead of sql
 
@@ -663,6 +685,7 @@ public class Database {
         update_stmt.setString(6, new_med.getExpiry());
         update_stmt.setString(7, new_med.getType());
         update_stmt.setString(8, old_med.getSerial_id());
+        update_stmt.setString(9,store_location);
 
 
         int rowsAffected = update_stmt.executeUpdate();

@@ -206,7 +206,7 @@ public class ShopMenu implements Initializable {
 
 
       try {
-         rs = GlobalDB.showInventory(GlobalConnect,store_location);
+         rs = GlobalDB.showInventory(GlobalConnect);
          //get low stock limit marker
          lowStockLimit = GlobalDB.fetchLowStockValue(GlobalConnect);
       } catch (SQLException e) {
@@ -391,7 +391,7 @@ public class ShopMenu implements Initializable {
 
    public void refreshList(){
       try {
-         this.rs = GlobalDB.showInventory(GlobalConnect,store_location);
+         this.rs = GlobalDB.showInventory(GlobalConnect);
       } catch (SQLException e) {
          throw new RuntimeException(e);
       }
@@ -408,7 +408,7 @@ public class ShopMenu implements Initializable {
          // Handle potential SQLException here
          e.printStackTrace();
       }
-      inventoryTable.setItems(list);
+      this.inventoryTable.setItems(list);
 
 
      detectStockEmpty();

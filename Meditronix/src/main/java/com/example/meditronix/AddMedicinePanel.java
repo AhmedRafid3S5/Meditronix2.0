@@ -143,6 +143,7 @@ public class AddMedicinePanel extends Pane implements Initializable {
 
 
                localDB.addMedicine(medicine, con,warningLabel);
+
            } else {
                warningLabel.setText("Fields with * must be filled!");
 
@@ -164,6 +165,7 @@ public class AddMedicinePanel extends Pane implements Initializable {
                timeline.play();
            }
 
+           ShopMenu.getInstance().refreshList();
 
 
 
